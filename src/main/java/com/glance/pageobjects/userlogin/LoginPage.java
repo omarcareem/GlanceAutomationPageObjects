@@ -64,7 +64,7 @@ public class LoginPage extends BasePage {
 
 		try {
 			TestLog.log.info("Entering user Name");
-			txtUserName.sendKeys("UserName");
+			txtUserName.sendKeys(UserName);
 			TestLog.log.info("Entered user Name as" + UserName);
 		} catch (Exception ex) {
 
@@ -75,7 +75,7 @@ public class LoginPage extends BasePage {
 
 		try {
 			TestLog.log.info("Entering Password");
-			txtPassword.sendKeys("Password");
+			txtPassword.sendKeys(Password);
 			TestLog.log.info("Entered the password as" + Password);
 		} catch (Exception ex) {
 

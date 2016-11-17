@@ -140,6 +140,27 @@ public class AddElementWizardPage extends BasePage{
 			TestLog.log.info("Unable to enter the footer. Due to: "+ex);
 		}
 	}
+	
+	public void enterDescription(String description){
+		try{
+			TestLog.log.info("Entering description");
+			txtDescription.clear();
+			txtDescription.sendKeys(description);
+			TestLog.log.info("Entered the "+ description);
+		}catch(Exception ex){
+			TestLog.log.info("Unable to enter the footer. Due to: "+ex);
+		}
+	}
+	
+	public void clickFirstPageNextButton(){
+		try{
+			TestLog.log.info("Clicking on Next button");
+			btnNext.click();
+			TestLog.log.info("Clicked on Next button");
+		}catch(Exception ex){
+			TestLog.log.info("Unable to enter the footer. Due to: "+ex);
+		}
+	}
 		
 	
 	

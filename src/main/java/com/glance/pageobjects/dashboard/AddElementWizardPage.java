@@ -4,8 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 import com.glance.pageobjects.common.BasePage;
+import com.glance.pageobjects.logs.TestLog;
 
 public class AddElementWizardPage extends BasePage{
 
@@ -87,5 +89,58 @@ public class AddElementWizardPage extends BasePage{
 	
 	@FindBy(xpath="//li/a[@id='close_wizard']/i")
 	WebElement linkCloseWizard;
+	
+	@FindBy(xpath="//div[@class='x_title']/h2")
+	WebElement titleElementWizard;
+	
+	
+	public String getElementWizardPageTitle(){
+		
+		String elementWizardPageTitle=null;
+		try{
+			TestLog.log.info("Reading the title");
+			elementWizardPageTitle=titleElementWizard.getText();
+			TestLog.log.info("The title is: "+elementWizardPageTitle);
+		}catch(Exception ex){
+			TestLog.log.info("Could not read the title due to: "+ex);
+		}
+		
+		return elementWizardPageTitle;
+	}
+	
+	public void selectMetric(String metric){
+		try{
+			Select dropSelectMetric = new Select(drpMetric);
+			TestLog.log.info("Selecting a metric value");
+			dropSelectMetric.selectByVisibleText(metric);
+			TestLog.log.info("Selected "+metric+" from the drop down");
+		}catch(Exception ex){
+			TestLog.log.info("Unable to select a value from the metric drop down. Due to: "+ex);
+		}		
+	}
+	
+	public void enterMetricTitle(String metricTitle){
+		try{
+			TestLog.log.info("Entering a metric title");
+			txtTitle.clear();
+			txtTitle.sendKeys(metricTitle);
+			TestLog.log.info("Entered the "+ metricTitle+" title");
+		}catch(Exception ex){
+			TestLog.log.info("Unable to enter the title. Due to: "+ex);
+		}
+	}
+	
+	public void enterFooter(String footer){
+		try{
+			TestLog.log.info("Entering footer");
+			txtFooter.clear();
+			txtFooter.sendKeys(footer);
+			TestLog.log.info("Entered the "+ footer);
+		}catch(Exception ex){
+			TestLog.log.info("Unable to enter the footer. Due to: "+ex);
+		}
+	}
+		
+	
 	
 }

@@ -278,7 +278,7 @@ public class DashboardPage extends BasePage {
 		try {
 			TestLog.log.info("Select delete icon");
 			btnAddNewElement.click();
-			TestLog.log.info("dashboard will delete");
+			TestLog.log.info("Navigated to add element");
 
 		} catch (Exception ex) {
 

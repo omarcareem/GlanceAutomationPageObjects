@@ -15,6 +15,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -26,6 +28,59 @@ public class CommonPageObject extends BasePage{
 		super(driver);
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	@FindBy(id="example_first")
+	WebElement btnFirst;
+	
+	@FindBy(id="example_previous")
+	WebElement btnPrevious;
+	
+	@FindBy(id="example_next")
+	WebElement btnNext;
+	
+	@FindBy(id="example_last")
+	WebElement btnLast;
+	
+	//Page Navigation - First page
+		public void FirstPageNavigation(){
+			if(btnFirst.isEnabled()){
+				btnFirst.click();
+			}else{
+				System.out.println("Page Navigation button Disable");
+			}
+		}
+		
+		
+	//Page Navigation - Previous page
+		public void previousPageNavigation(){
+			if(btnPrevious.isEnabled()){
+				btnPrevious.click();
+			}else{
+				System.out.println("Page Navigation button Disable");
+			}
+		}
+
+	//Page Navigation - Next page
+		public void NextPageNavigation(){
+			if(btnNext.isEnabled()){
+				btnNext.click();
+			}else{
+				System.out.println("Page Navigation button Disable");
+				}
+		}
+			
+	//Page Navigation - Last page
+		public void LPageNavigation(){
+			if(btnLast.isEnabled()){
+				btnLast.click();
+			}else{
+				System.out.println("Page Navigation button Disable");
+			}
+		}
+		
+		
+		
 	
 	//This method will capture screen shots
 	public void takeScreenShotofFailure(String screenShot) throws Exception {
@@ -57,6 +112,8 @@ public class CommonPageObject extends BasePage{
 			}
 		});
 	}
+	
+	
 	
 
 }

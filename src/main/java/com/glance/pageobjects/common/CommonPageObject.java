@@ -7,7 +7,9 @@ package com.glance.pageobjects.common;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -52,8 +54,10 @@ public class CommonPageObject extends BasePage {
 	WebElement lblRecordCount;
 	
 	
+	
 	By middlePagination = By.xpath("//div[@id='example_paginate']/span/a");
-	By tblSearch = By.xpath("//label/input");
+	By txtSearch = By.xpath("//label/input");
+	By tblExample = By.xpath("//table[@id='example']");
 
 	// Page Navigation - First page
 	public void firstPageNavigation() {
@@ -406,16 +410,163 @@ public class CommonPageObject extends BasePage {
 	// Page Count verification - Actual page count
 	public int pageCount() {
 		TestLog.log.info("get actual page count");
-		int pageNumbers = driver.findElements(By.xpath("//span/a")).size();
+		int pageNumbers = 0;
+		try{
+			pageNumbers = driver.findElements(By.xpath("//span/a")).size();
+			
+		}catch (Exception ex) {
+			TestLog.log.info("Could not find page count" + ex);
+		}
 		return pageNumbers;
-
 	}
 
 	//add text to search text box
 	public void tableSearch(String searchKey){
-		TestLog.log.info("add text to search text box");
-		driver.findElement(tblSearch).sendKeys(searchKey);		
+		TestLog.log.info("verify text search");
+		try{
+			driver.findElement(txtSearch).sendKeys(searchKey);
+		}catch (Exception ex) {
+			TestLog.log.info("Text search verification fails" + ex);
+		}
+				
 	}
+	
+	//sorting the table according to the colom
+	
+	public void tableSort(String colomName){
+		TestLog.log.info("sort according to the colom ");
+		try{
+			driver.findElement(By.xpath("//*[contains(text(),'"+colomName+"')]")).click();
+		}catch (Exception ex) {
+			TestLog.log.info("sorting fails" + ex);
+		}
+	}
+	
+	//verify sorting the table according to the colom
+	
+	public void verifyTableSort(String colomName){
+		TestLog.log.info("verification sort according to the colom ");
+		
+		int eleCount;
+        List<String> expUserID = new ArrayList();
+        List<String> expUserName = new ArrayList();
+        List<String> expFirstName = new ArrayList();
+        List<String> expLastName = new ArrayList();
+        List<String> expJobRole = new ArrayList();
+        
+        List<String> actUserID = new ArrayList();
+        List<String> actUserName = new ArrayList();
+        List<String> actFirstName = new ArrayList();
+        List<String> actLastName = new ArrayList();
+        List<String> actJobRole = new ArrayList();
+        
+        
+		try{
+			TestLog.log.info("find the row count");      
+			eleCount = driver.findElements(By.xpath("//*[contains(text(),'"+colomName+"')]")).size();
+
+            System.out.println("Element count: " + eleCount);
+
+            for(int i = 0; i < eleCount; i++){ 
+            	TestLog.log.info("capture values");
+                
+            	expUserID.add(driver.findElement(By.xpath("//*[contains(text(),'User ID')]")).getText());
+            	expUserName.add(driver.findElement(By.xpath("//*[contains(text(),'User Name')]")).getText());
+            	expFirstName.add(driver.findElement(By.xpath("//*[contains(text(),'First Name')]")).getText());
+            	expLastName.add(driver.findElement(By.xpath("//*[contains(text(),'Last Name')]")).getText());
+            	expJobRole.add(driver.findElement(By.xpath("//*[contains(text(),'Job Role ')]")).getText());
+            	
+            	actUserID.add(driver.findElement(By.xpath("//*[contains(text(),'User ID')]")).getText());
+            	actUserName.add(driver.findElement(By.xpath("//*[contains(text(),'User Name')]")).getText());
+            	actFirstName.add(driver.findElement(By.xpath("//*[contains(text(),'First Name')]")).getText());
+            	actLastName.add(driver.findElement(By.xpath("//*[contains(text(),'Last Name')]")).getText());
+            	actJobRole.add(driver.findElement(By.xpath("//*[contains(text(),'Job Role ')]")).getText());
+
+            }
+            TestLog.log.info("sort according to the coloms");
+            if (colomName=="User ID"){
+            	Collections.sort(expUserID);
+                       	
+            for (int i=0;i<expUserID.size();i++) {
+                
+                if (!(expUserID.get(i).equals(actUserID.get(i)))) {
+                                System.out.println("Coloum not sorted: " + i);
+                                break;
+
+                }else {
+                	System.out.println("expected value: " + expUserID +"actual value:"+actUserID);
+                }
+            }
+            }else if(colomName=="User Name"){
+                	Collections.sort(expUserName);
+                	
+                  for (int j=0;j<expUserName.size();j++) {
+                	
+                 
+               if (!(expUserName.get(j).equals(actUserName.get(j)))) {
+                        System.out.println("Coloum not sorted: " + j);
+                        break;
+
+        }else {
+        	System.out.println("expected value: " + expUserName +"actual value:"+actUserName);
+        }
+                  }
+            }else if(colomName=="First Name"){
+            	
+                 	Collections.sort(expFirstName);
+        	
+            for (int k=0;k<expFirstName.size();k++) {
+          	
+           
+         if (!(expFirstName.get(k).equals(actFirstName.get(k)))) {
+                  System.out.println("Coloum not sorted: " + k);
+                  break;
+
+         }else{
+        	 System.out.println("expected value: " + expFirstName +"actual value:"+actFirstName);
+         }
+            }
+            }else        	 
+        	 if(colomName=="Last Name"){
+        	Collections.sort(expLastName);
+        	
+            for (int l=0;l<expLastName.size();l++) {
+          	
+           
+         if (!(expLastName.get(l).equals(actLastName.get(l)))) {
+                  System.out.println("Coloum not sorted: " + l);
+                  break;
+
+            }else{
+            	System.out.println("expected value: " + expLastName +"actual value:"+actLastName);
+            }
+            }
+        	 }           	
+           if(colomName=="Job Role"){
+            	Collections.sort(expJobRole);
+            	
+                for (int m=0;m<expJobRole.size();m++) {
+              	
+               
+             if (!(expJobRole.get(m).equals(actJobRole.get(m)))) {
+                      System.out.println("Coloum not sorted: " + m);
+                      break;
+
+                }else{
+                	
+                	System.out.println("expected value: " + expJobRole +"actual value:"+actJobRole);
+                }
+                }
+           }else{
+        	   System.out.println("Coloum not sorted ");       	   
+                	
+                }
+		
+                } catch (Exception ex) {
+			TestLog.log.info("Coloum not sorted:" + ex);
+		}
+	}
+	
 	
 
 	// This method will capture screen shots

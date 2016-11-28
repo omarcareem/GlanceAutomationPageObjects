@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,7 +18,7 @@ public class CommonPageLeftPane extends BasePage {
 	public CommonPageLeftPane(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	//image logo
@@ -49,7 +50,7 @@ public class CommonPageLeftPane extends BasePage {
 	WebElement txtAccountAddNew;
 
 	// engagement name
-	@FindBy(xpath = " //a[contains(text(),'Engagement')]")
+	@FindBy(xpath = "//a[contains(text(),'Engagement')]")
 	WebElement txtEngagement;
 
 	// Add new Engagement
@@ -83,11 +84,14 @@ public class CommonPageLeftPane extends BasePage {
 	// bottomleft corner logout icon
 	@FindBy(xpath = "//span[@class='glyphicon glyphicon-off']")
 	WebElement LogoutIcon;
-
 	
-	//clicking elements under the Account drop down
-	By linkAccountList = By.xpath("//a[contains(text(),'Account')]/../ul/li");
+	@FindBy(xpath="//a[contains(text(),'Engagement')]/../ul/li[@class='btn-xs btn-primary']/a")
+	WebElement linkEngagementAddNew;
 
+	//clicking elements under the Account drop down
+	By linkAccountList = By.xpath("//a[contains(text(),'Account')]/../ul/li/a");
+	
+	
 	public ArrayList<String> getAccountNameList() {
 
 		ArrayList listOfAcoountNames = new ArrayList();
@@ -101,23 +105,52 @@ public class CommonPageLeftPane extends BasePage {
 		return listOfAcoountNames;
 	}
 	
-	public void clickOnAccountName(String accountName) {
+	public void clickOnAccountName(String accountNameValue) {
 
 		
-		List<WebElement> linkAccountNameList = driver
-				.findElements(linkAccountList);
+		List<WebElement> linkAccountNameList = driver.findElements(linkAccountList);
 
-		for (WebElement accountNames : linkAccountNameList) {
-			String returnedAccountName=accountNames.getText();
-			if(returnedAccountName==accountName){
-				accountNames.click();
+		for (WebElement accountNameInList : linkAccountNameList) {
+			
+			String returnedAccountName=accountNameInList.getText();
+			if(returnedAccountName.contains(accountNameValue)){
+				accountNameInList.click();
+				System.out.println("given Account name is clicked");
 				break;
 			}
 		}
 		
 	}
 	
+	
+	//click on engagement ******************************************* 
+	public void clickEngagement() {
 
+		try {
+			TestLog.log.info("Clicking engagement icon");
+			txtEngagement.click();
+			TestLog.log.info("Clicked");
+
+		} catch (Exception ex) {
+			System.out.println("click on engagement failed!");
+		}
+
+	}
+	
+	//click on account *******************************************
+		public void clickAccount() {
+
+			try {
+				TestLog.log.info("Clicking account icon");
+				txtAccount.click();
+				TestLog.log.info("Clicked");
+
+			} catch (Exception ex) {
+				System.out.println("click on account failed!");
+			}
+
+		}
+	
 	//clicking elements under the Engagement drop down
 		By linkEngagementList = By.xpath("//a[contains(text(),'Engagement')]/../ul/li");
 
@@ -136,18 +169,54 @@ public class CommonPageLeftPane extends BasePage {
 	public void clickOnEngagementName(String engagementName) {
 
 		
-		List<WebElement> linkEngagementNameList = driver
-			.findElements(linkEngagementList);
+		List<WebElement> linkEngagementNameList = driver.findElements(linkEngagementList);
 
 		for (WebElement  engagementNames : linkEngagementNameList) {
 		String returnedEngagementName=engagementNames.getText();
-			if(returnedEngagementName==engagementName){
+			if(returnedEngagementName.contains(engagementName)){
 				engagementNames.click();
 	 break;
 			}
 		}
 		
 	}
+	
+	//click on engagement name ***************************
+public List<String> clickOnEngagementName2(String engagementName) {
+
+		List<String> currentValue = new ArrayList<>();
+		
+		By linkEngagementList = By.xpath("//a[contains(text(),'Engagement')]/../ul");
+		WebElement select = driver.findElement(linkEngagementList);
+		List<WebElement> matches = select.findElements(By.tagName("li"));
+		for (WebElement  match : matches) {
+			currentValue.add(match.getText());
+			//String value = currentValue.add(match.getText());
+			if(currentValue.contains(engagementName)){
+				match.click();
+				
+			}
+			else{
+				System.out.println("Error selecting engagement");
+				break;
+			}
+			}
+		
+		return currentValue;
+		
+	}
+
+
+//method to select add new ************************
+	public void clickOnAddNewEngagementLink(){
+		
+		JavascriptExecutor executor = (JavascriptExecutor)driver;
+		executor.executeScript("arguments[0].click();", linkEngagementAddNew);
+		
+	}
+
+	
+	
 	
 	//clicking elements under the Project drop down
 		By linkProjectList = By.xpath("//a[contains(text(),'Project')]/../ul/li");

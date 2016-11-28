@@ -24,9 +24,9 @@ public class DeleteSearchRecordPage extends BasePage{
 	WebElement lblPageName;
 		
 	//initialization of variables with the xpath in Delete Search Record page
-	@FindBy(xpath="//select[@name='dataTable_length']")
+	@FindBy(xpath="//div[@id='searchTable_length']/label/select[@name='searchTable_length']")
 	WebElement drpdwnShowEntry;
-		
+	
 	@FindBy(xpath="//input[@type='search']")
 	WebElement txtSearch;
 
@@ -48,34 +48,48 @@ public class DeleteSearchRecordPage extends BasePage{
 	@FindBy(xpath="//a[@onclick='deleteData(this.id);']")
 	WebElement btnDelete;
 
-	// page specifying method(verification)
-	public String verifyPageName() {
-		return lblPageName.getText();
-	}
+	// method for identifying the page title
+		public boolean getPageName(String lblExpectedTitle) {
+			boolean flag = false;
+
+			String pageName = lblPageName.getText();
+			if (pageName.contains(lblExpectedTitle)) {
+				System.out.println("Navigated to delete Search result page " + pageName);
+				flag = true;
+			} else {
+				System.out.println("Not Navigated to delete Search result page");
+				flag = false;
+			}
+			return flag;
+		}
 			
 	//methods for the Delete Search Record page
-	public void clicktShowEntry(String lblValue){
+	public void clicktShowEntry(){
 		try{
 			TestLog.log.info("select the dropdwn list");
 			drpdwnShowEntry.click();
 			TestLog.log.info("drop down will appear");
 		}catch(Exception ex){
-			
+			TestLog.log.info("Error clicking show entry" + ex);
 		}
 	}
 	
 	//methods for one by one selection
-	public void selectTen(String selectShowEntry){
-		try{
-			TestLog.log.info("select entry from the drop down");
-			Select range = new Select(drpdwnShowEntry);
-			range.selectByVisibleText(selectShowEntry);
-					
-			TestLog.log.info("selected entries will appear in the table");
-		} catch (Exception ex) {
-			
-		}
+	By dropDownShowEntryValue = By.xpath("//div[@id='searchTable_length']/label/select[@name='searchTable_length']/option");
+	
+	public void selectValue(String inputShowEntry){
 		
+		List<WebElement> showEntryList = driver.findElements(dropDownShowEntryValue);
+		
+		for(WebElement showEntry : showEntryList){
+			String selectShowEntry = showEntry.getText();
+			if(selectShowEntry.contains(inputShowEntry)){
+				showEntry.click();
+				break;
+			}else{
+				System.out.println("Error selecting show entry");
+			}
+		}
 	}
 	
 	public void enterSearch(String txtSerachValue){
@@ -182,7 +196,7 @@ public class DeleteSearchRecordPage extends BasePage{
 				if (cellText.contains(needToDeleteText)){
 					btnDelete.click();
 				}else{
-					System.out.println("Can not delete, There is no such data in teh table");
+					System.out.println("Can not delete, There is no such data in the table");
 					
 				}
 				

@@ -94,18 +94,19 @@ public class AddElementWizardPage extends BasePage{
 	WebElement titleElementWizard;
 	
 	
-	public String getElementWizardPageTitle(){
+	public boolean getElementWizardPageTitle(String elementWizardPageTitle){
 		
-		String elementWizardPageTitle=null;
+		//String elementWizardPageTitle=null;
 		try{
 			TestLog.log.info("Reading the title");
 			elementWizardPageTitle=titleElementWizard.getText();
 			TestLog.log.info("The title is: "+elementWizardPageTitle);
+			System.out.println(elementWizardPageTitle);
 		}catch(Exception ex){
 			TestLog.log.info("Could not read the title due to: "+ex);
 		}
 		
-		return elementWizardPageTitle;
+		return true;
 	}
 	
 	public void selectMetric(String metric){

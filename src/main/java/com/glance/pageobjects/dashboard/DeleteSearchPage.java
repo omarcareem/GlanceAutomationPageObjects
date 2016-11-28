@@ -39,7 +39,7 @@ public class DeleteSearchPage extends BasePage{
 		@FindBy(xpath="//a[@id='sql_tab']")
 		WebElement tabSql;
 		
-		@FindBy(xpath="//textarea[@id='sql']")
+		@FindBy(xpath="//textarea[@id='sqlId']")
 		WebElement txtareaSql;
 		
 		@FindBy(xpath="//button[@id='submit_sql']")
@@ -53,9 +53,19 @@ public class DeleteSearchPage extends BasePage{
 		WebElement icnClose;
 		
 		
-		// page specifying method(verification)
-		public String verifyPageName() {
-			return lblPageName.getText();
+		// method for identifying the page title
+		public boolean getPageName(String lblExpectedTitle) {
+			boolean flag = false;
+
+			String pageName = lblPageName.getText();
+			if (pageName.contains(lblExpectedTitle)) {
+				System.out.println("Navigated to delete Search page " + pageName);
+				flag = true;
+			} else {
+				System.out.println("Not Navigated to delete Search page ");
+				flag = false;
+			}
+			return flag;
 		}
 		
 		//methods for the Search tab in Delete search page
@@ -66,7 +76,7 @@ public class DeleteSearchPage extends BasePage{
 				TestLog.log.info("navigate to search tab");
 				
 			}catch(Exception ex){
-				
+				TestLog.log.info("Error clicking search tab" + ex);
 			}
 		}
 		
@@ -78,7 +88,7 @@ public class DeleteSearchPage extends BasePage{
 						
 				TestLog.log.info("selected value will appear in the Type field");
 			}catch(Exception ex){
-				
+				TestLog.log.info("Error in selecting type" + ex);
 			}
 		}
 		
@@ -89,7 +99,7 @@ public class DeleteSearchPage extends BasePage{
 				TestLog.log.info("entered ID will appear in the ID field");
 				
 			}catch(Exception ex){
-				
+				TestLog.log.info("Error in entering ID" + ex);
 			}
 		}
 		
@@ -100,7 +110,7 @@ public class DeleteSearchPage extends BasePage{
 				TestLog.log.info("entered Name will appear in the Name field");
 				
 			}catch(Exception ex){
-				
+				TestLog.log.info("Error entering name" + ex);
 			}
 		}
 		
@@ -111,7 +121,7 @@ public class DeleteSearchPage extends BasePage{
 				TestLog.log.info("This will navigate to Delete Search Record page");
 				
 			}catch(Exception ex){
-				
+				TestLog.log.info("Error clicking search" + ex);
 			}
 		}
 		
@@ -123,18 +133,18 @@ public class DeleteSearchPage extends BasePage{
 				TestLog.log.info("navigate to sql tab");
 				
 			}catch(Exception ex){
-				
+				TestLog.log.info("Error clicking sql tab" + ex);
 			}
 		}
 		
-		public void enterSqlQuery(String sqlQuery){
+		public void enterSqlQuery(String sqlQueryValue){
 			try{
 				TestLog.log.info("enter sql query");
-				txtareaSql.sendKeys(sqlQuery);
+				txtareaSql.sendKeys(sqlQueryValue);
 				TestLog.log.info("sql query will appear in the sql field");
 				
 			}catch(Exception ex){
-				
+				TestLog.log.info("Error entering sql query" + ex);
 			}
 		}
 		
@@ -145,7 +155,7 @@ public class DeleteSearchPage extends BasePage{
 				TestLog.log.info("All the records relevant to accounts will listed in a tabel");
 				
 			}catch(Exception ex){
-				
+				TestLog.log.info("Error clicking submit" + ex);
 			}
 		}
 		

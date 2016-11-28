@@ -4,12 +4,15 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.glance.pageobjects.common.BasePage;
 import com.glance.pageobjects.logs.TestLog;
@@ -80,6 +83,20 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//button[@id='define_now']")
 	WebElement btnAddNewElement;
 
+	@FindBy(xpath="//h1")
+	WebElement lblElementMessage;
+	
+	@FindBy(xpath="//div[@class='x_title']/span")
+	WebElement headChartTitle;
+	
+	@FindBy(xpath="//button[contains(text(),'DELETE')]")
+	WebElement btnConfirmDelete;
+	
+	@FindBy(xpath="//div/button[contains(text(),'Okay')]")
+	WebElement btnDeleteConfirmOk;
+	
+	WebDriverWait wait = new WebDriverWait(driver, 10);
+	
 	// page specifying method(verification)
 	public String verifyPageName() {
 		return lblPageName.getText();
@@ -262,6 +279,7 @@ public class DashboardPage extends BasePage {
 	public void selectDelete() {
 
 		try {
+			wait.until(ExpectedConditions.visibilityOf(icnDelete));
 			TestLog.log.info("Select delete icon");
 			icnDelete.click();
 			TestLog.log.info("dashboard will delete");
@@ -271,12 +289,27 @@ public class DashboardPage extends BasePage {
 		}
 
 	}
+	
+	public void confirmDeleteGraph(){
+		try {
+			wait.until(ExpectedConditions.visibilityOf(btnConfirmDelete));
+			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			executor.executeScript("arguments[0].click();", btnConfirmDelete);
+			TestLog.log.info("Confirming deletion of graph");
+			executor.executeScript("arguments[0].click();", btnDeleteConfirmOk);
+			TestLog.log.info("Delete the graph");
+			
+		} catch (Exception ex) {
+
+		}
+	}
 
 	// method for ass new element
 	public void selectAddNewElement() {
 
 		try {
-			TestLog.log.info("Select delete icon");
+			wait.until(ExpectedConditions.visibilityOf(btnAddNewElement));
+			TestLog.log.info("Navigating to add element");
 			btnAddNewElement.click();
 			TestLog.log.info("Navigated to add element");
 
@@ -284,6 +317,33 @@ public class DashboardPage extends BasePage {
 
 		}
 
+	}
+	
+	public boolean verifyElementMessage(){
+		
+		boolean flag=false;
+		try{
+			//wait.until(ExpectedConditions.visibilityOf(lblElementMessage));
+		String actualElementMessage=lblElementMessage.getText();
+		String expectedElementMessage="No dashboard elements defined!";
+		if(actualElementMessage.contains(expectedElementMessage)){
+			TestLog.log.info("Element is not defined");
+			flag=true;
+		}
+		}catch(Exception ex){
+			TestLog.log.info("Could not retrieve the element message. Due to: "+ex);
+		}
+		
+		
+		return flag;
+	}
+	
+	public String verifyChartTitle(){
+		wait.until(ExpectedConditions.visibilityOf(headChartTitle));
+		String actualChartTitle=headChartTitle.getText();
+		System.out.println(actualChartTitle);
+		
+		return actualChartTitle;
 	}
 
 }

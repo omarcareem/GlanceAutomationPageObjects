@@ -8,6 +8,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.glance.pageobjects.common.BasePage;
 import com.glance.pageobjects.logs.TestLog;
@@ -86,7 +89,7 @@ public class CommonPageLeftPane extends BasePage {
 
 	
 	//clicking elements under the Account drop down
-	By linkAccountList = By.xpath("//a[contains(text(),'Account')]/../ul/li");
+	By linkAccountList = By.xpath("//a[contains(text(),'Account')]/../ul/li/a");
 
 	public ArrayList<String> getAccountNameList() {
 
@@ -106,14 +109,37 @@ public class CommonPageLeftPane extends BasePage {
 		
 		List<WebElement> linkAccountNameList = driver
 				.findElements(linkAccountList);
+		int noOfAccounts = driver
+				.findElements(linkAccountList).size();
+		System.out.println(noOfAccounts);
+		
+		for(int i=0;i<noOfAccounts;i++){
+			String returnedAccountName=linkAccountNameList.get(i).getText(); 
+			System.out.println(returnedAccountName);
+			if(returnedAccountName.contains(accountName)){
+				
+				WebDriverWait wait = new WebDriverWait(driver, 10);
+				wait.until(ExpectedConditions.elementToBeClickable(linkAccountNameList.get(i)));
+				linkAccountNameList.get(i).click();
+				break;
+			}
+			
+		}
+		
+		//String myAccountName=linkAccountNameList.get(1).getText(); 
+		//System.out.println(myAccountName);
 
-		for (WebElement accountNames : linkAccountNameList) {
+		/*for (WebElement accountNames : linkAccountNameList) {
 			String returnedAccountName=accountNames.getText();
-			if(returnedAccountName==accountName){
+			System.out.println("Account Name is: "+returnedAccountName);
+			if(returnedAccountName.contains(accountName)){
+				
+				WebDriverWait wait = new WebDriverWait(driver, 10);
+				wait.until(ExpectedConditions.elementToBeClickable(accountNames));
 				accountNames.click();
 				break;
 			}
-		}
+		}*/
 		
 	}
 	
@@ -294,6 +320,23 @@ public class CommonPageLeftPane extends BasePage {
 			System.out.println("Logout failed");
 		}
 
+	}
+	
+	public void clickOnAccount(){
+		try {
+			TestLog.log.info("Clicking on account");
+			WebDriverWait wait = new WebDriverWait(driver, 5);
+			wait.until(ExpectedConditions.visibilityOf(txtAccount));
+			txtAccount.click();
+			
+			TestLog.log.info("Clicked on Account");
+
+		} catch (Exception ex) {
+			System.out.println("Could not click on Account link. Due to: "+ex);
+		}
+		
+		
+		
 	}
 
 }

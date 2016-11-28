@@ -19,7 +19,7 @@ public class UserManagementPage extends CommonPageObject {
 	}
 	
 	//object identification using page factory model
-	@FindBy (xpath= "//div[@class='x_title']/h2")
+	@FindBy (xpath= "//div[@class='title_left']/h3")
 	WebElement lblUserDetails;
 	
 	@FindBy(name="example_length")
@@ -39,7 +39,7 @@ public class UserManagementPage extends CommonPageObject {
 	By clmActionDelete = By.xpath("//table[@id='example']/tbody/tr/td[7]/div/a[2]");
 	By dropdownEntries = By.xpath("//select[@name='example_length']/option");
 	
-	//method to verify the UserDetais element 
+	/*//method to verify the UserDetais element 
 	public void FindUserDetailsElement(){
 		if (lblUserDetails.isDisplayed()){
 			System.out.println("User Detail Page Navigation Success");
@@ -47,7 +47,25 @@ public class UserManagementPage extends CommonPageObject {
 			System.out.println("User Detail Page Navigation not Success");
 		}
 		
-	}
+	}*/
+	
+	//method to verify the UserDetais element 
+		public boolean FindUserDetailsElement(String expectedMessage){
+			boolean flag = false;
+			String actualMessage=lblUserDetails.getText();
+			if (actualMessage.contains(expectedMessage)) {
+				flag = true;
+				System.out.println("User Detail Page Navigation Success");
+				}
+			else {
+				System.out.println("User Detail Page Navigation not Success");
+				flag = false;
+				}
+			
+			return flag;
+			
+		}
+
 	
 	//select the table entry count from the drop down
 	public void selectTableEntries(String numberOfRecords){

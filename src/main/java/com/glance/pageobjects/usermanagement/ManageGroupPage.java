@@ -18,6 +18,9 @@ public class ManageGroupPage extends BasePage {
 		// TODO Auto-generated constructor stub
 	}
 
+	@FindBy(xpath="//div[@id='main_body']/div/div/div[1]/div[1]/h2")
+	WebElement lblAddGroup;
+	
 	@FindBy(xpath = "//i[@class='fa fa-group']")
 	WebElement manageGroupsIcon;
 
@@ -72,6 +75,25 @@ public class ManageGroupPage extends BasePage {
 	@FindBy(xpath = " //a[@class='paginate_button next']")
 	WebElement btnLast;
 
+	
+	
+
+	public boolean verifyNavigationToManageGroupPage(String expectedMessage){
+		boolean flag = false;
+		String actualMessage=lblAddGroup.getText();
+		if (actualMessage.contains(expectedMessage)) {
+			flag = true;
+			System.out.println("You are in the Manage Group page");
+			}
+		else {
+			System.out.println("You are not in the Manage Group page");
+			flag = false;
+			}
+		
+		return flag;
+		
+		
+	}
 	
 
 	public void inputGroupName(String grpName) {

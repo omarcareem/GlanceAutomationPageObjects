@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -149,6 +150,47 @@ public class CommonPageLeftPane extends BasePage {
 		
 	}
 	
+	
+	
+	
+	
+	@FindBy(xpath="//a[contains(text(),'Project')]/../ul/li[@class='btn-xs btn-primary']/a")
+    WebElement linkProjectAddNew;
+
+
+	public void clickOnAddNewProjectLink(){
+           
+           
+           //WebElement element = driver.findElement(By.id("gbqfd"));
+           JavascriptExecutor executor = (JavascriptExecutor)driver;
+           executor.executeScript("arguments[0].click();", linkProjectAddNew);
+           
+           
+    }
+	
+	//verify added Project
+	public boolean verifyAddedProject(String projectName){
+			txtAccount.click();
+			boolean flag = false;
+			String bodyText=driver.getPageSource();
+		if(bodyText.contains(projectName)){
+			System.out.println("Project is added"+projectName);
+			flag = true;
+				 			}
+		else{
+			System.out.println("Project is not added"+projectName);
+						}
+			return flag;
+		}
+	
+	
+	public void selectAddNewProject(){
+		txtProject.click();
+		txtProjectAddNew.click();
+		
+	}
+	
+	
 	//clicking elements under the Project drop down
 		By linkProjectList = By.xpath("//a[contains(text(),'Project')]/../ul/li");
 
@@ -178,6 +220,8 @@ public class CommonPageLeftPane extends BasePage {
 		}
 		
 	}
+	
+	
 	
 	//clicking elements under the Individual drop down
 	By linkIndividualList = By.xpath("//a[contains(text(),'Individual')]/../ul/li");

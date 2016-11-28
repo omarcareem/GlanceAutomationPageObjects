@@ -66,7 +66,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//button[@class='cancelBtn btn btn-default btn-small']")
 	WebElement btnClear;
 
-	// variable diclaration with xpath for 'Account Level Dashboard icons'
+	// variable declaration with xpath for 'Account Level Dashboard icons'
 	@FindBy(xpath = "//i[@class='fa fa-chevron-up']")
 	WebElement icnMaxMin;
 
@@ -76,7 +76,7 @@ public class DashboardPage extends BasePage {
 	@FindBy(xpath = "//i[@class='fa fa-trash']")
 	WebElement icnDelete;
 
-	// variable diclaration with xpath for 'Add New Element'
+	// variable declaration with xpath for 'Add New Element'
 	@FindBy(xpath = "//button[@id='define_now']")
 	WebElement btnAddNewElement;
 
@@ -85,6 +85,23 @@ public class DashboardPage extends BasePage {
 		return lblPageName.getText();
 	}
 
+	public boolean verifyNavigationToDashboardPage(String expectedMessage){
+		boolean flag = false;
+		String actualMessage=lblPageName.getText();
+		if (actualMessage.contains(expectedMessage)) {
+			flag = true;
+			System.out.println("You are in the dashboard page");
+			}
+		else {
+			System.out.println("You are not in the dashboard page");
+			flag = false;
+			}
+		
+		return flag;
+		
+		
+	}
+	
 	// text of the date range will selection through this
 	public void selectDateRange(String lblDateRanges) {
 		try {

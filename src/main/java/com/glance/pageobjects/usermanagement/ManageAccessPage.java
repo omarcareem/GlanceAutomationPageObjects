@@ -48,19 +48,23 @@ public class ManageAccessPage extends BasePage{
 	@FindBy(id="frm_submit")
 	WebElement btnGo;*/
 	
-	//Get the heading of the page
-	public String getTitle(){
-		return Pagelbl.getText();
-		
-		
-	}
-	
 	//Verify the heading
-	public void getlabl(String labl){
-		String actual=Pagelbl.getText();
-		Assert.assertEquals(labl, actual);
+	public boolean verifyNavigationToManageAccessPage(String expectedMessage){
+		boolean flag = false;
+		String actualMessage=Pagelbl.getText();
+		if (actualMessage.contains(expectedMessage)) {
+			flag = true;
+			System.out.println("You are in the Manage Access page");
+			}
+		else {
+			System.out.println("You are not in the Manage Access page");
+			flag = false;
+			}
+		
+		return flag;
+		
+		
 	}
-	
 	
 	
 	

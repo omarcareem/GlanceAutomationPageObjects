@@ -29,7 +29,7 @@ public class GroupMembershipPage extends BasePage {
 	@FindBy(xpath=("//button[@type='button']"))
 	WebElement btnCancel;
 	
-	@FindBy(xpath=("//div[@class='x_title']/h2"))
+	@FindBy(xpath=("//div[@id='main_body']/div/div/div[1]/div[1]/h2"))
 	WebElement Pagelbl;
 	
 	/*@FindBy(id="frm_submit")
@@ -42,10 +42,23 @@ public class GroupMembershipPage extends BasePage {
 		
 
 	//Verify the heading
-	public void getlabl(String labl){
-		String actual=Pagelbl.getText();
-		Assert.assertEquals(labl, actual);
+	public boolean verifyNavigationToGroupMembershipPage(String expectedMessage){
+		boolean flag = false;
+		String actualMessage=Pagelbl.getText();
+		if (actualMessage.contains(expectedMessage)) {
+			flag = true;
+			System.out.println("You are in the Group Membership page");
+			}
+		else {
+			System.out.println("You are not in the Group Membership page");
+			flag = false;
+			}
+		
+		return flag;
+		
+		
 	}
+	
 	
 	public void SelectUser(String User){
 		try{

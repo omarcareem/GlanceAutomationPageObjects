@@ -61,6 +61,27 @@ public class AddSocketDetailsPage extends BasePage{
 		return lblPageName.getText();	
 	}
 	
+	//add socket details page confirmation
+    public boolean verifyNavigationToAddSocketPage(String expectedMessage) {
+       
+        
+       boolean flag;
+       
+        String actualMessage=lblPageName.getText();
+               
+              
+                     if (actualMessage.contains(expectedMessage)) {
+                     flag = true;
+                     System.out.println("You are in the add socket details page");             
+                
+            } else {
+              System.out.println("You are not in the add socket details page");
+                flag = false;                     
+            }
+        
+        return flag;
+    }
+
 	//giving a socket name
 	public void enterSocketName(String socketName){
 			

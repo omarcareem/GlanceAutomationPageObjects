@@ -72,17 +72,20 @@ public class AddEngagementPage extends BasePage {
 	WebElement btnGoToDashBoard;
 	
 	//method for identifying the page title
-	public String getPageName(){
-		/*WebElement element = lblPageName;
-		String pageName = element.getText();
-		/*if(pageName.contains(lblExpectedTitle)){
-			TestLog.log.info("Navigated to correct page");
-		}else{
-			TestLog.log.info("Navigated to wrong page");
-		}*/
-		return lblPageName.getText();
-		
-	}
+	public boolean getPageName(String lblExpectedTitle) {
+        boolean flag = false;
+
+        String pageName = lblPageName.getText();
+        if (pageName.contains(lblExpectedTitle)) {
+               System.out.println("Navigated to Engagement page " + pageName);
+               flag = true;
+        } else {
+               System.out.println("Navigated to wrong page");
+               flag = false;
+        }
+        return flag;
+ }
+
 	
 	//methods for verify the empty fields
 	public boolean IsFieldEmpty(String text){

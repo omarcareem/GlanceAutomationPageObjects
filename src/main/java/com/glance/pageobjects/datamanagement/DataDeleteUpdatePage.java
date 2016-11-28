@@ -66,6 +66,28 @@ public class DataDeleteUpdatePage extends BasePage{
 			return lblPageName.getText();
 	}
 	
+	//add data delete update page confirmation
+    public boolean verifyNavigationToDataDeleteUpdatePage(String expectedMessage) {
+       
+        
+       boolean flag;
+       
+        String actualMessage=lblPageName.getText();
+               
+              
+                     if (actualMessage.contains(expectedMessage)) {
+                     flag = true;
+                     System.out.println("You are in the delete update page");             
+                
+            } else {
+              System.out.println("You are not in the delete update page");
+                flag = false;                     
+            }
+        
+        return flag;
+    }
+
+	
 	//selecting a table
 	public void selectSegment(String tableName){
 			

@@ -84,6 +84,26 @@ public class DashboardPage extends BasePage {
 	public String verifyPageName() {
 		return lblPageName.getText();
 	}
+	
+	//dashboard page confirmation
+	public boolean verifyNavigationToDashboardPage(String expectedMessage){
+		 boolean flag = false; 	
+		    	
+		 String actualMessage=lblPageName.getText();
+		               
+		        	
+		 	if (actualMessage.contains(expectedMessage)) {
+		        flag = true;
+		        System.out.println("You are in the dashboard page");             
+		                
+		    } else {
+		        System.out.println("You are not in the dashboard page");
+		        flag = false;                     
+		    }
+		        
+		    return flag;
+	}
+
 
 	// text of the date range will selection through this
 	public void selectDateRange(String lblDateRanges) {

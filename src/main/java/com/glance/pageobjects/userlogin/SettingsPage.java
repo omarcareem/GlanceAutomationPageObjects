@@ -3,6 +3,7 @@ package com.glance.pageobjects.userlogin;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import com.glance.pageobjects.common.BasePage;
 import com.glance.pageobjects.logs.TestLog;
@@ -11,8 +12,13 @@ public class SettingsPage extends BasePage {
 
 	public SettingsPage(WebDriver driver) {
 		super(driver);
+		PageFactory.initElements(driver, this);
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	@FindBy(xpath = "//div[@id='main_body']/div/div[2]/div/div[1]/h2")
+    WebElement lblSettingsDashboard;
 	
 	@FindBy(xpath="//div/a/i[@class='fa fa-institution']")
 	WebElement btnAddAccount;
@@ -109,11 +115,29 @@ public class SettingsPage extends BasePage {
 	
 	@FindBy(xpath="//div[@id='session_dump']/pre/font[22]")
 	WebElement SessionDumpLastName;
-	
 
 	
+	// Check settings page title
+    public boolean verifyNavigationToSettingPage(String expectedMessage){
+           boolean flag = false;
+           String actualMessage=lblSettingsDashboard.getText();
+           if (actualMessage.contains(expectedMessage)) {
+                 flag = true;
+                 System.out.println("You are in the settings page");
+                 }
+           else {
+                 System.out.println("You are not in the settings page");
+                 flag = false;
+                 }
+           
+           return flag;
+           
+           
+    }
+
+
 	//Click on Add Account Button
-		public void ClickAddAccountBtn(){
+		public void clickAddAccountBtn(){
 			
 			try{
 				TestLog.log.info("Clicking on Add Account Button");
@@ -127,7 +151,7 @@ public class SettingsPage extends BasePage {
 			
 			}
 	//Get Count of Account 
-				public int GetCountAddAccount(){
+				public int getCountAddAccount(){
 					String Count=null;
 					try{
 						TestLog.log.info("Getting the Count Of total Accounts");
@@ -145,7 +169,7 @@ public class SettingsPage extends BasePage {
 	
 
 	//Click on Add Engagement Button
-		public void ClickAddEngagementBtn(){
+		public void clickAddEngagementBtn(){
 			
 			try{
 				TestLog.log.info("Clicking on Add Engagement Button");
@@ -160,7 +184,7 @@ public class SettingsPage extends BasePage {
 			}
 		
 	//Get Count of Engagement 
-		public int GetCountAddEngagement(){
+		public int getCountAddEngagement(){
 			String Count=null;
 			try{
 				TestLog.log.info("Getting the Count Of total Engagements");
@@ -177,7 +201,7 @@ public class SettingsPage extends BasePage {
 			}		
 
 	//Click on Add Project Button
-		public void ClickAddProjectBtn(){
+		public void clickAddProjectBtn(){
 			
 			try{
 				TestLog.log.info("Clicking on Add Project Button");
@@ -192,7 +216,7 @@ public class SettingsPage extends BasePage {
 			}
 
 	//Get Count of Project 
-		public int GetCountAddProject(){
+		public int getCountAddProject(){
 			String Count=null;
 			try{
 				TestLog.log.info("Getting the Count Of total Projects");
@@ -210,7 +234,7 @@ public class SettingsPage extends BasePage {
 				
 	
 	//Click on Delete Records Button
-		public void ClickDeleteRecordsBtn(){
+		public void clickDeleteRecordsBtn(){
 			
 			try{
 				TestLog.log.info("Clicking on Delete Records Button");
@@ -225,7 +249,7 @@ public class SettingsPage extends BasePage {
 			}	
 	
 	//Click on Data Upload Button
-		public void ClickDataUploadBtn(){
+		public void clickDataUploadBtn(){
 			
 			try{
 				TestLog.log.info("Clicking on Data Upload Button");
@@ -240,7 +264,7 @@ public class SettingsPage extends BasePage {
 			}	
 	
 	//Click on Data Delete/Modify Button
-		public void ClickDataDeleteModifyBtn(){
+		public void clickDataDeleteModifyBtn(){
 			
 			try{
 				TestLog.log.info("Clicking on Data Delete/Modify Button");
@@ -255,7 +279,7 @@ public class SettingsPage extends BasePage {
 			}	
 			
 	//Click on Sockets Button
-		public void ClickSocketsBtn(){
+		public void clickSocketsBtn(){
 			
 			try{
 				TestLog.log.info("Clicking on Sockets Button");
@@ -270,7 +294,7 @@ public class SettingsPage extends BasePage {
 			}		
 		
 	//Get Count of Sockets
-		public int GetCountSockets(){
+		public int getCountSockets(){
 			String Count=null;
 			try{
 				TestLog.log.info("Getting the Count Of total Sockets");
@@ -288,7 +312,7 @@ public class SettingsPage extends BasePage {
 	
 		
 	//Click on Manage Users Button
-		public void ClickManageUsersBtn(){
+		public void clickManageUsersBtn(){
 			
 			try{
 				TestLog.log.info("Clicking on Manage Users Button");
@@ -303,7 +327,7 @@ public class SettingsPage extends BasePage {
 			}	
 		
 	//Get Count of Manage Users
-		public int GetCountManageUsers(){
+		public int getCountManageUsers(){
 			String Count=null;
 			try{
 				TestLog.log.info("Getting the Count Of total Manage Users");
@@ -320,7 +344,7 @@ public class SettingsPage extends BasePage {
 			}	
 	
 	//Click on Manage Groups Button
-		public void ClickManageGroupsBtn(){
+		public void clickManageGroupsBtn(){
 			
 			try{
 				TestLog.log.info("Clicking on Manage Groups Button");
@@ -335,7 +359,7 @@ public class SettingsPage extends BasePage {
 			}	
 	
 	//Get Count of Manage Groups
-		public int GetCountManageGroups(){
+		public int getCountManageGroups(){
 			String Count=null;
 			try{
 				TestLog.log.info("Getting the Count Of total Manage Groups");
@@ -352,7 +376,7 @@ public class SettingsPage extends BasePage {
 			}	
 		
 	//Click on Group Membership Button
-		public void ClickGroupMembershipBtn(){
+		public void clickGroupMembershipBtn(){
 			
 			try{
 				TestLog.log.info("Clicking on Group Membership Button");
@@ -367,7 +391,7 @@ public class SettingsPage extends BasePage {
 			}			
 		
 	//Click on Manage Access Button
-		public void ClickManageAccessBtn(){
+		public void clickManageAccessBtn(){
 			
 			try{
 				TestLog.log.info("Clicking on Manage Access Button");
@@ -382,7 +406,7 @@ public class SettingsPage extends BasePage {
 			}	
 		
 	//Click on Current Month Radio Button
-		public void ClickCurrentMonthRadioBtn(){
+		public void clickCurrentMonthRadioBtn(){
 					
 			try{
 				TestLog.log.info("Clicking on Current Month Radio Button");
@@ -396,7 +420,7 @@ public class SettingsPage extends BasePage {
 					
 			}	
 	//Click on Last Selected Radio Button
-		public void ClickLastSelectedRadioBtn(){
+		public void clickLastSelectedRadioBtn(){
 					
 			try{
 				TestLog.log.info("Clicking on Last Selected Radio Button");
@@ -411,7 +435,7 @@ public class SettingsPage extends BasePage {
 			}	
 
 	//Click on Save Button
-		public void ClickSaveBtn(){
+		public void clickSaveBtn(){
 					
 			try{
 				TestLog.log.info("Clicking on Save Button");
@@ -426,7 +450,7 @@ public class SettingsPage extends BasePage {
 			}	
 		
 	//Click on Save Ok Button
-		public void ClickSaveOKBtn(){
+		public void clickSaveOKBtn(){
 					
 			try{
 				TestLog.log.info("Clicking on Save Ok Button");
@@ -441,7 +465,7 @@ public class SettingsPage extends BasePage {
 			}
 		
 	//Click on Save Close Button
-		public void ClickSaveCloseBtn(){
+		public void clickSaveCloseBtn(){
 					
 			try{
 				TestLog.log.info("Clicking on Save Close Button");
@@ -457,7 +481,7 @@ public class SettingsPage extends BasePage {
 		
 	
 	//Click on Profile Update Button
-		public void ClickProfileUpdateBtn(){
+		public void clickProfileUpdateBtn(){
 					
 			try{
 				TestLog.log.info("Clicking on Profile Update Button");
@@ -471,7 +495,7 @@ public class SettingsPage extends BasePage {
 					
 			}	
 	//Click on Session Dump Button
-		public void ClickSessionDumpBtn(){
+		public void clickSessionDumpBtn(){
 		
 		try{
 			TestLog.log.info("Clicking on Session Dump Button");
@@ -485,7 +509,7 @@ public class SettingsPage extends BasePage {
 		}
 		
 	//Check on Session Dump User id
-		public String CheckSessionDumpUserId(){
+		public String checkSessionDumpUserId(){
 			String UserId=null;	
 		try{
 			TestLog.log.info("Checking on Session Dump User Id");
@@ -500,7 +524,7 @@ public class SettingsPage extends BasePage {
 		}		
 
 	//Check on Session Dump User name
-		public String CheckSessionDumpUserName(){
+		public String checkSessionDumpUserName(){
 			String UserName=null;
 		try{
 			TestLog.log.info("Checking on Session Dump User Name");
@@ -515,7 +539,7 @@ public class SettingsPage extends BasePage {
 		}
 		
 	//Check on Session Dump First name
-		public String CheckSessionDumpFirstName(){
+		public String checkSessionDumpFirstName(){
 			String FirstName=null;
 		try{
 			TestLog.log.info("Checking on Session Dump First Name");
@@ -530,7 +554,7 @@ public class SettingsPage extends BasePage {
 		}
 		
 	//Check on Session Dump Last name
-		public String CheckSessionDumpLastName(){
+		public String checkSessionDumpLastName(){
 			String LastName=null;	
 		try{
 			TestLog.log.info("Checking on Session Dump Last Name");

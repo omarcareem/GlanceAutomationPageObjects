@@ -3,6 +3,7 @@ package com.glance.pageobjects.datamanagement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 import com.glance.pageobjects.common.BasePage;
@@ -12,13 +13,14 @@ public class DataUploadPage extends BasePage{
 
 	public DataUploadPage(WebDriver driver) {
 		super(driver);
+		PageFactory.initElements(driver, this);
 		// TODO Auto-generated constructor stub
 	}
 
 	@FindBy (xpath="//div[@class='x_title']/h2")
 	WebElement lblPageName;
 	
-	@FindBy(id="tbl_data")
+	@FindBy(xpath="//select[@class='form-control step2']")
 	WebElement drpSelectDataTable;
 	
 	@FindBy(xpath="//div[@id='dZUpload']")
@@ -26,6 +28,12 @@ public class DataUploadPage extends BasePage{
 	
 	@FindBy(xpath="//button[@id='upload']")
 	WebElement btnUpload;
+	
+	@FindBy(xpath="//*[@id='jconfirm-box78429']")
+	WebElement submitSuccessMessage;
+	
+	@FindBy(xpath="//button[@class='btn btn-success']")
+	WebElement btnDone;
 	
 	@FindBy(xpath="//span[@id='jconfirm-box68404']")
 	WebElement errorMessage;
@@ -39,11 +47,30 @@ public class DataUploadPage extends BasePage{
 	@FindBy(xpath="//i[@class='fa fa-close']")
 	WebElement clickClose;
 	
-	//identifying page name
-	public String getPageName(){
+	@FindBy(xpath="//div[@class='content']")
+	WebElement alertMessage;
 	
-		return lblPageName.getText();	 
-	}
+	
+	//add data upload page confirmation
+    public boolean verifyNavigationToDataUploadPage(String expectedMessage) {
+    	
+        
+   	boolean flag;
+    	
+        String actualMessage=lblPageName.getText();
+               
+        	
+			if (actualMessage.contains(expectedMessage)) {
+        		flag = true;
+        		System.out.println("You are in the data upload page");             
+                
+            } else {
+            	System.out.println("You are not in the data upload page");
+                flag = false;                     
+            }
+        
+        return flag;
+    }
 	
 	//selecting a table
 	public void selectDataTable(String tableName){
@@ -76,7 +103,54 @@ public class DataUploadPage extends BasePage{
 		}
 	}
 	
-	
+	//submit success message
+    public boolean verifySubmitSuccess(String expectedMessage) {
+    	
+        
+   	boolean flag=false;
+    	
+        String actualMessage=submitSuccessMessage.getText();
+               
+        	
+			if (actualMessage.contains(expectedMessage)) {
+        		flag = true;
+        		System.out.println("You have uploaded the file successfully");             
+                
+            } else {
+            	System.out.println("You have not uploaded the file");
+                flag = false;                     
+            }
+        
+        return flag;
+    }
+    
+    //click done
+    public void clickDone(){
+    	
+    	btnDone.click();
+    }
+    
+	//add data upload page confirmation
+    public boolean verifyWrongFileErrorMessage(String expectedMessage) {
+    	
+        
+   	boolean flag;
+    	
+        String actualMessage=alertMessage.getText();
+               
+        	
+			if (actualMessage.contains(expectedMessage)) {
+        		flag = true;
+        		System.out.println("You are in the data upload page");             
+                
+            } else {
+            	System.out.println("You are not in the data upload page");
+                flag = false;                     
+            }
+        
+        return flag;
+    }
+    
 	//error message
 	public void errorMessage(){
 		

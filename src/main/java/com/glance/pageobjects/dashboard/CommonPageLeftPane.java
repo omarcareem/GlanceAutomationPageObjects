@@ -1,9 +1,11 @@
 package com.glance.pageobjects.dashboard;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,12 +43,12 @@ public class CommonPageLeftPane extends BasePage {
 	WebElement txtUserNameLeft;
 
 	// account name
-	@FindBy(xpath = "//a[contains(text(),'Account')]")
+	@FindBy(xpath = "//i[@class='fa fa-institution']")
 	WebElement txtAccount;
 
 	// Add new Account
-	@FindBy(xpath = "//div/ul/li[1]/ul/li[6]/a")
-	WebElement txtAccountAddNew;
+	@FindBy(xpath="//a[contains(text(),'Account')]/../ul/li[@class='btn-xs btn-primary']/a")
+    WebElement linkAccountAddNew;
 
 	// engagement name
 	@FindBy(xpath = " //a[contains(text(),'Engagement')]")
@@ -84,12 +86,17 @@ public class CommonPageLeftPane extends BasePage {
 	@FindBy(xpath = "//span[@class='glyphicon glyphicon-off']")
 	WebElement LogoutIcon;
 
+	//public void selectAddNewAccount(){
+	//txtAccount.click();
+	//txtAccountAddNew.click();
+	//}
 	
 	//clicking elements under the Account drop down
-	By linkAccountList = By.xpath("//a[contains(text(),'Account')]/../ul/li");
+	By linkAccountList = By.xpath("//a[contains(text(),'Account')]/../ul/li");    
 
-	public ArrayList<String> getAccountNameList() {
-
+	/*public ArrayList<String> getAccountNameList() {
+		
+		
 		ArrayList listOfAcoountNames = new ArrayList();
 		List<WebElement> linkAccountNameList = driver
 				.findElements(linkAccountList);
@@ -98,22 +105,59 @@ public class CommonPageLeftPane extends BasePage {
 
 			listOfAcoountNames.add(accountNames.getText());
 		}
-		return listOfAcoountNames;
-	}
-	
-	public void clickOnAccountName(String accountName) {
-
 		
+		return listOfAcoountNames;
+	}*/
+	
+	//clicking add new account
+	public void clickOnAddNewAccountLink(){
+        
+        
+        //WebElement element = driver.findElement(By.id("gbqfd"));
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        executor.executeScript("arguments[0].click();", linkAccountAddNew);
+        
+     }
+
+	public void clickOnAccountName(String accountName) {
+		
+		txtAccount.click();
+	//	List<String> listOfAcoountNames = new ArrayList<String>();
 		List<WebElement> linkAccountNameList = driver
 				.findElements(linkAccountList);
+		
+		Iterator<WebElement> iter = linkAccountNameList.iterator();
+		
+		while(iter.hasNext()) {
+		    WebElement accName = iter.next();
 
-		for (WebElement accountNames : linkAccountNameList) {
+		    if (accName.getText()==accountName) {
+		    	accName.click();
+		        System.out.println("sdad");
+		    }
+		}
+		/*for(int i=0; i<linkAccountNameList.size(); i++){
+
+	        //loading text of each element in to array all_elements_text
+			listOfAcoountNames.add(linkAccountNameList.get(i).getText());
+			
+		 }
+	   
+		for( int j = 0; j < listOfAcoountNames.length; j++){
+			
+			String first = listOfAcoountNames[j];
+		    String second = listOfAcoountNames[j+1];
+		}
+			
+			
+			
+			for (WebElement accountNames : listOfAcoountNames) {
 			String returnedAccountName=accountNames.getText();
 			if(returnedAccountName==accountName){
 				accountNames.click();
 				break;
 			}
-		}
+		}*/
 		
 	}
 	
@@ -294,6 +338,30 @@ public class CommonPageLeftPane extends BasePage {
 			System.out.println("Logout failed");
 		}
 
+	}
+	
+	//verify added
+	public boolean verifyAdded(String accountName){
+		
+		txtAccount.click();
+		boolean flag = false;
+		
+		String bodyText=driver.getPageSource();
+
+        if(bodyText.contains(accountName)){
+
+                    System.out.println("Account is added");
+                    flag = true;
+
+                    }else{
+
+                    System.out.println("Account is not added");
+
+                    }
+		return flag;
+
+
+		
 	}
 
 }

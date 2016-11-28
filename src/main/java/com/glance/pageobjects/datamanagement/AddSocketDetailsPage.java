@@ -55,11 +55,32 @@ public class AddSocketDetailsPage extends BasePage{
 	@FindBy(xpath="//div/button[@class='btn btn-primary']")
 	WebElement btnCancel;
 	
-	//identifying page name
+/*	//identifying page name
 	public String getPageName(){
 		
 		return lblPageName.getText();	
-	}
+	}*/
+	
+	//add socket details page confirmation
+    public boolean verifyNavigationToAddSocketPage(String expectedMessage) {
+    	
+        
+   	boolean flag=false;
+    	
+        String actualMessage=lblPageName.getText();
+               
+        	
+			if (actualMessage.contains(expectedMessage)) {
+        		flag = true;
+        		System.out.println("You are in the add socket details page");             
+                
+            } else {
+            	System.out.println("You are not in the add socket details page");
+                flag = false;                     
+            }
+        
+        return flag;
+    }
 	
 	//giving a socket name
 	public void enterSocketName(String socketName){
@@ -107,12 +128,12 @@ public class AddSocketDetailsPage extends BasePage{
 	}
 	
 	//give user name
-	public void enterUserName(String userName){
+	public void enterUserName(String userName1){
 						
 		try	{
 							
 			TestLog.log.info("Giving user name");
-			txtUserName.sendKeys(userName);
+			txtUserName.sendKeys(userName1);
 			TestLog.log.info("Gave user name");
 		}
 						
@@ -122,12 +143,12 @@ public class AddSocketDetailsPage extends BasePage{
 	}
 	
 	//give password
-	public void enterPassword(String password){
+	public void enterPassword(String password1){
 							
 		try	{
 								
 			TestLog.log.info("Giving password");
-			txtPassword.sendKeys(password);
+			txtPassword.sendKeys(password1);
 			TestLog.log.info("Gave password");
 		}
 							
@@ -182,10 +203,26 @@ public class AddSocketDetailsPage extends BasePage{
 	}
 	
 	//Submit success
-	public String submitSuccessMessage(){
-			
-		return successMessage.getText();
-	}
+    public boolean verifySubmitSuccessMessage(String expectedMessage) {
+    	
+        
+   	boolean flag=false;
+    	
+        String actualMessage=successMessage.getText();
+               
+        	
+			if (actualMessage.contains(expectedMessage)) {
+        		flag = true;
+        		System.out.println("Added the socket successfully");             
+                
+            } else {
+            	System.out.println("Socket didn't added successfully");
+                flag = false;                     
+            }
+        
+        return flag;
+    }
+	
 	//success message accepted
 	public void clickOkay(){
 				

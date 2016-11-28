@@ -1,5 +1,7 @@
 package com.glance.pageobjects.datamanagement;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -36,14 +38,23 @@ public class DataDeleteUpdatePage extends BasePage{
 	@FindBy(xpath="//button[@id='deleteButton']")
 	WebElement btnDelete;
 	
-	@FindBy(xpath="//div[@class='content']")
-	WebElement errorMessage;
+	@FindBy(xpath="//span[@class='title']")
+	WebElement deleteConfirmationMessage;
+	
+	@FindBy(xpath="//span[@class='title']")
+	WebElement updateConfirmationMessage;
+			
+	@FindBy(xpath="//body/div[6]/div[2]/div/div/div/div/div[4]/button[1]")
+	WebElement btnDeleteOkay;
+	
+	@FindBy(xpath="//body/div[6]/div[2]/div/div/div/div/div[4]/button[2]")
+	WebElement btnDeleteClose;
+	
+	@FindBy(xpath="//button[@class='btn btn-warning']")
+	WebElement btnUpdateOkay;
 	
 	@FindBy(xpath="//button[@class='btn btn-default']")
-	WebElement btnOkay;
-	
-	@FindBy(xpath="//i[@class='fa fa-chevron-up']")
-	WebElement clickCollapse;
+	WebElement btnUpdateClose;
 	
 	@FindBy(className="paginate_button first disabled")
 	WebElement btnFirst;
@@ -57,23 +68,43 @@ public class DataDeleteUpdatePage extends BasePage{
 	@FindBy(className="paginate_button last")
 	WebElement btnLast;
 	
+	//table[@id='data_table']
+	
+	
+	@FindBy(xpath="//i[@class='fa fa-chevron-up']")
+	WebElement clickCollapse;
+	
 	@FindBy(xpath="//i[@class='fa fa-close']")
 	WebElement clickClose;
+
 	
-	//identifying page name
-	public String getPageName(){
-	
-			return lblPageName.getText();
+    //data delete update page confirmation
+	public boolean verifyNavigationToDataDeleteUpdatePage(String expectedMessage) {
+    
+		boolean flag;
+    
+		String actualMessage=lblPageName.getText();
+            
+        if (actualMessage.contains(expectedMessage)) {
+        	flag = true;
+            System.out.println("You are in the delete update page");             
+             
+        } else {
+        	System.out.println("You are not in the delete update page");
+            flag = false;                     
+        }
+     
+        return flag;
 	}
 	
 	//selecting a table
-	public void selectSegment(String tableName){
+	public void selectTable(String tableName){
 			
 		try	{
 				
 			TestLog.log.info("Select a table from drop down list");
 			Select dropdown = new Select(drpSelectDataTable);
-			dropdown.selectByVisibleText("cdi");	
+			dropdown.selectByVisibleText(tableName);	
 			TestLog.log.info("Selected a table from drop down list");
 		}
 			
@@ -132,7 +163,6 @@ public class DataDeleteUpdatePage extends BasePage{
 		btnLast.click();
 	}
 		
-	
 	//clicking update
 	public void clickUpdate(){
 				
@@ -147,14 +177,43 @@ public class DataDeleteUpdatePage extends BasePage{
 			TestLog.log.info("Could not click update. "+ ex);		
 		}
 	}
+	
+	//update confirmation message
+	public boolean verifyUpdateConfirmation(String expectedMessage) {
+	    
+			boolean flag;
+	    
+			String actualMessage=updateConfirmationMessage.getText();
+	            
+	        if (actualMessage.contains(expectedMessage)) {
+	        	flag = true;
+	            System.out.println("You are in the delete update page");             
+	             
+	        } else {
+	        	System.out.println("You are not in the delete update page");
+	            flag = false;                     
+	        }
+	     
+	        return flag;
+		}
+	
+	//update confirmation click
+	public void clickUpdateOkay(){
+					
+		btnUpdateOkay.click();
+	}
+			
+	public void clickUpdateClose(){
+			
+		btnUpdateOkay.click();
+	}
 		
 	//clicking delete
-	public void clickDelete(){
+	public void clickDelete(String userin){
 				
 		try {
-					
+			
 			TestLog.log.info("Clicking delete button");
-			String userin = null;
 			WebElement selectRow = driver.findElement(By.xpath("//td[text()='"+userin+"']/.."));
 			selectRow.click();
 			btnDelete.click();
@@ -166,17 +225,37 @@ public class DataDeleteUpdatePage extends BasePage{
 		}
 	}
 	
-	//error message
-	public void errorMessage(){
-			
-		errorMessage.getText();
+
+	//delete confirmation message
+	public boolean verifydeleteConfirmationMessage(String expectedMessage){
+		    
+			boolean flag=false;
+	    
+			String actualMessage=deleteConfirmationMessage.getText();
+	            
+	        if (actualMessage.contains(expectedMessage)) {
+	        	flag = true;
+	            System.out.println("You have deleted the record");             
+	             
+	        } else {
+	        	System.out.println("You have not deleted the record");
+	            flag = false;                     
+	        }
+	     
+	        return flag;
+	}
+	
+	//delete confirmation click
+	public void clickDeleteOkay(){
+				
+		btnDeleteOkay.click();
 	}
 		
-	//error message accepted
-	public void clickOkay(){
-			
-		btnOkay.click();
+	public void clickDeleteClose(){
+		
+		btnDeleteClose.click();
 	}
+		
 	
 	//clicking collapse
 	public void clickCollapse(){
@@ -206,5 +285,34 @@ public class DataDeleteUpdatePage extends BasePage{
 		catch(Exception ex){
 			TestLog.log.info("Could not click close. "+ ex);	
 		}
+	}
+	
+	//verify delete
+	public boolean verifyDeleted(String userin){
+        boolean flag = true;
+
+        WebElement tblUser = driver.findElement(By.xpath("//tbody"));
+        List<WebElement> tblRow = tblUser.findElements(By.tagName("tr"));
+
+        outerloop: {
+               for (WebElement row : tblRow) {
+
+                     List<WebElement> tblData = row.findElements(By.xpath("//td[1]"));
+
+                     for (WebElement data : tblData) {
+
+                            String userName = data.getText();
+                            //System.out.println(userName);
+                            if (userName.contains(userin)) {
+                                   System.out.println("Deleted");
+                                   flag = false;
+                                   break outerloop;
+
+                            }
+                     }
+               }
+        }
+        
+        return flag;
 	}
 }

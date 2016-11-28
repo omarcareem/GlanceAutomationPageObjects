@@ -50,12 +50,28 @@ public class AddAccountPage extends BasePage{
 	@FindBy(xpath="//i[@class='fa fa-close']")
 	WebElement clickClose;
 	
-	//identifying page name
-	public String getPageName(){
-
-		return lblPageName.getText();		
-	}
 	
+	//add account page confirmation
+    public boolean verifyNavigationToAddAccountPage(String expectedMessage) {
+    	
+        
+   	boolean flag;
+    	
+        String actualMessage=lblPageName.getText();
+               
+        	
+			if (actualMessage.contains(expectedMessage)) {
+        		flag = true;
+        		System.out.println("You are in the add account page");             
+                
+            } else {
+            	System.out.println("You are not in the add account page");
+                flag = false;                     
+            }
+        
+        return flag;
+    }
+    
 	//giving an account name
 	public void enterAccountName(String accountName){
 		

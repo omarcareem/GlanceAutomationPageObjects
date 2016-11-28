@@ -148,6 +148,11 @@ public class LoginPage extends BasePage {
 
 	}
 
+	public void waitForPageLoad(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

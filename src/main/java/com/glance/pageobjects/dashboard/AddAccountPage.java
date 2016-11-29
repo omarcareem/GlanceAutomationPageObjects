@@ -49,12 +49,7 @@ public class AddAccountPage extends BasePage{
 	
 	@FindBy(xpath="//i[@class='fa fa-close']")
 	WebElement clickClose;
-	
-	//identifying page name
-	public String getPageName(){
 
-		return lblPageName.getText();		
-	}
 	
 	//add account page confirmation
     public boolean verifyNavigationToAddAccountPage(String expectedMessage) {

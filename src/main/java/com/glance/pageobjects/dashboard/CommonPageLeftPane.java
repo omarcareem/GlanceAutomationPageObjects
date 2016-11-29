@@ -47,7 +47,11 @@ public class CommonPageLeftPane extends BasePage {
 	// account name
 	@FindBy(xpath = "//a[contains(text(),'Account')]")
 	WebElement txtAccount;
-
+	
+	// Add new Account
+	@FindBy(xpath="//a[contains(text(),'Account')]/../ul/li[@class='btn-xs btn-primary']/a")
+    WebElement linkAccountAddNew;
+	
 	// Add new Account
 	@FindBy(xpath = "//div/ul/li[1]/ul/li[6]/a")
 	WebElement txtAccountAddNew;
@@ -89,6 +93,16 @@ public class CommonPageLeftPane extends BasePage {
 	WebElement LogoutIcon;
 
 	
+	//clicking add new account
+		public void clickOnAddNewAccountLink(){
+	        
+	        
+	        //WebElement element = driver.findElement(By.id("gbqfd"));
+	        JavascriptExecutor executor = (JavascriptExecutor)driver;
+	        executor.executeScript("arguments[0].click();", linkAccountAddNew);
+	        
+	     }
+		
 	//clicking elements under the Account drop down
 	By linkAccountList = By.xpath("//a[contains(text(),'Account')]/../ul/li/a");
 
@@ -376,6 +390,30 @@ public class CommonPageLeftPane extends BasePage {
 		}
 		
 		
+		
+	}
+	
+	//verify added
+	public boolean verifyAdded(String accountName){
+		
+		txtAccount.click();
+		boolean flag = false;
+		
+		String bodyText=driver.getPageSource();
+
+        if(bodyText.contains(accountName)){
+
+                    System.out.println("Account is added");
+                    flag = true;
+
+                    }else{
+
+                    System.out.println("Account is not added");
+
+                    }
+		return flag;
+
+
 		
 	}
 

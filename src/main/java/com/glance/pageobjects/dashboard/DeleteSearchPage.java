@@ -58,6 +58,27 @@ public class DeleteSearchPage extends BasePage{
 			return lblPageName.getText();
 		}
 		
+		//delete search page confirmation
+	    public boolean verifyNavigationToDeleteSearchPage(String expectedMessage) {
+	       
+	        
+	       boolean flag;
+	       
+	        String actualMessage=lblPageName.getText();
+	               
+	              
+	                     if (actualMessage.contains(expectedMessage)) {
+	                     flag = true;
+	                     System.out.println("You are in the Delete Search page");             
+	                
+	            } else {
+	              System.out.println("You are not in the Delete Search page");
+	                flag = false;                     
+	            }
+	        
+	        return flag;
+	    }
+	    
 		//methods for the Search tab in Delete search page
 		public void clickSearchTab(){
 			try{

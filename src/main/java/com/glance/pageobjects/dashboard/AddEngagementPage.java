@@ -84,6 +84,22 @@ public class AddEngagementPage extends BasePage {
 		
 	}
 	
+
+	//method for identifying the page title
+	public boolean getPageName(String lblExpectedTitle) {
+        boolean flag = false;
+
+        String pageName = lblPageName.getText();
+        if (pageName.contains(lblExpectedTitle)) {
+               System.out.println("Navigated to Engagement page " + pageName);
+               flag = true;
+        } else {
+               System.out.println("Navigated to wrong page");
+               flag = false;
+        }
+        return flag;
+ }
+	
 	//methods for verify the empty fields
 	public boolean IsFieldEmpty(String text){
 		

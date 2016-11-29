@@ -1,6 +1,5 @@
 package com.glance.pageobjects.dashboard;
 
-import java.util.Calendar;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -11,7 +10,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.glance.pageobjects.common.BasePage;
@@ -102,20 +100,36 @@ public class DashboardPage extends BasePage {
 	// variable diclaration with xpath for 'Add New Element'
 	@FindBy(xpath = "//button[@id='define_now']")
 	WebElement btnAddNewElement;
-	
-	@FindBy(xpath="//h1")
+
+	@FindBy(xpath = "//h1")
 	WebElement lblElementMessage;
-	
-	@FindBy(xpath="//div[@class='x_title']/span")
+
+	@FindBy(xpath = "//div[@class='x_title']/span")
 	WebElement headChartTitle;
-	
-	@FindBy(xpath="//button[contains(text(),'DELETE')]")
+
+	@FindBy(xpath = "//button[contains(text(),'DELETE')]")
 	WebElement btnConfirmDelete;
-	
-	@FindBy(xpath="//div/button[contains(text(),'Okay')]")
+
+	@FindBy(xpath = "//div/button[contains(text(),'Okay')]")
 	WebElement btnDeleteConfirmOk;
-	
+
 	WebDriverWait wait = new WebDriverWait(driver, 10);
+
+	// dashboard page confirmation
+	public boolean verifyNavigationToDashboardPage(String expectedMessage) {
+		boolean flag = false;
+		String actualMessage = lblPageName.getText();
+		if (actualMessage.contains(expectedMessage)) {
+			flag = true;
+			System.out.println("You are in the dashboard page");
+		} else {
+			System.out.println("You are not in the dashboard page");
+			flag = false;
+		}
+
+		return flag;
+
+	}
 
 	// page specifying method(verification)
 	public boolean getPageName(String lblExpectedTitle) {
@@ -131,22 +145,7 @@ public class DashboardPage extends BasePage {
 		}
 		return flag;
 	}
-	public boolean verifyNavigationToDashboardPage(String expectedMessage){
-		boolean flag = false;
-		String actualMessage=lblPageName.getText();
-		if (actualMessage.contains(expectedMessage)) {
-			flag = true;
-			System.out.println("You are in the dashboard page");
-			}
-		else {
-			System.out.println("You are not in the dashboard page");
-			flag = false;
-			}
-		
-		return flag;
-		
-		
-	}
+
 	// text of the date range will selection through this
 	public void clickDateRange() {
 		try {
@@ -353,16 +352,16 @@ public class DashboardPage extends BasePage {
 		}
 
 	}
-	
-	public void confirmDeleteGraph(){
+
+	public void confirmDeleteGraph() {
 		try {
 			wait.until(ExpectedConditions.visibilityOf(btnConfirmDelete));
-			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].click();", btnConfirmDelete);
 			TestLog.log.info("Confirming deletion of graph");
 			executor.executeScript("arguments[0].click();", btnDeleteConfirmOk);
 			TestLog.log.info("Delete the graph");
-			
+
 		} catch (Exception ex) {
 
 		}
@@ -452,31 +451,30 @@ public class DashboardPage extends BasePage {
 		}
 
 	}
-	
-	public boolean verifyElementMessage(){
-		
-		boolean flag=false;
-		try{
-			//wait.until(ExpectedConditions.visibilityOf(lblElementMessage));
-		String actualElementMessage=lblElementMessage.getText();
-		String expectedElementMessage="No dashboard elements defined!";
-		if(actualElementMessage.contains(expectedElementMessage)){
-			TestLog.log.info("Element is not defined");
-			flag=true;
+
+	public boolean verifyElementMessage() {
+
+		boolean flag = false;
+		try {
+			// wait.until(ExpectedConditions.visibilityOf(lblElementMessage));
+			String actualElementMessage = lblElementMessage.getText();
+			String expectedElementMessage = "No dashboard elements defined!";
+			if (actualElementMessage.contains(expectedElementMessage)) {
+				TestLog.log.info("Element is not defined");
+				flag = true;
+			}
+		} catch (Exception ex) {
+			TestLog.log.info("Could not retrieve the element message. Due to: " + ex);
 		}
-		}catch(Exception ex){
-			TestLog.log.info("Could not retrieve the element message. Due to: "+ex);
-		}
-		
-		
+
 		return flag;
 	}
-	
-	public String verifyChartTitle(){
+
+	public String verifyChartTitle() {
 		wait.until(ExpectedConditions.visibilityOf(headChartTitle));
-		String actualChartTitle=headChartTitle.getText();
+		String actualChartTitle = headChartTitle.getText();
 		System.out.println(actualChartTitle);
-		
+
 		return actualChartTitle;
 	}
 

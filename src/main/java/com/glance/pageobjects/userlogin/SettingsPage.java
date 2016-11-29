@@ -1,5 +1,8 @@
 package com.glance.pageobjects.userlogin;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -110,6 +113,9 @@ public class SettingsPage extends BasePage {
 
 	@FindBy(xpath = "//div[@id='session_dump']/pre/font[22]")
 	WebElement sessionDumpLastName;
+	
+	@FindBy(xpath = "//div[@class='x_title']/h2")
+	String lblPageName;
 
 	// Check settings page title
 		
@@ -196,6 +202,43 @@ public class SettingsPage extends BasePage {
 		return (Integer.parseInt(Count));
 
 	}
+	// method for verifying add engagement count ************************
+			public boolean verifyEngagementCount(int previousCountEngagement, int newCountEngagement) {
+
+				boolean flag = false;
+
+				if (previousCountEngagement < newCountEngagement) {
+					System.out.println("new engagement is added " + previousCountEngagement + "and" + newCountEngagement);
+					flag = true;
+				} else {
+					System.out.println("new engagement is not added");
+					flag = false;
+				}
+				return flag;
+
+			}
+
+			// method for verifying settings page ************************
+			public boolean verifyPageName(String[] expected) {
+
+				List<WebElement> pageNames = driver.findElements(By.xpath(lblPageName));
+
+				if (expected.length != pageNames.size()) {
+					System.out.println("fail, wrong number of elements found");
+				}
+
+				for (int i = 0; i < expected.length; i++) {
+					String optionValue = pageNames.get(i).getAttribute("h2");
+					if (optionValue.equals(expected[i])) {
+						System.out.println("passed on: " + optionValue);
+					} else {
+						System.out.println("failed on: " + optionValue);
+					}
+				}
+				return false;
+
+			}
+
 
 	// Click on Add Project Button
 	public void clickAddProjectBtn() {

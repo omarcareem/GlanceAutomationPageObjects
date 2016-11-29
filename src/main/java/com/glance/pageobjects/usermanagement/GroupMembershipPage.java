@@ -39,7 +39,23 @@ public class GroupMembershipPage extends BasePage {
 	WebElement txtSearch;*/
 	
 	
-		
+	//Verify the heading
+		public boolean verifyNavigationToGroupMembershipPage(String expectedMessage){
+			boolean flag = false;
+			String actualMessage=Pagelbl.getText();
+			if (actualMessage.contains(expectedMessage)) {
+				flag = true;
+				System.out.println("You are in the Group Membership page");
+				}
+			else {
+				System.out.println("You are not in the Group Membership page");
+				flag = false;
+				}
+			
+			return flag;
+			
+			
+		}
 
 	//Verify the heading
 	public void getlabl(String labl){

@@ -81,6 +81,23 @@ public class ProfileUpdatePage extends BasePage {
 			return lblProfileUpdateTitle.getText();
 
 		}
+
+	//method to verify the profile update element 
+			public boolean FindUserDetailsElement(String expectedMessage){
+				boolean flag = false;
+				String actualMessage=lblProfileUpdateTitle.getText();
+				if (actualMessage.contains(expectedMessage)) {
+					flag = true;
+					System.out.println("User profile update Navigation Success");
+					}
+				else {
+					System.out.println("User profile update Navigation not Success");
+					flag = false;
+					}
+				
+				return flag;
+				
+			}
 	
 	//Form Attributes
 	public void changeUsername(String UserName){

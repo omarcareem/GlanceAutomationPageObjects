@@ -3,6 +3,7 @@ package com.glance.pageobjects.userlogin;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import com.glance.pageobjects.common.BasePage;
 import com.glance.pageobjects.logs.TestLog;
@@ -11,6 +12,7 @@ public class LockScreenPage extends BasePage {
 
 	public LockScreenPage(WebDriver driver) {
 		super(driver);
+		PageFactory.initElements(driver, this);
 		// TODO Auto-generated constructor stub
 				
 		
@@ -24,7 +26,7 @@ public class LockScreenPage extends BasePage {
 	
 	
 	@FindBy(xpath="//img[@id='image']")
-	WebElement ProfilePic;
+	WebElement profilePic;
 	
 	@FindBy(xpath="//input[@id='pwd']")
 	WebElement txtPassword;
@@ -40,7 +42,7 @@ public class LockScreenPage extends BasePage {
 	
 	
 	//Click on Lock button in left down icon
-	public void ClickLockBtn(){
+	public void clickLockBtn(){
 		
 		try{
 			TestLog.log.info("Clicking on Lock Icon");
@@ -61,14 +63,32 @@ public class LockScreenPage extends BasePage {
 			return lblLockScreenPage.getText();
 
 		}	
+		
+	//verify LockScreen Page name
+		public boolean verifyNavigationToLockScreen(String expectedMessage){
+			boolean flag = false;
+			String actualMessage=lblLockScreenPage.getText();
+			if (actualMessage.contains(expectedMessage)) {
+				flag = true;
+				System.out.println("You are in the Lock Screen page");
+				}
+			else {
+				System.out.println("You are not in the Lock Screen page");
+				flag = false;
+				}
+			
+			return flag;
+			
+			
+		}
 	
 	
 	//Click on the Profile Picture
-	public void ClickProfilePicture(){		
+	public void clickProfilePicture(){		
 		
 		try{
 			TestLog.log.info("Clicking on Profile Picture Icon");
-			ProfilePic.click();
+			profilePic.click();
 			TestLog.log.info("Clicked on Profile Picture Icon");
 			
 			}catch(Exception ex){
@@ -80,11 +100,11 @@ public class LockScreenPage extends BasePage {
 		}
 	
 	//Entering Password
-	public void EnterPassword(String Password){
+	public void enterPassword(String password){
 		
 		try{
 			TestLog.log.info("Entering Password");
-			txtPassword.sendKeys(Password);
+			txtPassword.sendKeys(password);
 			TestLog.log.info("Entered Password");
 			
 			}catch(Exception ex){
@@ -94,7 +114,7 @@ public class LockScreenPage extends BasePage {
 		}
 	
 	//Click on Login Button
-	public void ClickLogInBtn(){
+	public void clickLogInBtn(){
 		
 		try{
 			TestLog.log.info("Clicking on Log In Button");
@@ -109,7 +129,7 @@ public class LockScreenPage extends BasePage {
 		}
 	
 	//Click on LogInOk Button
-		public void ClickLogInOKBtn(){
+		public void clickLogInOKBtn(){
 						
 			try{
 				TestLog.log.info("Clicking on LogIn Ok Button");
@@ -124,7 +144,7 @@ public class LockScreenPage extends BasePage {
 			}
 		
 	//Click on LogInClose Button
-			public void ClickLogInCloseBtn(){
+			public void clickLogInCloseBtn(){
 								
 				try{
 					TestLog.log.info("Clicking on LogIn Close Button");

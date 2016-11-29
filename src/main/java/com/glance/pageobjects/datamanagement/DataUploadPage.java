@@ -45,6 +45,29 @@ public class DataUploadPage extends BasePage{
 		return lblPageName.getText();	 
 	}
 	
+
+	//add data upload page confirmation
+    public boolean verifyNavigationToDataUploadPage(String expectedMessage) {
+       
+        
+       boolean flag;
+       
+        String actualMessage=lblPageName.getText();
+               
+              
+                if (actualMessage.contains(expectedMessage)) {
+                flag = true;
+                System.out.println("You are in the data upload page");             
+                
+            } else{
+              System.out.println("You are not in the data upload page");
+                flag = false;                     
+            }
+        
+        return flag;
+    }
+
+	
 	//selecting a table
 	public void selectDataTable(String tableName){
 		

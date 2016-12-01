@@ -1,5 +1,7 @@
 package com.glance.pageobjects.datamanagement;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -64,7 +66,7 @@ public class DataDeleteUpdatePage extends BasePage {
 
 	@FindBy(xpath = "//i[@class='fa fa-close']")
 	WebElement clickClose;
-	
+
 	@FindBy(xpath = "//a[@id='data_table_first']")
 	WebElement btnFirst;
 
@@ -82,11 +84,10 @@ public class DataDeleteUpdatePage extends BasePage {
 
 	@FindBy(xpath = "//div[@id='data_table_info']")
 	WebElement lblRecordCount;
-	
+
 	By middlePagination = By.xpath("//div[@id='example_paginate']/span/a");
 	By txtSearch = By.xpath("//label/input");
 	By tblExample = By.xpath("//table[@id='example']");
-
 
 	// add data delete update page confirmation
 	public boolean verifyNavigationToDataDeleteUpdatePage(String expectedMessage) {
@@ -138,7 +139,6 @@ public class DataDeleteUpdatePage extends BasePage {
 		}
 	}
 
-
 	// clicking update
 	public void clickUpdate() {
 
@@ -172,7 +172,6 @@ public class DataDeleteUpdatePage extends BasePage {
 
 		return flag;
 	}
-
 
 	// clicking delete
 	public void clickDelete(String userin) {
@@ -291,239 +290,325 @@ public class DataDeleteUpdatePage extends BasePage {
 
 		return flag;
 	}
-	
+
 	// Page Navigation - First page
-		public void firstPageNavigation() {
+	public void firstPageNavigation() {
 
-			try {
-				TestLog.log.info("Check First Button eneble");
-				if (btnFirst.isEnabled()) {
-					TestLog.log.info("Click on First Button");
-					btnFirst.click();
+		try {
+			TestLog.log.info("Check First Button eneble");
+			if (btnFirst.isEnabled()) {
+				TestLog.log.info("Click on First Button");
+				btnFirst.click();
+			} else {
+				TestLog.log.info("Page Navigation button First Disable");
+			}
+		} catch (Exception ex) {
+			TestLog.log.info("Could not find page Navigation button" + ex);
+		}
+	}
+
+	// Page Navigation - Previous page
+	public void previousPageNavigation() {
+		try {
+			TestLog.log.info("Check Previous Button eneble");
+			if (btnPrevious.isEnabled()) {
+				TestLog.log.info("Click on Previous Button");
+				btnPrevious.click();
+			} else {
+				TestLog.log.info("Page Navigation button Previous Disable");
+			}
+		} catch (Exception ex) {
+			TestLog.log.info("Could not find page Navigation button" + ex);
+		}
+	}
+
+	// Page Navigation - Next page
+	public void nextPageNavigation() {
+		try {
+			TestLog.log.info("Check Next Button eneble");
+			if (btnNext.isEnabled()) {
+				TestLog.log.info("Click on Next Button");
+				btnNext.click();
+			} else {
+				TestLog.log.info("Page Navigation button Previous Disable");
+			}
+		} catch (Exception ex) {
+			TestLog.log.info("Could not find page Navigation button" + ex);
+		}
+	}
+
+	// Page Navigation - Last page
+	public void lastPageNavigation() {
+		try {
+			TestLog.log.info("Check Last Button eneble");
+			if (btnLast.isEnabled()) {
+				TestLog.log.info("Click on Last Button");
+				btnLast.click();
+			} else {
+				TestLog.log.info("Page Navigation button Previous Disable");
+			}
+		} catch (Exception ex) {
+			TestLog.log.info("Could not find page Navigation button" + ex);
+		}
+	}
+
+	// Page navigation - Middle Pages
+
+	public void middlePageNavigation() {
+		try {
+			List<WebElement> pagination = driver.findElements(middlePagination);
+			TestLog.log.info("checkif pagination link exists");
+
+			if (pagination.size() > 0) {
+				System.out.println("pagination exists");
+				TestLog.log.info("click on pagination link ");
+				for (int i = 0; i < pagination.size(); i++) {
+					pagination.get(i).click();
+				}
+			} else {
+				System.out.println("pagination not exists");
+			}
+		} catch (Exception ex) {
+			TestLog.log.info("Could not find page Navigation button" + ex);
+		}
+	}
+
+	// Page navigation verification - Actual page count text
+	public String actualPage() {
+		String recordCount = null;
+		try {
+
+			TestLog.log.info("get actual page count text");
+			recordCount = lblRecordCount.getText();
+
+		} catch (Exception ex) {
+			TestLog.log.info("Could not find dropdown" + ex);
+		}
+		return recordCount;
+	}
+
+	// select the table entry count from the drop down
+	public void selectDropDuwn(String dropDownValue) {
+		try {
+			TestLog.log.info("check dropdown exist");
+			if (dropDown.isDisplayed()) {
+				TestLog.log.info("select from dropdown list");
+				Select drpRecords = new Select(dropDown);
+				drpRecords.selectByVisibleText(dropDownValue);
+			} else {
+				TestLog.log.info("dropdown does not exist");
+				System.out.println("Table Entry dropdown not visible");
+			}
+
+		} catch (Exception ex) {
+			TestLog.log.info("Could not find dropdown" + ex);
+		}
+
+	}
+
+	public void expectedRowCount(int rowCount) {
+
+		TestLog.log.info("verify selection");
+
+		Select visibleRecords = new Select(dropDown);
+
+		TestLog.log.info("get selection from drop down");
+		WebElement element = visibleRecords.getFirstSelectedOption();
+		String selectedValue = element.getText();
+		int expectedRowCount = 0;
+
+		try {
+			TestLog.log.info("get actual row count");
+			if (rowCount <= 10) {
+				if (selectedValue == "10") {
+					expectedRowCount = rowCount;
+				} else if (selectedValue == "25") {
+					expectedRowCount = rowCount;
+				} else if (selectedValue == "50") {
+					expectedRowCount = rowCount;
+				} else if (selectedValue == "100") {
+					expectedRowCount = rowCount;
 				} else {
-					TestLog.log.info("Page Navigation button First Disable");
+					TestLog.log.info("no record added");
+					System.out.println("No records appeared");
 				}
-			} catch (Exception ex) {
-				TestLog.log.info("Could not find page Navigation button" + ex);
 			}
-		}
-
-
-		// Page Navigation - Previous page
-		public void previousPageNavigation() {
-			try {
-				TestLog.log.info("Check Previous Button eneble");
-				if (btnPrevious.isEnabled()) {
-					TestLog.log.info("Click on Previous Button");
-					btnPrevious.click();
+			if (rowCount > 10 || rowCount <= 25) {
+				if (selectedValue == "10") {
+					expectedRowCount = 10;
+				} else if (selectedValue == "25") {
+					expectedRowCount = rowCount;
+				} else if (selectedValue == "50") {
+					expectedRowCount = rowCount;
+				} else if (selectedValue == "100") {
+					expectedRowCount = rowCount;
 				} else {
-					TestLog.log.info("Page Navigation button Previous Disable");
+					System.out.println("No records appeared");
 				}
-			} catch (Exception ex) {
-				TestLog.log.info("Could not find page Navigation button" + ex);
 			}
-		}
-
-		// Page Navigation - Next page
-		public void nextPageNavigation() {
-			try {
-				TestLog.log.info("Check Next Button eneble");
-				if (btnNext.isEnabled()) {
-					TestLog.log.info("Click on Next Button");
-					btnNext.click();
+			if (rowCount > 25 || rowCount <= 50) {
+				if (selectedValue == "10") {
+					expectedRowCount = 10;
+				} else if (selectedValue == "25") {
+					expectedRowCount = 25;
+				} else if (selectedValue == "50") {
+					expectedRowCount = rowCount;
+				} else if (selectedValue == "100") {
+					expectedRowCount = rowCount;
 				} else {
-					TestLog.log.info("Page Navigation button Previous Disable");
+					System.out.println("No records appeared");
 				}
-			} catch (Exception ex) {
-				TestLog.log.info("Could not find page Navigation button" + ex);
 			}
-		}
-
-		// Page Navigation - Last page
-		public void lastPageNavigation() {
-			try {
-				TestLog.log.info("Check Last Button eneble");
-				if (btnLast.isEnabled()) {
-					TestLog.log.info("Click on Last Button");
-					btnLast.click();
+			if (rowCount > 50 || rowCount <= 100) {
+				if (selectedValue == "10") {
+					expectedRowCount = 10;
+				} else if (selectedValue == "25") {
+					expectedRowCount = 25;
+				} else if (selectedValue == "50") {
+					expectedRowCount = 50;
+				} else if (selectedValue == "100") {
+					expectedRowCount = rowCount;
 				} else {
-					TestLog.log.info("Page Navigation button Previous Disable");
+					System.out.println("No records appeared");
 				}
-			} catch (Exception ex) {
-				TestLog.log.info("Could not find page Navigation button" + ex);
 			}
-		}
-
-		// Page navigation - Middle Pages
-
-		public void middlePageNavigation() {
-			try {
-				List<WebElement> pagination = driver.findElements(middlePagination);
-				TestLog.log.info("checkif pagination link exists");
-
-				if (pagination.size() > 0) {
-					System.out.println("pagination exists");
-					TestLog.log.info("click on pagination link ");
-					for (int i = 0; i < pagination.size(); i++) {
-						pagination.get(i).click();
-					}
+			if (rowCount > 100) {
+				if (selectedValue == "10") {
+					expectedRowCount = 10;
+				} else if (selectedValue == "25") {
+					expectedRowCount = 25;
+				} else if (selectedValue == "50") {
+					expectedRowCount = 50;
+				} else if (selectedValue == "100") {
+					expectedRowCount = 100;
 				} else {
-					System.out.println("pagination not exists");
+					System.out.println("No records appeared");
 				}
-			} catch (Exception ex) {
-				TestLog.log.info("Could not find page Navigation button" + ex);
 			}
+		} catch (Exception ex) {
+			TestLog.log.info("Could not find dropdown" + ex);
 		}
 
-		
+	}
 
-		// Page navigation verification - Actual page count text
-		public String actualPage() {
-			String recordCount = null;
-			try {
+	// validate actual row count
+	public int actualRowCount() {
+		int actualRawCount = 0;
 
-				TestLog.log.info("get actual page count text");
-				recordCount = lblRecordCount.getText();
+		try {
+			actualRawCount = driver.findElements(By.tagName("tr")).size();
 
-			} catch (Exception ex) {
-				TestLog.log.info("Could not find dropdown" + ex);
-			}
-			return recordCount;
+		} catch (Exception ex) {
+			TestLog.log.info("Could not find table" + ex);
 		}
+		return actualRawCount;
+	}
 
-		// select the table entry count from the drop down
-		public void selectDropDuwn(String dropDownValue) {
-			try {
-				TestLog.log.info("check dropdown exist");
-				if (dropDown.isDisplayed()) {
-					TestLog.log.info("select from dropdown list");
-					Select drpRecords = new Select(dropDown);
-					drpRecords.selectByVisibleText(dropDownValue);
+	// Page count verification - Expected page count
+	public void verifyDroDownPageCount(int rowCount) {
+		try {
+			TestLog.log.info("verify selection");
+
+			Select visibleRecords = new Select(dropDown);
+
+			TestLog.log.info("get table row count");
+			WebElement element = visibleRecords.getFirstSelectedOption();
+			String selectedValue = element.getText();
+
+			TestLog.log.info("get page number count");
+			int pageCount;
+
+			TestLog.log.info("get page count");
+			if (rowCount < 10) {
+				if (selectedValue == "10") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 10.0));
+					System.out.println(pageCount);
+				} else if (selectedValue == "25") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 25.0));
+					System.out.println(pageCount);
+				} else if (selectedValue == "50") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 50.0));
+					System.out.println(pageCount);
+				} else if (selectedValue == "100") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 100.0));
+					System.out.println(pageCount);
 				} else {
-					TestLog.log.info("dropdown does not exist");
-					System.out.println("Table Entry dropdown not visible");
+					System.out.println("No pages appeared");
 				}
-
-			} catch (Exception ex) {
-				TestLog.log.info("Could not find dropdown" + ex);
 			}
 
-		}
-
-		public void expectedRowCount(int rowCount){
-				
-					TestLog.log.info("verify selection");
-					
-					Select visibleRecords= new Select(dropDown);
-					
-					TestLog.log.info("get selection from drop down");
-					WebElement element = visibleRecords.getFirstSelectedOption();
-					String selectedValue= element.getText();
-					int expectedRowCount=0;
-					
-					try{							
-					TestLog.log.info("get actual row count");
-					if (rowCount <= 10){
-						if(selectedValue=="10"){
-							expectedRowCount = rowCount;
-								} else if(selectedValue=="25"){
-									expectedRowCount = 	rowCount;					
-								}else if(selectedValue=="50"){
-									expectedRowCount = 	rowCount;						
-								}else if(selectedValue=="100"){
-									expectedRowCount = 	rowCount;						
-								}else{
-									TestLog.log.info("no record added");
-									System.out.println("No records appeared");
-								}
-					}
-					if (rowCount > 10 || rowCount <= 25){
-						if(selectedValue=="10"){
-							expectedRowCount = 	10;
-								} else if(selectedValue=="25"){
-									expectedRowCount = 	rowCount;					
-								}else if(selectedValue=="50"){
-									expectedRowCount = 	rowCount;						
-								}else if(selectedValue=="100"){
-									expectedRowCount = 	rowCount;						
-								}else{
-									System.out.println("No records appeared");
-								}
-					}
-					if (rowCount > 25 || rowCount <= 50){
-						if(selectedValue=="10"){
-							expectedRowCount = 	10;
-								} else if(selectedValue=="25"){
-									expectedRowCount = 	25;					
-								}else if(selectedValue=="50"){
-									expectedRowCount = 	rowCount;						
-								}else if(selectedValue=="100"){
-									expectedRowCount = 	rowCount;						
-								}else{
-									System.out.println("No records appeared");
-								}
-					}
-					if (rowCount > 50 || rowCount <= 100){
-						if(selectedValue=="10"){
-							expectedRowCount = 	10;
-								} else if(selectedValue=="25"){
-									expectedRowCount = 	25;					
-								}else if(selectedValue=="50"){
-									expectedRowCount = 	50;						
-								}else if(selectedValue=="100"){
-									expectedRowCount = 	rowCount;						
-								}else{
-									System.out.println("No records appeared");
-								}
-					}
-					if (rowCount > 100){
-						if(selectedValue=="10"){
-							expectedRowCount = 	10;
-								} else if(selectedValue=="25"){
-									expectedRowCount = 	25;					
-								}else if(selectedValue=="50"){
-									expectedRowCount = 	50;						
-								}else if(selectedValue=="100"){
-									expectedRowCount = 	100;						
-								}else{
-									System.out.println("No records appeared");
-								}
-					}
-				}catch (Exception ex) {
-					TestLog.log.info("Could not find dropdown" + ex);
+			if (rowCount < 25) {
+				if (selectedValue == "10") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 10.0));
+					System.out.println(pageCount);
+				} else if (selectedValue == "25") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 25.0));
+					System.out.println(pageCount);
+				} else if (selectedValue == "50") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 50.0));
+					System.out.println(pageCount);
+				} else if (selectedValue == "100") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 100.0));
+					System.out.println(pageCount);
+				} else {
+					System.out.println("No pages appeared");
 				}
-				
 			}
 
-		// validate actual row count
-		public int actualRowCount() {
-			int actualRawCount = 0;
-
-			try {
-				actualRawCount = driver.findElements(By.tagName("tr")).size();
-
-			} catch (Exception ex) {
-				TestLog.log.info("Could not find table" + ex);
+			if (rowCount < 50) {
+				if (selectedValue == "10") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 10.0));
+					System.out.println(pageCount);
+				} else if (selectedValue == "25") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 25.0));
+					System.out.println(pageCount);
+				} else if (selectedValue == "50") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 50.0));
+					System.out.println(pageCount);
+				} else if (selectedValue == "100") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 100.0));
+					System.out.println(pageCount);
+				} else {
+					System.out.println("No pages appeared");
+				}
 			}
-			return actualRawCount;
-		}
 
-		// Page count verification - Expected page count
-		public void verifyDroDownPageCount(int rowCount) {
-			try {
-				TestLog.log.info("verify selection");
+			if (rowCount < 100) {
+				if (selectedValue == "10") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 10.0));
+					System.out.println(pageCount);
+				} else if (selectedValue == "25") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 25.0));
+					System.out.println(pageCount);
+				} else if (selectedValue == "50") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 50.0));
+					System.out.println(pageCount);
+				} else if (selectedValue == "100") {
+					TestLog.log.info("get page count");
+					pageCount = (int) (Math.ceil(rowCount / 100.0));
+					System.out.println(pageCount);
+				} else {
+					System.out.println("No pages appeared");
+				}
+			}
 
-				Select visibleRecords = new Select(dropDown);
-
-				TestLog.log.info("get table row count");
-				WebElement element = visibleRecords.getFirstSelectedOption();
-				String selectedValue = element.getText();
-				
-				TestLog.log.info("get page number count");
-				int pageCount;
-
-				TestLog.log.info("get page count");
-				if (rowCount < 10) {
+			if (rowCount > 100) {
+				if (selectedValue == "10") {
 					if (selectedValue == "10") {
 						TestLog.log.info("get page count");
 						pageCount = (int) (Math.ceil(rowCount / 10.0));
@@ -544,123 +629,164 @@ public class DataDeleteUpdatePage extends BasePage {
 						System.out.println("No pages appeared");
 					}
 				}
-
-				if (rowCount < 25) {
-					if (selectedValue == "10") {
-						TestLog.log.info("get page count");
-						pageCount = (int) (Math.ceil(rowCount / 10.0));
-						System.out.println(pageCount);
-					} else if (selectedValue == "25") {
-						TestLog.log.info("get page count");
-						pageCount = (int) (Math.ceil(rowCount / 25.0));
-						System.out.println(pageCount);
-					} else if (selectedValue == "50") {
-						TestLog.log.info("get page count");
-						pageCount = (int) (Math.ceil(rowCount / 50.0));
-						System.out.println(pageCount);
-					} else if (selectedValue == "100") {
-						TestLog.log.info("get page count");
-						pageCount = (int) (Math.ceil(rowCount / 100.0));
-						System.out.println(pageCount);
-					} else {
-						System.out.println("No pages appeared");
-					}
-				}
-
-				if (rowCount < 50) {
-					if (selectedValue == "10") {
-						TestLog.log.info("get page count");
-						pageCount = (int) (Math.ceil(rowCount / 10.0));
-						System.out.println(pageCount);
-					} else if (selectedValue == "25") {
-						TestLog.log.info("get page count");
-						pageCount = (int) (Math.ceil(rowCount / 25.0));
-						System.out.println(pageCount);
-					} else if (selectedValue == "50") {
-						TestLog.log.info("get page count");
-						pageCount = (int) (Math.ceil(rowCount / 50.0));
-						System.out.println(pageCount);
-					} else if (selectedValue == "100") {
-						TestLog.log.info("get page count");
-						pageCount = (int) (Math.ceil(rowCount / 100.0));
-						System.out.println(pageCount);
-					} else {
-						System.out.println("No pages appeared");
-					}
-				}
-
-				if (rowCount < 100) {
-					if (selectedValue == "10") {
-						TestLog.log.info("get page count");
-						pageCount = (int) (Math.ceil(rowCount / 10.0));
-						System.out.println(pageCount);
-					} else if (selectedValue == "25") {
-						TestLog.log.info("get page count");
-						pageCount = (int) (Math.ceil(rowCount / 25.0));
-						System.out.println(pageCount);
-					} else if (selectedValue == "50") {
-						TestLog.log.info("get page count");
-						pageCount = (int) (Math.ceil(rowCount / 50.0));
-						System.out.println(pageCount);
-					} else if (selectedValue == "100") {
-						TestLog.log.info("get page count");
-						pageCount = (int) (Math.ceil(rowCount / 100.0));
-						System.out.println(pageCount);
-					} else {
-						System.out.println("No pages appeared");
-					}
-				}
-
-				if (rowCount > 100) {
-					if (selectedValue == "10") {
-						if (selectedValue == "10") {
-							TestLog.log.info("get page count");
-							pageCount = (int) (Math.ceil(rowCount / 10.0));
-							System.out.println(pageCount);
-						} else if (selectedValue == "25") {
-							TestLog.log.info("get page count");
-							pageCount = (int) (Math.ceil(rowCount / 25.0));
-							System.out.println(pageCount);
-						} else if (selectedValue == "50") {
-							TestLog.log.info("get page count");
-							pageCount = (int) (Math.ceil(rowCount / 50.0));
-							System.out.println(pageCount);
-						} else if (selectedValue == "100") {
-							TestLog.log.info("get page count");
-							pageCount = (int) (Math.ceil(rowCount / 100.0));
-							System.out.println(pageCount);
-						} else {
-							System.out.println("No pages appeared");
-						}
-					}
-				}
-
-			} catch (Exception ex) {
-				TestLog.log.info("Could not find dropdown" + ex);
 			}
+
+		} catch (Exception ex) {
+			TestLog.log.info("Could not find dropdown" + ex);
+		}
+	}
+
+	// Page Count verification - Actual page count
+	public int pageCount() {
+		TestLog.log.info("get actual page count");
+		int pageNumbers = 0;
+		try {
+			pageNumbers = driver.findElements(By.xpath("//span/a")).size();
+
+		} catch (Exception ex) {
+			TestLog.log.info("Could not find page count" + ex);
+		}
+		return pageNumbers;
+	}
+
+	// add text to search text box
+	public void tableSearch(String searchKey) {
+		TestLog.log.info("verify text search");
+		try {
+			driver.findElement(txtSearch).sendKeys(searchKey);
+		} catch (Exception ex) {
+			TestLog.log.info("Text search verification fails" + ex);
 		}
 
-		// Page Count verification - Actual page count
-		public int pageCount() {
-			TestLog.log.info("get actual page count");
-			int pageNumbers = 0;
-			try{
-				pageNumbers = driver.findElements(By.xpath("//span/a")).size();
-				
-			}catch (Exception ex) {
-				TestLog.log.info("Could not find page count" + ex);
-			}
-			return pageNumbers;
-		}
+	}
 
-		//add text to search text box
-		public void tableSearch(String searchKey){
-			TestLog.log.info("verify text search");
-			try{
-				driver.findElement(txtSearch).sendKeys(searchKey);
-			}catch (Exception ex) {
-				TestLog.log.info("Text search verification fails" + ex);
-			}
-					
+	// sorting the table according to the colom
+
+	public void tableSort(String colomName) {
+		TestLog.log.info("sort according to the colom ");
+		try {
+			driver.findElement(By.xpath("//*[contains(text(),'" + colomName + "')]")).click();
+		} catch (Exception ex) {
+			TestLog.log.info("sorting fails" + ex);
 		}
+	}
+
+	// verify sorting the table according to the colom
+
+	public void verifyTableSort(String colomName) {
+		TestLog.log.info("verification sort according to the colom ");
+
+		int eleCount;
+		List<String> expcdi_id = new ArrayList();
+		List<String> explevel = new ArrayList();
+		List<String> expentity_id = new ArrayList();
+		List<String> expdate = new ArrayList();
+		List<String> expcdi = new ArrayList();
+
+		List<String> actcdi_id = new ArrayList();
+		List<String> actlevel = new ArrayList();
+		List<String> actentity_id = new ArrayList();
+		List<String> actdate = new ArrayList();
+		List<String> actcdi = new ArrayList();
+
+		try {
+			TestLog.log.info("find the row count");
+			eleCount = driver.findElements(By.xpath("//*[contains(text(),'" + colomName + "')]")).size();
+
+			System.out.println("Element count: " + eleCount);
+
+			for (int i = 0; i < eleCount; i++) {
+				TestLog.log.info("capture values");
+
+				expcdi_id.add(driver.findElement(By.xpath("//*[contains(text(),'cdi_id')]")).getText());
+				explevel.add(driver.findElement(By.xpath("//*[contains(text(),'level')]")).getText());
+				expentity_id.add(driver.findElement(By.xpath("//*[contains(text(),'entity_id')]")).getText());
+				expdate.add(driver.findElement(By.xpath("//*[contains(text(),'date')]")).getText());
+				expcdi.add(driver.findElement(By.xpath("//*[contains(text(),'cdi')]")).getText());
+
+				actcdi_id.add(driver.findElement(By.xpath("//*[contains(text(),'cdi_id')]")).getText());
+				actlevel.add(driver.findElement(By.xpath("//*[contains(text(),'level')]")).getText());
+				actentity_id.add(driver.findElement(By.xpath("//*[contains(text(),'entity_id')]")).getText());
+				actdate.add(driver.findElement(By.xpath("//*[contains(text(),'date')]")).getText());
+				actcdi.add(driver.findElement(By.xpath("//*[contains(text(),'cdi')]")).getText());
+
+			}
+			TestLog.log.info("sort according to the coloms");
+			if (colomName == "cdi_id") {
+				Collections.sort(expcdi_id);
+
+				for (int i = 0; i < expcdi_id.size(); i++) {
+
+					if (!(expcdi_id.get(i).equals(actcdi_id.get(i)))) {
+						System.out.println("Coloum not sorted: " + i);
+						break;
+
+					} else {
+						System.out.println("expected value: " + expcdi_id + "actual value:" + actcdi_id);
+					}
+				}
+			} else if (colomName == "level") {
+				Collections.sort(explevel);
+
+				for (int j = 0; j < explevel.size(); j++) {
+
+					if (!(explevel.get(j).equals(actlevel.get(j)))) {
+						System.out.println("Coloum not sorted: " + j);
+						break;
+
+					} else {
+						System.out.println("expected value: " + explevel + "actual value:" + actlevel);
+					}
+				}
+			} else if (colomName == "entity_id") {
+
+				Collections.sort(expentity_id);
+
+				for (int k = 0; k < expentity_id.size(); k++) {
+
+					if (!(expentity_id.get(k).equals(actentity_id.get(k)))) {
+						System.out.println("Coloum not sorted: " + k);
+						break;
+
+					} else {
+						System.out.println("expected value: " + expentity_id + "actual value:" + actentity_id);
+					}
+				}
+			} else if (colomName == "date") {
+				Collections.sort(expdate);
+
+				for (int l = 0; l < expdate.size(); l++) {
+
+					if (!(expdate.get(l).equals(actdate.get(l)))) {
+						System.out.println("Coloum not sorted: " + l);
+						break;
+
+					} else {
+						System.out.println("expected value: " + expdate + "actual value:" + actdate);
+					}
+				}
+			}
+			if (colomName == "cdi") {
+				Collections.sort(expcdi);
+
+				for (int m = 0; m < expcdi.size(); m++) {
+
+					if (!(expcdi.get(m).equals(actcdi.get(m)))) {
+						System.out.println("Coloum not sorted: " + m);
+						break;
+
+					} else {
+
+						System.out.println("expected value: " + expcdi + "actual value:" + actcdi);
+					}
+				}
+			} else {
+				System.out.println("Coloum not sorted ");
+
+			}
+
+		} catch (Exception ex) {
+			TestLog.log.info("Coloum not sorted:" + ex);
+		}
+	}
 }

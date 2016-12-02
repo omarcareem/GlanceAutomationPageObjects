@@ -112,6 +112,9 @@ public class DashboardPage extends BasePage {
 
 	@FindBy(xpath = "//div/button[contains(text(),'Okay')]")
 	WebElement btnDeleteConfirmOk;
+	
+	@FindBy(xpath = "//h1[@class='text-center']")
+	WebElement accessDenied;
 
 	WebDriverWait wait = new WebDriverWait(driver, 10);
 
@@ -145,6 +148,8 @@ public class DashboardPage extends BasePage {
 		}
 		return flag;
 	}
+	
+	
 
 	// text of the date range will selection through this
 	public void clickDateRange() {
@@ -478,4 +483,19 @@ public class DashboardPage extends BasePage {
 		return actualChartTitle;
 	}
 
+	// dashboard page access denied confirmation
+		public boolean verifyNavigationToAccessDeniedPage(String expectedMessage) {
+			boolean flag = false;
+			String actualMessage = accessDenied.getText();
+			if (actualMessage.contains(expectedMessage)) {
+				flag = true;
+				System.out.println("You are in the Access Denied page");
+			} else {
+				System.out.println("You are not in the dashboard page");
+				flag = false;
+			}
+
+			return flag;
+
+		}
 }

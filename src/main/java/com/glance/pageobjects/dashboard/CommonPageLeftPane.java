@@ -44,7 +44,7 @@ public class CommonPageLeftPane extends BasePage {
 	@FindBy(xpath = "//div[@class='profile_info']/h2")
 	WebElement txtUserNameLeft;
 
-	// account name
+	// account name ******************
 	@FindBy(xpath = "//a[contains(text(),'Account')]")
 	WebElement txtAccount;
 
@@ -56,7 +56,7 @@ public class CommonPageLeftPane extends BasePage {
 	@FindBy(xpath = "//div/ul/li[1]/ul/li[6]/a")
 	WebElement txtAccountAddNew;
 
-	// engagement name
+	// engagement name ****************
 	@FindBy(xpath = " //a[contains(text(),'Engagement')]")
 	WebElement txtEngagement;
 
@@ -64,7 +64,7 @@ public class CommonPageLeftPane extends BasePage {
 	@FindBy(xpath = "//div/ul/li[2]/ul/li[8]/a")
 	WebElement txtEngagementAddNew;
 
-	// project name
+	// project name ******************
 	@FindBy(xpath = "//a[contains(text(),'Project')]")
 	WebElement txtProject;
 
@@ -72,7 +72,7 @@ public class CommonPageLeftPane extends BasePage {
 	@FindBy(xpath = "//div/ul/li[3]/ul/li/a")
 	WebElement txtProjectAddNew;
 
-	// Individual name
+	// Individual name *************
 	@FindBy(xpath = "//a[contains(text(),'Individual')]")
 	WebElement txtIndividual;
 
@@ -175,12 +175,42 @@ public class CommonPageLeftPane extends BasePage {
 			TestLog.log.info("Clicking account icon");
 			txtAccount.click();
 			TestLog.log.info("Clicked");
-
+			System.out.println("click is done");
 		} catch (Exception ex) {
 			System.out.println("click on account failed!");
 		}
 
 	}
+	
+	// click on project *******************************************
+		public void clickProject() {
+
+			try {
+				TestLog.log.info("Clicking account icon");
+				txtProject.click();
+				TestLog.log.info("Clicked");
+
+			} catch (Exception ex) {
+				System.out.println("click on account failed!");
+			}
+
+		}
+		
+		// click on individual *******************************************
+				public void clickIndividual() {
+
+					try {
+						TestLog.log.info("Clicking account icon");
+						txtIndividual.click();
+						TestLog.log.info("Clicked");
+
+					} catch (Exception ex) {
+						System.out.println("click on account failed!");
+					}
+
+				}
+	
+	
 
 	// clicking elements under the Engagement drop down
 	By linkEngagementList = By.xpath("//a[contains(text(),'Engagement')]/../ul/li");
@@ -199,16 +229,21 @@ public class CommonPageLeftPane extends BasePage {
 
 	public void clickOnEngagementName(String engagementName) {
 
-		List<WebElement> linkEngagementNameList = driver.findElements(linkEngagementList);
+		List<WebElement> linkAccountNameList = driver.findElements(linkEngagementList);
+		int noOfAccounts = driver.findElements(linkEngagementList).size();
+		System.out.println(noOfAccounts);
 
-		for (WebElement engagementNames : linkEngagementNameList) {
-			String returnedEngagementName = engagementNames.getText();
-			if (returnedEngagementName == engagementName) {
-				engagementNames.click();
+		for (int i = 0; i < noOfAccounts; i++) {
+			String returnedAccountName = linkAccountNameList.get(i).getText();
+			System.out.println(returnedAccountName);
+			if (returnedAccountName.contains(engagementName)) {
+
+				WebDriverWait wait = new WebDriverWait(driver, 10);
+				wait.until(ExpectedConditions.elementToBeClickable(linkAccountNameList.get(i)));
+				linkAccountNameList.get(i).click();
 				break;
 			}
 		}
-
 	}
 
 	// method to select add new ************************
@@ -267,16 +302,21 @@ public class CommonPageLeftPane extends BasePage {
 
 	public void clickOnProjectName(String projectName) {
 
-		List<WebElement> linkProjectNameList = driver.findElements(linkProjectList);
+		List<WebElement> linkAccountNameList = driver.findElements(linkProjectList);
+		int noOfAccounts = driver.findElements(linkProjectList).size();
+		System.out.println(noOfAccounts);
 
-		for (WebElement projectNames : linkProjectNameList) {
-			String returnedProjectName = projectNames.getText();
-			if (returnedProjectName == projectName) {
-				projectNames.click();
+		for (int i = 0; i < noOfAccounts; i++) {
+			String returnedAccountName = linkAccountNameList.get(i).getText();
+			System.out.println(returnedAccountName);
+			if (returnedAccountName.contains(projectName)) {
+
+				WebDriverWait wait = new WebDriverWait(driver, 10);
+				wait.until(ExpectedConditions.elementToBeClickable(linkAccountNameList.get(i)));
+				linkAccountNameList.get(i).click();
 				break;
 			}
 		}
-
 	}
 
 	// clicking elements under the Individual drop down
@@ -296,13 +336,18 @@ public class CommonPageLeftPane extends BasePage {
 
 	public void clickOnIndividualName(String individualName) {
 
-		List<WebElement> linkIndividualNameList = driver.findElements(linkIndividualList);
+		List<WebElement> linkAccountNameList = driver.findElements(linkIndividualList);
+		int noOfAccounts = driver.findElements(linkIndividualList).size();
+		System.out.println(noOfAccounts);
 
-		for (WebElement individualNames : linkIndividualNameList) {
-			String returnedIndividualName = individualNames.getText();
-			if (returnedIndividualName == individualName) {
-				individualNames.click();
+		for (int i = 0; i < noOfAccounts; i++) {
+			String returnedAccountName = linkAccountNameList.get(i).getText();
+			System.out.println(returnedAccountName);
+			if (returnedAccountName.contains(individualName)) {
 
+				WebDriverWait wait = new WebDriverWait(driver, 10);
+				wait.until(ExpectedConditions.elementToBeClickable(linkAccountNameList.get(i)));
+				linkAccountNameList.get(i).click();
 				break;
 			}
 		}

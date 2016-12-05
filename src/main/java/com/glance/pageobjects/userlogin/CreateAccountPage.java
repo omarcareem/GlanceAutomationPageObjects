@@ -19,7 +19,7 @@ public class CreateAccountPage extends BasePage {
 	}
 	
 	//Title
-	@FindBy(xpath="//div/section/form/h1")
+	@FindBy(xpath="//div/section/form[@id='registerform']/h1")
 	 WebElement lblCreateAccount;
 	
 	//Create account Form
@@ -50,64 +50,82 @@ public class CreateAccountPage extends BasePage {
 	@FindBy(xpath="//div[4]/button[1]")
 	 WebElement popupOkaybtn;
 	
-	@FindBy(xpath="//div[4]/button[2]")
+	@FindBy(xpath="//div[3]/div[2]/div/div/div/div/div[4]/button[2]]")
 	 WebElement popupClosebtn;
 	
 	//Title
-	public String getCreateAccTitle() {
+	
+	
+	public boolean getCreateAccTitle(String lblCreateAccountTitle) {
 
-		return lblCreateAccount.getText();
+		boolean flag = false;
+
+		String popupMessageName = lblCreateAccount.getText();
+		if (popupMessageName.contains(lblCreateAccountTitle)) {
+			System.out.println("Navigation verified to:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println("Navigation to create Account page  is not verified");
+			flag = false;
+		}
+		return flag;
 
 	}
 
 	//Form Attributes
-	public void createUsername(String UserName){
+	public void createUsername(String userName){
 	
 	try{
 		TestLog.log.info("Creating user Name");
-		txtUserName.sendKeys("UserName");
-		TestLog.log.info("Created user Name"+ UserName);
+		txtUserName.clear();
+		txtUserName.sendKeys(userName);
+		TestLog.log.info("Created user Name"+ userName);
 	}
 	 catch(Exception ex){
+		 TestLog.log.info("Could not enter user name "+ex); 
 	 
 	 }
 }
 	
 
-	public void addemailAdd(String EmailAdd){
+	public void addemailAdd(String emailAdd){
 	
 	try{
 		TestLog.log.info("Entering user Name");
-		txtemailAdd.sendKeys("EmailAdd");
+		txtemailAdd.clear();
+		txtemailAdd.sendKeys(emailAdd);
 		TestLog.log.info("Entered user Name");
 	}
 	 catch(Exception ex){
+		 TestLog.log.info("Could not enter email address "+ex); 
 	 
 	 }
 }
 	
 
-	public void createpassword(String Password){
+	public void createpassword(String password){
 	
 		try{
 			TestLog.log.info("Creating user password");
-			txtPassword.sendKeys("Password");
-			TestLog.log.info("Created user password" + Password);
+			txtPassword.clear();
+			txtPassword.sendKeys(password);
+			TestLog.log.info("Created user password" + password);
 		}
 		 catch(Exception ex){
-		 
+			 TestLog.log.info("Could not enter password. "+ex); 
 		 }
 	}
 
-	public void confirmPassword(String ConPassword){
+	public void confirmPassword(String conPassword){
 	
 	try{
 		TestLog.log.info("Re entering user password");
-		txtConPassword.sendKeys("ConPassword");
-		TestLog.log.info("Re enterd user password" + ConPassword);
+		txtConPassword.clear();
+		txtConPassword.sendKeys(conPassword);
+		TestLog.log.info("Re enterd user password" + conPassword);
 	}
 	 catch(Exception ex){
-	 
+		 TestLog.log.info("Could not enter confirm password. "+ex); 
 	 }
 }
 
@@ -120,39 +138,48 @@ public class CreateAccountPage extends BasePage {
 		TestLog.log.info("Clicked submit button");
 	}
 	 catch(Exception ex){
-	 
+		 TestLog.log.info("Could not Click on submit button. "+ex); 
 	 }
 }
 	
 	//For Success  creation of account
-	public String getPopupMsg() {
+	public boolean getPopupMsg(String lblCreateAccPopupmsg) {
 
-		return lblPopupMsg.getText();
+		boolean flag = false;
+
+		String popupMessageName = lblPopupMsg.getText();
+		if (popupMessageName.contains(lblCreateAccPopupmsg)) {
+			System.out.println("Invalid  try is verified:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println("Ivalid try is not verified");
+			flag = false;
+		}
+		return flag;
 
 	}
-	
 
 	public void clickpopupOkay(){
 		
 		try{
-			TestLog.log.info("Clicking submit button");
+			TestLog.log.info("Clicking okay button");
 			popupClosebtn.click();
-			TestLog.log.info("Clicked submit button");
+			TestLog.log.info("Clicked okay button");
 		}
 		 catch(Exception ex){
-		 
+			 TestLog.log.info("Could not Click okay button of msg box. "+ex); 
 		 }
 	}
 	
 	public void clickpopupClose(){
 		
 		try{
-			TestLog.log.info("Clicking submit button");
-			popupClosebtn.click();
-			TestLog.log.info("Clicked submit button");
+			TestLog.log.info("Clicking cancel button");
+			popupOkaybtn.click();
+			TestLog.log.info("Clicked cancel button");
 		}
 		 catch(Exception ex){
-		 
+			 TestLog.log.info("Could not Click cancel button of msg box. "+ex); 
 		 }
 	}
 	
@@ -165,7 +192,7 @@ public class CreateAccountPage extends BasePage {
 		TestLog.log.info("Navigated to login page");
 	}
 	 catch(Exception ex){
-	 
+		 TestLog.log.info("Could not Click on login page link. "+ex); 
 	 }
 }
 	

@@ -30,7 +30,7 @@ public class LoginPage extends BasePage {
 	WebElement btnlogin;
 
 	// MessageBox
-	@FindBy(xpath = "//div/span[@id=jconfirm-box18893']")
+	@FindBy(xpath = "//div[3]/div")
 	WebElement lblLoginError;
 
 	@FindBy(xpath = "//div[4]/button[1]")
@@ -40,7 +40,7 @@ public class LoginPage extends BasePage {
 	WebElement btnMsgBoxCancel;
 
 	// Links to other Pages
-	@FindBy(xpath = "//div/p/a[@class='to_register']")
+	@FindBy(xpath = "//div[5]/p/a[@class='to_register']")
 	WebElement linkCreateAccount;
 
 	@FindBy(xpath = "//div[3]/a")
@@ -49,35 +49,48 @@ public class LoginPage extends BasePage {
 	
 	
 	// Get the title of Login Page
-	public String getLoginTitle() {
+	public boolean getLoginTitle(String lblLoginTitle) {
 
-		return lblLoginForm.getText();
+		boolean flag = false;
+
+		String popupMessageName = lblLoginForm.getText();
+		if (popupMessageName.contains(lblLoginTitle)) {
+			System.out.println("Navigated to  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println("Not navigated to LoginPage");
+			flag = false;
+		}
+		return flag;
 
 	}
-	
-	// return heading.getText().toString().contains("Apply to join our network as a developer");
 
 
 
 	//Form Attributes
-	public void enterUsername(String UserName) {
+	public void enterUsername(String userName) {
 
 		try {
+			
 			TestLog.log.info("Entering user Name");
-			txtUserName.sendKeys(UserName);
-			TestLog.log.info("Entered user Name as" + UserName);
+			txtUserName.clear();
+			txtUserName.sendKeys(userName);
+			TestLog.log.info("Entered user Name as" + userName);
 		} catch (Exception ex) {
+			TestLog.log.info("Could not enter user name "+ex); 
 
 		}
 	}
 
-	public void enterPassword(String Password) {
+	public void enterPassword(String password) {
 
 		try {
 			TestLog.log.info("Entering Password");
-			txtPassword.sendKeys(Password);
-			TestLog.log.info("Entered the password as" + Password);
+			txtPassword.clear();
+			txtPassword.sendKeys(password);
+			TestLog.log.info("Entered the password as" + password);
 		} catch (Exception ex) {
+			TestLog.log.info("Could not enter password. "+ex); 
 
 		}
 	}
@@ -89,6 +102,8 @@ public class LoginPage extends BasePage {
 			btnlogin.click();
 			TestLog.log.info("clicked login button");
 		} catch (Exception ex) {
+			
+			TestLog.log.info("Could not click login. "+ex); 
 
 		}
 
@@ -102,6 +117,8 @@ public class LoginPage extends BasePage {
 			linkCreateAccount.click();
 			TestLog.log.info("Navigated to Create Account Page");
 		} catch (Exception ex) {
+			
+			TestLog.log.info("Could not click create account link "+ex); 
 
 		}
 	}
@@ -110,19 +127,32 @@ public class LoginPage extends BasePage {
 
 		try {
 			TestLog.log.info("Navigating to Create Account Page");
-			linkCreateAccount.click();
+			linkLostPasssword.click();
 			TestLog.log.info("Navigated to Create Account Page");
 		} catch (Exception ex) {
+			
+			TestLog.log.info("Could not Click lost password link. "+ex); 
 
 		}
 	}
 
 	//pop up msgBox
-	public String getLoginError() {
+	public boolean verifyLoginError(String lblLoginErrormsg) {
 
-		return lblLoginError.getText();
+				boolean flag = false;
 
-	}
+				String popupMessageName = lblLoginError.getText();
+				if (popupMessageName.contains(lblLoginErrormsg)) {
+					System.out.println("Invalid login try is verified:  " + popupMessageName);
+					flag = true;
+				} else {
+					System.out.println("Ivalid Login error is not verified");
+					flag = false;
+				}
+				return flag;
+
+			}
+
 	
 	public void clickErrorOK() {
 
@@ -131,7 +161,8 @@ public class LoginPage extends BasePage {
 			btnMsgBoxOkay.click();
 			TestLog.log.info("clicked okay button");
 		} catch (Exception ex) {
-
+			
+			TestLog.log.info("Could not Click okay button of msg box. "+ex); 
 		}
 
 	}
@@ -143,6 +174,7 @@ public class LoginPage extends BasePage {
 			btnMsgBoxCancel.click();
 			TestLog.log.info("clicked cancel button");
 		} catch (Exception ex) {
+			TestLog.log.info("Could not Click cancel button of msg box. "+ex); 
 
 		}
 

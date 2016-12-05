@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.Select;
 import com.glance.pageobjects.common.BasePage;
 import com.glance.pageobjects.logs.TestLog;
 
+
 public class ProfileUpdatePage extends BasePage {
 
 	public ProfileUpdatePage(WebDriver driver) {
@@ -76,65 +77,57 @@ public class ProfileUpdatePage extends BasePage {
 	
 
 	//Title
-	public String getProfileUpdateTitle() {
+	public boolean getProfileUpdateTitle(String profileUpdateTitle) {
 
-			return lblProfileUpdateTitle.getText();
+		boolean flag = false;
 
+		String popupMessageName = lblProfileUpdateTitle.getText();
+		if (popupMessageName.contains(profileUpdateTitle)) {
+			System.out.println("Navigation verified to:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println("Navigation to profile update page  is not verified");
+			flag = false;
 		}
+		return flag;
 
-	//method to verify the profile update element 
-			public boolean FindUserDetailsElement(String expectedMessage){
-				boolean flag = false;
-				String actualMessage=lblProfileUpdateTitle.getText();
-				if (actualMessage.contains(expectedMessage)) {
-					flag = true;
-					System.out.println("User profile update Navigation Success");
-					}
-				else {
-					System.out.println("User profile update Navigation not Success");
-					flag = false;
-					}
-				
-				return flag;
-				
-			}
-	
+	}
 	//Form Attributes
-	public void changeUsername(String UserName){
+	public void changeUsername(String userName){
 		try{
     		TestLog.log.info("Changing user Name");
     		txtUserName.clear();
-    		txtUserName.sendKeys("UserName");
-    		TestLog.log.info("Changed user Name to" + UserName);
+    		txtUserName.sendKeys(userName);
+    		TestLog.log.info("Changed user Name to" + userName);
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not enter user name. "+ex); 
     	 }
     	
     }
 	
-	public void changeFirstName(String FirstName){
+	public void changeFirstName(String firstName){
 		try{
     		TestLog.log.info(" Changing user first name");
     		txtFirstName.clear();
-    		txtFirstName.sendKeys("FirstName");
-    		TestLog.log.info("Changed user first name to"+ FirstName);
+    		txtFirstName.sendKeys(firstName);
+    		TestLog.log.info("Changed user first name to"+ firstName);
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not enter first name. "+ex); 
     	 }
     	
     }
 	
-	public void changeLastname(String LastName){
+	public void changeLastname(String lastName){
 		try{
     		TestLog.log.info("Changing user last Name");
     		txtLastName.clear();
-    		txtLastName.sendKeys("LastName");
-    		TestLog.log.info("Changed user last Name to "+LastName);
+    		txtLastName.sendKeys(lastName);
+    		TestLog.log.info("Changed user last Name to "+lastName);
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not enter last name "+ex); 
     	 }
     	
     }
@@ -142,11 +135,11 @@ public class ProfileUpdatePage extends BasePage {
 	public void viewprofileImg(boolean image){
 		try{
     		TestLog.log.info("Checking user profile image");
-    		viewImg.equals("image");
+    		viewImg.equals(image);
     		TestLog.log.info("Checked user profile image" + image);
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not check image "+ex); 
     	 }
 		
     }
@@ -158,7 +151,7 @@ public class ProfileUpdatePage extends BasePage {
     		TestLog.log.info("Clicked change image link");
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not Click on the change image link. "+ex); 
     	 }
 		
     }
@@ -170,20 +163,20 @@ public class ProfileUpdatePage extends BasePage {
     		TestLog.log.info("Clicked choose image button");
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not Click on the choose image link "+ex); 
     	 }
 	
     }
 	
-	public void changeEmail(String EmailAdd){
+	public void changeEmail(String emailAdd){
 		try{
     		TestLog.log.info("Changing user last Name");
     		txtEmail.clear();
-    		txtEmail.sendKeys("EmailAdd");
-    		TestLog.log.info("Changed user last Name to "+EmailAdd);
+    		txtEmail.sendKeys(emailAdd);
+    		TestLog.log.info("Changed user last Name to "+emailAdd);
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not enter email address "+ex); 
     	 }
     	
     }
@@ -196,33 +189,31 @@ public class ProfileUpdatePage extends BasePage {
     		TestLog.log.info("Clicked change password button");
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not click on change password button. "+ex); 
     	 }
 		
     }
 	
-	public void changeNewPswd(String NewPassword){
+	public void changeNewPswd(String newPassword){
 		try{
     		TestLog.log.info("Entering user new password");
-    		txtNewPassword.clear();
-    		txtNewPassword.sendKeys("NewPassword");
-    		TestLog.log.info("Entered the user new password as" + NewPassword);
+    		txtNewPassword.sendKeys(newPassword);
+    		TestLog.log.info("Entered the user new password as" + newPassword);
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not enter password "+ex); 
     	 }
 		
     }
 	
-	public void changeConPassword(String ConPassword){
+	public void changeConPassword(String conPassword){
 		try{
     		TestLog.log.info("Entering user confirm password");
-    		txtConPassword.clear();
-    		txtConPassword.sendKeys("ConPassword");
-    		TestLog.log.info("Entered the user confirm password"+ ConPassword);
+    		txtConPassword.sendKeys(conPassword);
+    		TestLog.log.info("Entered the user confirm password"+ conPassword);
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not enter confirm password "+ex); 
     	 }
 		
     }
@@ -235,7 +226,7 @@ public class ProfileUpdatePage extends BasePage {
     		TestLog.log.info("Selected "+ jobRole );
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not select from drop down "+ex); 
     	 }
 		
     }
@@ -248,7 +239,7 @@ public class ProfileUpdatePage extends BasePage {
     		TestLog.log.info("clicked Update button");
     	}
     	 catch(Exception ex){
-    	 
+    		 TestLog.log.info("Could not Click oon submit button "+ex); 
     	 }
     	
     }
@@ -262,15 +253,26 @@ public class ProfileUpdatePage extends BasePage {
     		TestLog.log.info("clicked cancel button");
     	}
     	 catch(Exception ex){
-    	 
+    		 TestLog.log.info("Could not Click on the cancel button "+ex); 
     	 }
     	
     }
 	
 	//Pop up Messages for Success and Unsuccess
-	public String getpopupMsgContent() {
+	
+	public boolean getpopupMsgContent(String profileUpdateMsgContent) {
 
-		return lblPopupMsg.getText();
+		boolean flag = false;
+
+		String popupMessageName = lblPopupMsg.getText();
+		if (popupMessageName.contains(profileUpdateMsgContent)) {
+			System.out.println("Profile update try is verified as:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println(" Profile update try is not verified");
+			flag = false;
+		}
+		return flag;
 
 	}
 
@@ -283,23 +285,29 @@ public class ProfileUpdatePage extends BasePage {
     		TestLog.log.info("clicked Okay button");
     	}
     	 catch(Exception ex){
-    	 
+    		 TestLog.log.info("Could not Click okay button of msg box. "+ex); 
     	 }
     	
     }
 
-	public void clickPopupCancelBtn(){
+	public void clickPopupCloseBtn(){
 	
 		try{
-		TestLog.log.info("Clicking cancel button");
+		TestLog.log.info("Clicking close button");
 		btnPopupCancel.click();
-		TestLog.log.info("clicked cancel button");
+		TestLog.log.info("clicked close button");
 		}
 	 catch(Exception ex){
-	 
+		 TestLog.log.info("Could not Click close button of msg box. "+ex); 
 	 }
 	
 }
+	/*public void getUserNameValue(){
+		
+		String valUserName = Element.getAttribute(txtUserName);
+	
+}
+*/
     
 }
 

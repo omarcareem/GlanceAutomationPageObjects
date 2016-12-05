@@ -24,8 +24,8 @@ public class LostPasswordPage extends BasePage {
 	 WebElement lblLostPasswordTitle;
 	
 	//Form Attributes
-	@FindBy(id="user_id")
-	 WebElement txtUserID;
+	@FindBy(id="user_name")
+	 WebElement txtUserName;
 	
 	@FindBy(id="email_id")
 	 WebElement txtEmailAdd;
@@ -37,7 +37,7 @@ public class LostPasswordPage extends BasePage {
 	 WebElement backBtn;
 	
 	//Popup msg Box
-	@FindBy(xpath="	//div[3]/div")
+	@FindBy(xpath="	//div/div[3]/div")
 	 WebElement lblLostPasswordmsg;
 	
 	@FindBy(xpath="	//div[4]/button[1]")
@@ -51,32 +51,44 @@ public class LostPasswordPage extends BasePage {
 	
 	
 	//Title
-	public String getLostPasswordTitle() {
+	public boolean getLostPasswordTitle(String lblLostpasswordtTitle) {
 
-		return lblLostPasswordTitle.getText();
+		boolean flag = false;
+
+		String popupMessageName = lblLostPasswordTitle.getText();
+		if (popupMessageName.contains(lblLostpasswordtTitle)) {
+			System.out.println("Navigated to:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println(" navigation is not verified");
+			flag = false;
+		}
+		return flag;
 
 	}
 	
 	//Form Attributes
-	public void enterUserID(String UserName){
+	public void enterUserName(String userName){
 		try{
-    		TestLog.log.info("Entering user ID");
-    		txtUserID.sendKeys("UserName");
-    		TestLog.log.info("Entered UserID" );
+    		TestLog.log.info("Entering user Name");
+    		txtUserName.clear();
+    		txtUserName.sendKeys(userName);
+    		TestLog.log.info("Entered User Name" );
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not enter user name "+ex); 
     	 }
     	
     }
-	public void enterEmailAdd(String EmailAdd){
+	public void enterEmailAdd(String emailAdd){
 		try{
     		TestLog.log.info("Entering Email Address");
-    		txtEmailAdd.sendKeys("EmailAdd");
+    		txtEmailAdd.clear();
+    		txtEmailAdd.sendKeys(emailAdd);
     		TestLog.log.info("Entered Email Address");
     	}
     	 catch(Exception ex){
- 	 
+    		 TestLog.log.info("Could not enter email address "+ex); 
     	 }
     	
     }
@@ -89,7 +101,7 @@ public class LostPasswordPage extends BasePage {
     		TestLog.log.info("clicked submit button");
     	}
     	 catch(Exception ex){
-    	 
+    		 TestLog.log.info("Could not Click click on submit botton "+ex); 
     	 }
     	
     }
@@ -103,27 +115,37 @@ public class LostPasswordPage extends BasePage {
 		TestLog.log.info("clicked back button");
 	}
 	 catch(Exception ex){
-	 
+		 TestLog.log.info("Could not Click on the back button "+ex); 
 	 }
 	
 }
 
 	//For Unsuccess submission 
-	public String getLostPasswordMsgContent() {
+	public boolean getLostPasswordMsgContent(String lblLostpasswordtmsg) {
 
-		return lblLostPasswordTitle.getText();
+		boolean flag = false;
+
+		String popupMessageName = lblLostPasswordmsg.getText();
+		if (popupMessageName.contains(lblLostpasswordtmsg)) {
+			System.out.println("Invalid lost password request error try is verified:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println("Ivalid lost password request error is not verified");
+			flag = false;
+		}
+		return flag;
 
 	}
 
 	public void clickPopupOkay(){
 		
 		try{
-			TestLog.log.info("Clicking back button");
+			TestLog.log.info("Clicking okay button");
 			btnLostPasswordOkay.click();
-			TestLog.log.info("clicked back button");
+			TestLog.log.info("clicked okay button");
 		}
 		 catch(Exception ex){
-		 
+			 TestLog.log.info("Could not Click okay button of msg box. "+ex); 
 		 }
 		
 	}
@@ -131,12 +153,12 @@ public class LostPasswordPage extends BasePage {
 	public void clickPopupCancel(){
 		
 		try{
-			TestLog.log.info("Clicking back button");
+			TestLog.log.info("Clicking cacel button");
 			btnLostPasswordCancel.click();
-			TestLog.log.info("clicked back button");
+			TestLog.log.info("clicked cancel button");
 		}
 		 catch(Exception ex){
-		 
+			 TestLog.log.info("Could not Click cancel button of msg box. "+ex); 
 		 }
 		
 	}

@@ -1,4 +1,5 @@
 package com.glance.pageobjects.usermanagement;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -34,6 +35,12 @@ public class ManageGroupPage extends BasePage {
 
 	@FindBy(xpath = "//input[@class='btn btn-success']")
 	WebElement btnAdd;
+	
+	@FindBy(xpath=("//button[@class='btn btn-success']"))   
+	WebElement btnOkayforAddGrp;
+	
+	@FindBy(xpath=("//button[@class='btn btn-danger']"))   
+	WebElement btnOkayforDeleteGrp;
 
 	@FindBy(xpath = "//button[text()='Cancel']")
 	WebElement btnCancel;
@@ -97,7 +104,7 @@ public class ManageGroupPage extends BasePage {
 		try {
 			TestLog.log.info("Typing on Group Name input field");
 			txtGroupName.sendKeys(grpName);
-			TestLog.log.info("Typed on funding start input field");
+			TestLog.log.info("Typed on Group Name input field");
 
 		} catch (Exception ex) {
 			System.out.println("Couldn't input Group name!");
@@ -188,13 +195,15 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
-	public void clickDelete(String groupName) {
+	public void clickDelete(String groupNameNew) {
 
 		try {
 			TestLog.log.info("clicking Delete");
 			
-			WebElement btnDelete = driver.findElement(By.xpath("//td[text()='" + groupName + "']/../td[5]/div/a[2]"));
+			WebElement btnDelete = driver.findElement(By.xpath("//td[text()='" + groupNameNew + "']/../td[5]/div/a[2]"));
 			btnDelete.click();
+			Thread.sleep(1000);
+			btnOkayforDeleteGrp.click();
 			TestLog.log.info("clicked Delete");
 
 		} catch (Exception ex) {
@@ -202,5 +211,70 @@ public class ManageGroupPage extends BasePage {
 		}
 
 	}
+	//verfiy added group
+		public boolean verifyAdded(String grpName) {
+
+	        boolean flag = false;
+
+	        WebElement tblUser = driver.findElement(By.xpath("//tbody"));
+	        List<WebElement> tblRow = tblUser.findElements(By.tagName("tr"));
+
+	        outerloop: {
+	               for (WebElement row : tblRow) {
+
+	                     List<WebElement> tblData = row
+	                                   .findElements(By.xpath("//td[3]"));
+
+	                     for (WebElement data : tblData) {
+
+	                            String groupName = data.getText();
+	                            System.out.println(groupName);
+	                            if (groupName.contains(grpName)) {
+	                                   System.out.println("Successfully Added");
+	                                   flag = true;
+	                                   break outerloop;
+
+	                            }
+
+	                     }
+
+	               }
+	        }
+	        return flag;
+	 }
+	   
+		//verify group deleted
+		public boolean verifyDeleted(String grpNameNew) {
+
+	        boolean flag = true;
+
+	        WebElement tblUser = driver.findElement(By.xpath("//tbody"));
+	        List<WebElement> tblRow = tblUser.findElements(By.tagName("tr"));
+
+	        outerloop: {
+	               for (WebElement row : tblRow) {
+
+	                     List<WebElement> tblData = row
+	                                   .findElements(By.xpath("//td[3]"));
+
+	                     for (WebElement data : tblData) {
+
+	                            String groupName = data.getText();
+	                            System.out.println(groupName);
+	                            if (groupName.contains(grpNameNew)) {
+	                                   System.out.println("Successfully Deleted");
+	                                   flag = false;
+	                                   break outerloop;
+
+	                            }
+
+	                     }
+
+	               }
+	        }
+	        return flag;
+	 }
+	
+	
 
 }

@@ -43,11 +43,18 @@ public class CommonPageLeftPane extends BasePage {
 	// user name in the left panel
 	@FindBy(xpath = "//div[@class='profile_info']/h2")
 	WebElement txtUserNameLeft;
+	
+	
 
 	// account name ******************
 	@FindBy(xpath = "//a[contains(text(),'Account')]")
 	WebElement txtAccount;
 
+	
+	//error no dashborad define
+	@FindBy(xpath = "//p[contains(text(),'No dashboard elements defined for the selected account.')]")
+	WebElement errorNodbDefineAcc;
+			
 	// Add new Account
 	@FindBy(xpath = "//a[contains(text(),'Account')]/../ul/li[@class='btn-xs btn-primary']/a")
 	WebElement linkAccountAddNew;
@@ -59,6 +66,10 @@ public class CommonPageLeftPane extends BasePage {
 	// engagement name ****************
 	@FindBy(xpath = " //a[contains(text(),'Engagement')]")
 	WebElement txtEngagement;
+	
+	//error msg for Project
+		//@FindBy(xpath = "//h1[contains(text(),'Access Denied!')]")
+		//WebElement errorAccessDProj;
 
 	// Add new Engagement
 	@FindBy(xpath = "//div/ul/li[2]/ul/li[8]/a")
@@ -126,31 +137,19 @@ public class CommonPageLeftPane extends BasePage {
 		System.out.println(noOfAccounts);
 
 		for (int i = 0; i < noOfAccounts; i++) {
-			String returnedAccountName = linkAccountNameList.get(i).getText();
+			String returnedAccountName = linkAccountNameList.get(i+1).getText();
 			System.out.println(returnedAccountName);
 			if (returnedAccountName.contains(accountName)) {
 
 				WebDriverWait wait = new WebDriverWait(driver, 10);
-				wait.until(ExpectedConditions.elementToBeClickable(linkAccountNameList.get(i)));
-				linkAccountNameList.get(i).click();
+				wait.until(ExpectedConditions.elementToBeClickable(linkAccountNameList.get(i+1)));
+				linkAccountNameList.get(i+1).click();
 				break;
 			}
 
 		}
 
-		// String myAccountName=linkAccountNameList.get(1).getText();
-		// System.out.println(myAccountName);
-
-		/*
-		 * for (WebElement accountNames : linkAccountNameList) { String
-		 * returnedAccountName=accountNames.getText(); System.out.println(
-		 * "Account Name is: "+returnedAccountName);
-		 * if(returnedAccountName.contains(accountName)){
-		 * 
-		 * WebDriverWait wait = new WebDriverWait(driver, 10);
-		 * wait.until(ExpectedConditions.elementToBeClickable(accountNames));
-		 * accountNames.click(); break; } }
-		 */
+		
 
 	}
 
@@ -227,23 +226,30 @@ public class CommonPageLeftPane extends BasePage {
 		return listOfEngagementNames;
 	}
 
-	public void clickOnEngagementName(String engagementName) {
+public void clickOnEngagementName(String engagementName) {
 
-		List<WebElement> linkAccountNameList = driver.findElements(linkEngagementList);
-		int noOfAccounts = driver.findElements(linkEngagementList).size();
-		System.out.println(noOfAccounts);
-
-		for (int i = 0; i < noOfAccounts; i++) {
-			String returnedAccountName = linkAccountNameList.get(i).getText();
-			System.out.println(returnedAccountName);
-			if (returnedAccountName.contains(engagementName)) {
-
+		
+		List<WebElement> linkEngagementNameList = driver.findElements(linkEngagementList);
+			
+			int noOfEngagements = driver.findElements(linkEngagementList).size();
+		System.out.println(noOfEngagements);
+           
+		   for(int i=0;i<noOfEngagements;i++){
+			String returnedEngagementName=linkEngagementNameList.get(i).getText(); 
+			System.out.println(returnedEngagementName);
+			if(returnedEngagementName.contains(engagementName)){
+				
 				WebDriverWait wait = new WebDriverWait(driver, 10);
-				wait.until(ExpectedConditions.elementToBeClickable(linkAccountNameList.get(i)));
-				linkAccountNameList.get(i).click();
+				wait.until(ExpectedConditions.elementToBeClickable(linkEngagementNameList.get(i)));
+				linkEngagementNameList.get(i).click();
 				break;
 			}
+			
 		}
+		
+	
+			
+		
 	}
 
 	// method to select add new ************************
@@ -300,23 +306,27 @@ public class CommonPageLeftPane extends BasePage {
 		return listOfProjectNames;
 	}
 
-	public void clickOnProjectName(String projectName) {
+public void clickOnProjectName(String projectName) {
 
-		List<WebElement> linkAccountNameList = driver.findElements(linkProjectList);
-		int noOfAccounts = driver.findElements(linkProjectList).size();
-		System.out.println(noOfAccounts);
-
-		for (int i = 0; i < noOfAccounts; i++) {
-			String returnedAccountName = linkAccountNameList.get(i).getText();
-			System.out.println(returnedAccountName);
-			if (returnedAccountName.contains(projectName)) {
-
+		
+		List<WebElement> linkProjectNameList = driver.findElements(linkProjectList);
+			
+			int noOfProjects = driver.findElements(linkProjectList).size();
+		System.out.println(noOfProjects);
+           
+		   for(int i=0;i<noOfProjects;i++){
+			String returnedProjectName=linkProjectNameList.get(i).getText(); 
+			System.out.println(returnedProjectName);
+			if(returnedProjectName.contains(projectName)){
+				
 				WebDriverWait wait = new WebDriverWait(driver, 10);
-				wait.until(ExpectedConditions.elementToBeClickable(linkAccountNameList.get(i)));
-				linkAccountNameList.get(i).click();
+				wait.until(ExpectedConditions.elementToBeClickable(linkProjectNameList.get(i)));
+				linkProjectNameList.get(i).click();
 				break;
 			}
+			
 		}
+		
 	}
 
 	// clicking elements under the Individual drop down
@@ -336,22 +346,24 @@ public class CommonPageLeftPane extends BasePage {
 
 	public void clickOnIndividualName(String individualName) {
 
-		List<WebElement> linkAccountNameList = driver.findElements(linkIndividualList);
-		int noOfAccounts = driver.findElements(linkIndividualList).size();
-		System.out.println(noOfAccounts);
+		List<WebElement> linkIndividualNameList = driver.findElements(linkIndividualList);
 
-		for (int i = 0; i < noOfAccounts; i++) {
-			String returnedAccountName = linkAccountNameList.get(i).getText();
-			System.out.println(returnedAccountName);
-			if (returnedAccountName.contains(individualName)) {
-
+		int noOfIndividuals = driver.findElements(linkIndividualList).size();
+		System.out.println(noOfIndividuals);
+		
+		 for(int i=0;i<noOfIndividuals;i++){
+			String returnedIndividualName=linkIndividualNameList.get(i).getText(); 
+			System.out.println(returnedIndividualName);
+			if(returnedIndividualName.contains(individualName)){
+				
 				WebDriverWait wait = new WebDriverWait(driver, 10);
-				wait.until(ExpectedConditions.elementToBeClickable(linkAccountNameList.get(i)));
-				linkAccountNameList.get(i).click();
+				wait.until(ExpectedConditions.elementToBeClickable(linkIndividualNameList.get(i)));
+				linkIndividualNameList.get(i).click();
 				break;
-			}
+		
+		    }
 		}
-
+		
 	}
 
 	// clicking on glance icon
@@ -438,20 +450,123 @@ public class CommonPageLeftPane extends BasePage {
 
 	}
 
-	public void clickOnAccount() {
+
+	
+	public void clickOnAccount(){
 		try {
 			TestLog.log.info("Clicking on account");
 			WebDriverWait wait = new WebDriverWait(driver, 5);
 			wait.until(ExpectedConditions.visibilityOf(txtAccount));
 			txtAccount.click();
-
+			
 			TestLog.log.info("Clicked on Account");
 
 		} catch (Exception ex) {
-			System.out.println("Could not click on Account link. Due to: " + ex);
+			System.out.println("Could not click on Account link. Due to: "+ex);
 		}
-
+		
+		
+		
 	}
+	
+	
+	
+	public void clickOnIndividual(){
+		try {
+			TestLog.log.info("Clicking on individual");
+			WebDriverWait wait = new WebDriverWait(driver, 5);
+			wait.until(ExpectedConditions.visibilityOf(txtIndividual));
+			txtIndividual.click();
+			
+			TestLog.log.info("Clicked on individual");
+
+		} catch (Exception ex) {
+			System.out.println("Could not click on individual link. Due to: "+ex);
+		}
+		
+		
+		
+	}
+	
+	public void clickOnEngagement(){
+		try {
+			TestLog.log.info("Clicking on engagement");
+			WebDriverWait wait = new WebDriverWait(driver, 5);
+			wait.until(ExpectedConditions.visibilityOf(txtEngagement));
+			txtEngagement.click();
+			
+			TestLog.log.info("Clicked on Engagement");
+
+		} catch (Exception ex) {
+			System.out.println("Could not click on Engagement link. Due to: "+ex);
+		}
+		
+		
+		
+	}
+	
+	public void clickOnProject(){
+		try {
+			TestLog.log.info("Clicking on project");
+			WebDriverWait wait = new WebDriverWait(driver, 5);
+			wait.until(ExpectedConditions.visibilityOf(txtProject));
+			txtProject.click();
+			
+			TestLog.log.info("Clicked on project");
+
+		} catch (Exception ex) {
+			System.out.println("Could not click on project link. Due to: "+ex);
+		}
+		
+		
+		
+	}
+	 
+	/*public boolean verifyAccessDenied(){
+	WebElement errorAccessDProj;
+	errorAccessDProj=driver.findElement(By.xpath("//h1[contains(text(),'Access Denied!')]"));
+
+	
+	boolean flag = false;
+	
+	
+	String text = errorAccessDProj.getText();
+	if (text.contains("Access Denied")){
+		flag=true;
+	
+	}
+	
+	return flag;
+}*/
+	
+	public boolean verifyNoDashboardDefineAcc() {
+		WebElement errorNodbDefineAcc;
+		errorNodbDefineAcc=driver.findElement(By.xpath("//p[contains(text(),'No dashboard elements defined for the selected account.')]"));
+		
+	    boolean flag = false;
+		
+		String text = errorNodbDefineAcc.getText();
+		if(text.contains("No dashboard elements defined")){
+			flag= true;
+		}
+		
+		return flag;
+	}
+	
+	//Verify the Pancake icon
+		 public boolean verifyToggling() {
+			    boolean flag= false;
+			    String glanceLink = txtLogo.getText();
+			  
+			    if(glanceLink.contains("GLANCe")) {
+			    	System.out.println("Toggling verified");
+			    	flag = true;
+			    }
+			    
+			    return flag;
+			    
+			}
+	
 
 	// verify added
 	public boolean verifyAdded(String accountName) {

@@ -92,10 +92,7 @@ public class SettingsPage extends BasePage {
 
 	@FindBy(xpath = "//button[@class='btn btn-info']")
 	WebElement btnSaveOK;
-
-	@FindBy(xpath = "//button[@class='btn btn-default']")
-	WebElement btnSaveClose;
-
+	
 	@FindBy(xpath = "//a[@class='btn btn-success']")
 	WebElement btnProfileUpdate;
 
@@ -517,21 +514,7 @@ public class SettingsPage extends BasePage {
 
 	}
 
-	// Click on Save Close Button
-	public void clickSaveCloseBtn() {
-
-		try {
-			TestLog.log.info("Clicking on Save Close Button");
-			btnSaveClose.click();
-			TestLog.log.info("Clicked on Save Close Button");
-
-		} catch (Exception ex) {
-			TestLog.log.info("Could not Click on the Save Close Button. " + ex);
-
-		}
-
-	}
-
+	
 	// Click on Profile Update Button
 	public void clickProfileUpdateBtn() {
 

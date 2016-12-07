@@ -92,6 +92,8 @@ public class ProfileUpdatePage extends BasePage {
 		return flag;
 
 	}
+	
+	
 	//Form Attributes
 	public void changeUsername(String userName){
 		try{

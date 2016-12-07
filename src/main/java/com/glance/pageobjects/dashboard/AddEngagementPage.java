@@ -9,7 +9,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.glance.pageobjects.common.BasePage;
 import com.glance.pageobjects.logs.TestLog;
@@ -95,13 +97,14 @@ public class AddEngagementPage extends BasePage {
 		try {
 			TestLog.log.info("enter engagement name");
 			txtEngagementName.sendKeys(valueEngagementName);
+			
 			TestLog.log.info("Engagement name will appear as AVA");
 
 		} catch (Exception ex) {
 			TestLog.log.info("Error entering engagement name" + ex);
 		}
 	}
-
+	
 	// method for selecting an account
 	public void selectAccount(String lblAccountValue) {
 		try {
@@ -276,4 +279,73 @@ public class AddEngagementPage extends BasePage {
 		return flag;
 	}
 
+	//*******************************************************
+	public void enterEngagementName2(String engagementName) {
+		try {
+			wait.until(ExpectedConditions.visibilityOf(txtEngagementName));
+			TestLog.log.info("Entering a engagement");
+			txtEngagementName.clear();
+			txtEngagementName.sendKeys(engagementName);
+			TestLog.log.info("Entered the " + engagementName + " title");
+		} catch (Exception ex) {
+			TestLog.log.info("Unable to enter the engagement. Due to: " + ex);
+		}
+	}
+	
+	WebDriverWait wait = new WebDriverWait(driver, 10);
+	@FindBy(xpath = "//select[@id='account_id']")
+	WebElement drpdwnAccount2;
+	public void selectAccount2(String accountType) {
+		try {
+			Select dropSelectAccount = new Select(drpdwnAccount2);
+			wait.until(ExpectedConditions.visibilityOf(drpdwnAccount2));
+			TestLog.log.info("Selecting an account");
+			dropSelectAccount.selectByVisibleText(accountType);
+			TestLog.log.info("Selected " + accountType + " from the drop down");
+		} catch (Exception ex) {
+			TestLog.log.info("Unable to select an account. Due to: " + ex);
+		}
+	}
+	
+	@FindBy(xpath = "//select[@id='delivery_method_id']")
+	WebElement drpdwnDeliveryMethod2;
+	public void selectDeliveryMethod2(String deliveryMethod) {
+		try {
+			Select dropSelectdeliveryMethod = new Select(drpdwnDeliveryMethod2);
+			wait.until(ExpectedConditions.visibilityOf(drpdwnDeliveryMethod2));
+			TestLog.log.info("Selecting a Delivery Method");
+			dropSelectdeliveryMethod.selectByVisibleText(deliveryMethod);
+			TestLog.log.info("Selected " + deliveryMethod + " from the drop down");
+		} catch (Exception ex) {
+			TestLog.log.info("Unable to select a Delivery Method. Due to: " + ex);
+		}
+	}
+	
+	@FindBy(xpath = "//select[@id='contract_type_id']")
+	WebElement drpdwnContractType2;
+	public void selectContractType2(String contractType) {
+		try {
+			Select dropSelectContractType = new Select(drpdwnContractType2);
+			wait.until(ExpectedConditions.visibilityOf(drpdwnContractType2));
+			TestLog.log.info("Selecting a Contract Type");
+			dropSelectContractType.selectByVisibleText(contractType);
+			TestLog.log.info("Selected " + contractType + " from the drop down");
+		} catch (Exception ex) {
+			TestLog.log.info("Unable to select a Contract Type. Due to: " + ex);
+		}
+	}
+
+	public void enterYear2(String years) {
+		try {
+			wait.until(ExpectedConditions.visibilityOf(txtYears));
+			TestLog.log.info("Entering a year");
+			txtYears.clear();
+			txtYears.sendKeys(years);
+			TestLog.log.info("Entered the " + years + " title");
+		} catch (Exception ex) {
+			TestLog.log.info("Unable to enter the year. Due to: " + ex);
+		}
+	}
+	
+	//*******************************************************
 }

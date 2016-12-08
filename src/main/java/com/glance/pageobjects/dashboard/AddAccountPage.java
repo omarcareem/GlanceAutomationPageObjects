@@ -20,6 +20,9 @@ public class AddAccountPage extends BasePage {
 	@FindBy(xpath = "//div[@class='x_title']/h2")
 	WebElement lblPageName;
 
+	@FindBy(xpath = "//h1[@class='text-center']")
+	WebElement accessDeniedMessage;
+
 	@FindBy(id = "account_name")
 	WebElement txtAccountName;
 
@@ -45,6 +48,9 @@ public class AddAccountPage extends BasePage {
 	WebElement btnCancel;
 
 	@FindBy(xpath = "//i[@class='fa fa-chevron-up']")
+	WebElement clickExpand;
+	
+	@FindBy(xpath = "//i[@class='fa fa-chevron-down']")
 	WebElement clickCollapse;
 
 	@FindBy(xpath = "//i[@class='fa fa-close']")
@@ -63,6 +69,25 @@ public class AddAccountPage extends BasePage {
 
 		} else {
 			System.out.println("You are not in the add account page");
+			flag = false;
+		}
+
+		return flag;
+	}
+
+	// access denied message
+	public boolean verifyAccessDeniedMessage(String expectedMessage) {
+
+		boolean flag;
+
+		String actualMessage = accessDeniedMessage.getText();
+
+		if (actualMessage.contains(expectedMessage)) {
+			flag = true;
+			System.out.println("User does not have access");
+
+		} else {
+			System.out.println("User have access");
 			flag = false;
 		}
 
@@ -147,20 +172,21 @@ public class AddAccountPage extends BasePage {
 		}
 	}
 
-	// clicking collapse
-	public void clickCollapse() {
+	//click collapse and expand
+		public void clickCollapseExpand() {
 
-		try {
+			try {
 
-			TestLog.log.info("Clicking the collapse icon");
-			clickCollapse.click();
-			TestLog.log.info("Clicked the collapse icon");
+				TestLog.log.info("Clicking the collapse icon");
+				clickCollapse.click();
+				clickExpand.click();
+				TestLog.log.info("Clicked the collapse icon");
+			}
+
+			catch (Exception ex) {
+				TestLog.log.info("Could not click collapse. " + ex);
+			}
 		}
-
-		catch (Exception ex) {
-			TestLog.log.info("Could not enter the account name. " + ex);
-		}
-	}
 
 	// clicking close
 	public void clickClose() {

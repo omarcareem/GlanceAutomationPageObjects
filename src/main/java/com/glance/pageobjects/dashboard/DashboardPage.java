@@ -423,7 +423,9 @@ public class DashboardPage extends BasePage {
 	public void selectOkayInPopup() {
 		try {
 			TestLog.log.info("select go to dashboard");
-			((WebElement) okayBtn).click();
+			//((WebElement) okayBtn).click();
+			//driver.findElement(okayBtn).click();
+			btnDeleteConfirmOk.click();
 			TestLog.log.info("navigate to dashboard page");
 
 		} catch (Exception ex) {

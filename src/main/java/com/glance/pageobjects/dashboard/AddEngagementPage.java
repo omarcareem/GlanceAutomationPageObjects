@@ -6,7 +6,6 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -76,6 +75,9 @@ public class AddEngagementPage extends BasePage {
 
 	@FindBy(xpath = "//div[@class='row tile_count']/div[@class='jumbotron']/h1")
 	WebElement lblDashboardPageName;
+	
+	@FindBy(xpath = "//div[@class='x_title']/h2")
+	WebElement headChartTitle;
 
 	// method for identifying the page title
 	public boolean getPageName(String lblExpectedTitle) {
@@ -345,6 +347,14 @@ public class AddEngagementPage extends BasePage {
 		} catch (Exception ex) {
 			TestLog.log.info("Unable to enter the year. Due to: " + ex);
 		}
+	}
+	
+	public String verifyChartTitle() {
+		wait.until(ExpectedConditions.visibilityOf(headChartTitle));
+		String actualChartTitle = headChartTitle.getText();
+		System.out.println(actualChartTitle);
+
+		return actualChartTitle;
 	}
 	
 	//*******************************************************

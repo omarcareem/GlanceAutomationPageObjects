@@ -1,22 +1,14 @@
 package com.glance.pageobjects.dashboard;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -737,11 +729,12 @@ public class DeleteSearchRecordPage extends BasePage {
 
 					String record = data.getText();
 					if (record.contains(recordIn)) {
-						System.out.println("deleted");
+						System.out.println("not deleted");
 						flag = false;
 						break outerloop;
 					} else {
-						System.out.println("not deleted");
+						System.out.println("deleted");
+						break;
 					}
 
 				}

@@ -35,7 +35,7 @@ public class AddProjectPage extends BasePage {
 
 	@FindBy(id = "project_name")
 	WebElement txtProjectName;
-
+	
 	@FindBy(xpath = "//div[1]/div[1]/span")
 	WebElement lblProjectName;
 
@@ -156,6 +156,25 @@ public class AddProjectPage extends BasePage {
 		}
 
 	}
+	
+	public boolean verifyWrongProjectName(String expectedMessage){
+		boolean flag = false;
+		String actualMessage=lblProjectName.getText();
+		if (actualMessage.contains(expectedMessage)) {
+			flag = true;
+			System.out.println("Error message for non alphanumeric values");
+		}
+		else {
+			System.out.println("No any Error message for non alphanumeric values");
+			flag = false;
+			}
+		
+		return flag;
+		
+		
+	}
+	
+	
 
 	// Enter the Client Project ID
 	public void enterClientProjectId(String clientProjectId) {

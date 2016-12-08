@@ -1,13 +1,16 @@
-package com.glance.pageobjects.usermanagement;
+package com.glance.usermanagement.tests;
 
+
+
+
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-
-import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.testng.Assert;
+import org.openqa.selenium.support.PageFactory;
 
 import com.glance.pageobjects.common.BasePage;
 import com.glance.pageobjects.logs.TestLog;
@@ -16,11 +19,12 @@ public class DeleteUser extends BasePage {
 
 	public DeleteUser(WebDriver driver) {
 		super(driver);
+		PageFactory.initElements(driver,this);
 		// TODO Auto-generated constructor stub
 	}
 	
-	@FindBy(xpath=("//div[@class='x_title']/h2"))
-	WebElement Pagelbl;
+	@FindBy(xpath=("//div[@class='title_left']/h3"))
+	WebElement pagelbl;
 	
 	@FindBy(id="deleteButton")
 	WebElement btnDelete;
@@ -28,43 +32,59 @@ public class DeleteUser extends BasePage {
 	@FindBy(id="backButton")
 	WebElement btnBack;
 	
+	@FindBy(xpath=("//button[@class='btn btn-danger']"))   
+	WebElement btnOk;
+	
+	@FindBy(xpath=("//button[@class='btn btn-default']"))   
+	WebElement btnClose;
+	
+	@FindBy(xpath=("//input[@type='search']"))   
+	WebElement txtSearch;
 	
 	//Get the heading of the page
-	public String getTitle(){
-		return Pagelbl.getText();
+	public boolean getTitle(){
+		Boolean flag;
+		flag= false;
+		String title= pagelbl.getText();
+		if (title.contains("User Details")){
+			System.out.println("In manage user page");
+			flag=true;
+		}
+		return flag;
 		
 		
 	}
+
 	
-	//Verify the heading
-	public void getlabl(String labl){
-		String actual=Pagelbl.getText();
-		Assert.assertEquals(labl, actual);
+	//Select user to delete	
+	public void selectUserToDelete(String userDelete){
+		try{
+			TestLog.log.info("Cancel update");
+			txtSearch.sendKeys(userDelete);
+			
+			WebElement btnDelete=driver.findElement(By.xpath("//i[@class='fa fa-trash']"));
+			btnDelete.click();
+			
+			driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
+			btnDelete.click();
+			
+			TestLog.log.info("Canceled");
+		
+		} catch (Exception ex) {
+			
+		}
+		
 	}
 	
-	//Delete user by accepting alert
-			public void DeleteUsers(String alertDelete, String success){
+	//Delete user 
+			public void deleteUsers(){
 				try{
 					TestLog.log.info("Delete a user");
 					
 					btnDelete.click(); //Click delete button
-					
-					
-					Alert Alert1 = driver.switchTo().alert(); //Switch driver to alert
-					String alertText1 = Alert1.getText(); //Getting the text displayed in alert
-					Assert.assertEquals(alertDelete, alertText1);
-					
-				
-					
-				    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+					Thread.sleep(5000);
 
-				    Alert1.accept(); //Accept alert
-				    
-				    Alert Alert2=driver.switchTo().alert();
-				    String alertText2=Alert2.getText();
-				    Assert.assertEquals(success, alertText2);
-				    
-				    Alert2.accept();
+					btnOk.click(); //click ok to conform delete
 				    
 				    
 					TestLog.log.info("User is deleted");
@@ -74,32 +94,59 @@ public class DeleteUser extends BasePage {
 				}
 				
 			}
+	
+			
+	//Verify delete
+			public boolean verifyDelete(String userDelete){
+				
+				txtSearch.sendKeys(userDelete);
+				
+				boolean flag = true;
+				
+				WebElement tblUser = driver.findElement(By.xpath("//tbody"));
+				List<WebElement> tblRow = tblUser.findElements(By.tagName("tr"));
 
-			//Dismissing alert
-					public void CancelAlert(String alertCancel){
-						try{
-							TestLog.log.info("Cancel alert");
-							btnDelete.click();
-							
-							Alert Alert = driver.switchTo().alert();
-							String alertText2 = Alert.getText();
-							Assert.assertEquals(alertCancel, alertText2);
-							
-							//System.out.println("Alert text is " + alertText);
-							
-						    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+				outerloop: {
+					for (WebElement row : tblRow) {
 
-						    Alert.dismiss(); //Dismissing alert
-							
-							TestLog.log.info("User is deleted");
-						
-						} catch (Exception ex) {
-							
+						List<WebElement> tblData = row
+								.findElements(By.xpath("//td[3]"));
+
+						for (WebElement data : tblData) {
+
+							String userName = data.getText();
+							System.out.println(userName);
+							if (userName.contains(userDelete)) {
+								System.out.println("Success");
+								flag = false;
+								break outerloop;
+
+							}
+
 						}
-						
+
 					}
-	//Go back 
-			public void GoBack(){
+				}
+				return flag;
+			}
+			
+//Cancel Delete user 
+			
+			public void CancelDeleteUser(){
+				try{
+					TestLog.log.info("Delete a user");
+					btnDelete.click();
+					btnClose.click();
+				    
+					TestLog.log.info("User is deleted");
+				
+				} catch (Exception ex) {
+					
+				}
+				
+			}
+//Go back 
+			public void goBack(){
 				try{
 					TestLog.log.info("Navigate back");
 					btnBack.click();
@@ -110,5 +157,6 @@ public class DeleteUser extends BasePage {
 				}
 				
 			}
+			
 
 }

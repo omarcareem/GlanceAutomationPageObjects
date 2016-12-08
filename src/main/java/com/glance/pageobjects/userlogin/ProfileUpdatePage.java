@@ -2,6 +2,8 @@ package com.glance.pageobjects.userlogin;
 
 
 
+import java.awt.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,6 +29,7 @@ public class ProfileUpdatePage extends BasePage {
 	//Form Attributes
 	@FindBy(id="user_name")
 	 WebElement txtUserName;
+	 
 	
 	@FindBy(id="first-name")
 	 WebElement txtFirstName;
@@ -52,7 +55,7 @@ public class ProfileUpdatePage extends BasePage {
 	@FindBy(id="con_password")
 	 WebElement txtConPassword;
 	
-	@FindBy(id="email")
+	@FindBy(id="emailAddress")
 	 WebElement txtEmail;
 	
 	@FindBy(id="role_data")
@@ -65,15 +68,32 @@ public class ProfileUpdatePage extends BasePage {
 	 WebElement btnCancel;
 
 	//pop up msg Box
-	@FindBy(xpath="//div[3]/div[@class='content']")
-	 WebElement lblPopupMsg;
+	@FindBy(xpath="//div[2]/div/div/div/div/div[3]/div")
+	 WebElement lblPopupMsg1;
 	
-	@FindBy(xpath="//div[4]/button[1]")
-	 WebElement btnPopupOkay;
+	@FindBy(xpath="//div[2]/div/div/div/div/div[3]/div")
+	 WebElement lblPopupMsg2;
 	
-	@FindBy(xpath="//div[4]/button[2]")
-	 WebElement btnPopupCancel;
+	@FindBy(xpath="//div[2]/div/div/div/div/div[3]/div")
+	 WebElement lblPopupMsg3;
 	
+	@FindBy(xpath="//div[2]/div/div/div/div/div[3]/div")
+	 WebElement lblPopupMsg4;
+	
+	@FindBy(xpath="//div[2]/div/div/div/div/div[3]/div")
+	 WebElement lblPopupMsg5;
+	
+	@FindBy(xpath="//div[2]/div/div/div/div/div[3]/div")
+	 WebElement lblPopupMsg6;
+	
+	
+	
+	
+	@FindBy(xpath="//div/div[4]/button[@class='btn btn-success']")
+	 WebElement btnPopupDone;
+
+	@FindBy(xpath="//div/div[4]/button[@class='btn btn-warning']")
+	 WebElement btnPopupOK;
 	
 
 	//Title
@@ -103,6 +123,7 @@ public class ProfileUpdatePage extends BasePage {
     		TestLog.log.info("Changed user Name to" + userName);
     	}
     	 catch(Exception ex){
+    		System.out.println("not changed username");
     		 TestLog.log.info("Could not enter user name. "+ex); 
     	 }
     	
@@ -233,6 +254,9 @@ public class ProfileUpdatePage extends BasePage {
 		
     }
 	
+
+
+	
 	public void clickUpdateBtn(){
     	
     	try{
@@ -262,11 +286,27 @@ public class ProfileUpdatePage extends BasePage {
 	
 	//Pop up Messages for Success and Unsuccess
 	
-	public boolean getpopupMsgContent(String profileUpdateMsgContent) {
+	public boolean getpopupMsgContent1(String profileUpdateMsgContent) {
 
 		boolean flag = false;
 
-		String popupMessageName = lblPopupMsg.getText();
+		String popupMessageName = lblPopupMsg1.getText();
+		if (popupMessageName.contains(profileUpdateMsgContent)) {
+			System.out.println("Profile update try is verified as:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println(" Profile update try is not verified");
+			flag = false;
+		}
+		return flag;
+
+	}
+	
+	public boolean getpopupMsgContent2(String profileUpdateMsgContent) {
+
+		boolean flag = false;
+
+		String popupMessageName = lblPopupMsg2.getText();
 		if (popupMessageName.contains(profileUpdateMsgContent)) {
 			System.out.println("Profile update try is verified as:  " + popupMessageName);
 			flag = true;
@@ -278,38 +318,178 @@ public class ProfileUpdatePage extends BasePage {
 
 	}
 
+	public boolean getpopupMsgContent3(String profileUpdateMsgContent) {
+
+		boolean flag = false;
+
+		String popupMessageName = lblPopupMsg3.getText();
+		if (popupMessageName.contains(profileUpdateMsgContent)) {
+			System.out.println("Profile update try is verified as:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println(" Profile update try is not verified");
+			flag = false;
+		}
+		return flag;
+
+	}
 	
-	public void clickPopupOkayBtn(){
+	
+	public boolean getpopupMsgContent4(String profileUpdateMsgContent) {
+
+		boolean flag = false;
+
+		String popupMessageName = lblPopupMsg4.getText();
+		if (popupMessageName.contains(profileUpdateMsgContent)) {
+			System.out.println("Profile update try is verified as:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println(" Profile update try is not verified");
+			flag = false;
+		}
+		return flag;
+
+	}
+	
+	public boolean getpopupMsgContent5(String profileUpdateMsgContent) {
+
+		boolean flag = false;
+
+		String popupMessageName = lblPopupMsg5.getText();
+		if (popupMessageName.contains(profileUpdateMsgContent)) {
+			System.out.println("Profile update try is verified as:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println(" Profile update try is not verified");
+			flag = false;
+		}
+		return flag;
+
+	}
+	
+	
+	public boolean getpopupMsgContent6(String profileUpdateMsgContent) {
+
+		boolean flag = false;
+
+		String popupMessageName = lblPopupMsg6.getText();
+		if (popupMessageName.contains(profileUpdateMsgContent)) {
+			System.out.println("Profile update try is verified as:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println(" Profile update try is not verified");
+			flag = false;
+		}
+		return flag;
+
+	}
+	
+	public void clickPopupDoneBtn(){
     	
     	try{
-    		TestLog.log.info("Clicking Okay button");
-    		btnPopupOkay.click();
-    		TestLog.log.info("clicked Okay button");
+    		TestLog.log.info("Clicking Done button");
+    		btnPopupDone.click();
+    		TestLog.log.info("clicked Done button");
     	}
     	 catch(Exception ex){
-    		 TestLog.log.info("Could not Click okay button of msg box. "+ex); 
+    		 TestLog.log.info("Could not Click Done button of msg box. "+ex); 
+    	 }
+    	
+    }
+	
+public void clickPopupOKBtn(){
+    	
+    	try{
+    		TestLog.log.info("Clicking OK button");
+    		btnPopupOK.click();
+    		TestLog.log.info("clicked OK button");
+    	}
+    	 catch(Exception ex){
+    		 TestLog.log.info("Could not Click OK button of msg box. "+ex); 
     	 }
     	
     }
 
-	public void clickPopupCloseBtn(){
-	
-		try{
-		TestLog.log.info("Clicking close button");
-		btnPopupCancel.click();
-		TestLog.log.info("clicked close button");
-		}
-	 catch(Exception ex){
-		 TestLog.log.info("Could not Click close button of msg box. "+ex); 
-	 }
-	
+
+public boolean getUserNameValue(String valUserName) {
+
+	boolean flag = false;
+
+	String valueOfUserName = txtUserName.getAttribute("value");
+	if (valueOfUserName.contains(valUserName)) {
+		System.out.println("Profile update as:  " + valueOfUserName);
+		flag = true;
+	} else {
+		System.out.println(" Profile update try is not verified");
+		flag = false;
+	}
+	return flag;
+
 }
-	/*public void getUserNameValue(){
-		
-		String valUserName = Element.getAttribute(txtUserName);
-	
-}
-*/
+
     
+public boolean getEmailIDValue(String valEmailID) {
+
+	boolean flag = false;
+
+	String valueOfEmailID = txtEmail.getAttribute("value");
+	if (valueOfEmailID.contains(valEmailID)) {
+		System.out.println("Profile update as:  " + valueOfEmailID);
+		flag = true;
+	} else {
+		System.out.println(" Profile update try is not verified");
+		flag = false;
+	}
+	return flag;
+
+}
+
+public boolean getFirstNameValue(String valFirstName) {
+
+	boolean flag = false;
+
+	String valueOfFirstName = txtFirstName.getAttribute("value");
+	if (valueOfFirstName.contains(valFirstName)) {
+		System.out.println("Profile update as:  " + valueOfFirstName);
+		flag = true;
+	} else {
+		System.out.println(" Profile update try is not verified");
+		flag = false;
+	}
+	return flag;
+
+}
+
+public boolean getlastNameValue(String valLastName) {
+
+	boolean flag = false;
+
+	String valueOfLastName = txtLastName.getAttribute("value");
+	if (valueOfLastName.contains(valLastName)) {
+		System.out.println("Profile update as:  " + valueOfLastName);
+		flag = true;
+	} else {
+		System.out.println(" Profile update try is not verified");
+		flag = false;
+	}
+	return flag;
+
+}
+
+public boolean getJobRoleValue(String valJobRole) {
+
+	boolean flag = false;
+
+	String valueOfJobRole = drpjobrole.getAttribute("value");
+	if (valueOfJobRole.contains(valJobRole)) {
+		System.out.println("Profile update as:  " + valueOfJobRole);
+		flag = true;
+	} else {
+		System.out.println(" Profile update try is not verified");
+		flag = false;
+	}
+	return flag;
+
+}
 }
 

@@ -1,8 +1,6 @@
 package com.glance.pageobjects.userlogin;
 
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.Alert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,15 +42,27 @@ public class CreateAccountPage extends BasePage {
 	
 	//popup success message
 	
-	@FindBy(xpath="//div[3]/div")
-	 WebElement lblPopupMsg;
+	@FindBy(xpath="//div[3]/div[@class='content']")
+	 WebElement lblPopupMsg1;
 	
-	@FindBy(xpath="//div[4]/button[1]")
-	 WebElement popupOkaybtn;
+	@FindBy(xpath="//div[3]/div[2]/div/div/div/div/div[3]/div")
+	 WebElement lblPopupMsg2;
 	
-	@FindBy(xpath="//div[3]/div[2]/div/div/div/div/div[4]/button[2]]")
-	 WebElement popupClosebtn;
+	@FindBy(xpath="//div[2]/div[2]/div/div/div/div/div[3]/div")
+	 WebElement lblPopupMsg3;
 	
+	
+	
+	@FindBy(xpath="//div[4]/button")
+	 WebElement popupDonebtn;
+	
+	@FindBy(xpath="//div[4]/button")
+	 WebElement popupOKbtn;
+	
+	
+
+	
+	//div[3]/div[2]/div/div/div/div/div[4]/button[@class='btn btn-warning']
 	//Title
 	
 	
@@ -143,45 +153,83 @@ public class CreateAccountPage extends BasePage {
 }
 	
 	//For Success  creation of account
-	public boolean getPopupMsg(String lblCreateAccPopupmsg) {
+	public boolean getPopupMsg1(String lblValidCreateAccPopupmsg) {
 
 		boolean flag = false;
 
-		String popupMessageName = lblPopupMsg.getText();
-		if (popupMessageName.contains(lblCreateAccPopupmsg)) {
-			System.out.println("Invalid  try is verified:  " + popupMessageName);
+		String popupMessageName = lblPopupMsg1.getText();
+		if (popupMessageName.contains(lblValidCreateAccPopupmsg)) {
+			System.out.println("Valid  try is verified:  " + popupMessageName);
 			flag = true;
 		} else {
-			System.out.println("Ivalid try is not verified");
+			System.out.println("Valid try is not verified");
 			flag = false;
 		}
 		return flag;
 
 	}
+	
+	public boolean getPopupMsg2(String lblInvalidCreateAccPopupmsg1) {
 
-	public void clickpopupOkay(){
+		boolean flag = false;
+
+		String popupMessageName = lblPopupMsg2.getText();
+		if (popupMessageName.contains(lblInvalidCreateAccPopupmsg1)) {
+			System.out.println("invalid  try is verified:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println("Invalid try is not verified");
+			flag = false;
+		}
+		return flag;
+
+	}
+	
+	public boolean getPopupMsg3(String lblInvalidCreateAccPopupmsg2) {
+
+		boolean flag = false;
+
+		String popupMessageName = lblPopupMsg3.getText();
+		if (popupMessageName.contains(lblInvalidCreateAccPopupmsg2)) {
+			System.out.println("invalid  try is verified:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println("Invalid try is not verified");
+			flag = false;
+		}
+		return flag;
+
+	}
+	
+	
+
+	public void clickpopupDone(){
 		
 		try{
-			TestLog.log.info("Clicking okay button");
-			popupClosebtn.click();
-			TestLog.log.info("Clicked okay button");
+			TestLog.log.info("Clicking Done button");
+			popupDonebtn.click();
+			TestLog.log.info("Clicked Done button");
 		}
 		 catch(Exception ex){
-			 TestLog.log.info("Could not Click okay button of msg box. "+ex); 
+			 TestLog.log.info("Could not Click Done button of msg box. "+ex); 
 		 }
 	}
 	
-	public void clickpopupClose(){
+public void clickpopupOK(){
 		
 		try{
-			TestLog.log.info("Clicking cancel button");
-			popupOkaybtn.click();
-			TestLog.log.info("Clicked cancel button");
+			TestLog.log.info("Clicking OK button");
+			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			executor.executeScript("arguments[0].click();", popupOKbtn);
+			//popupOKbtn.click();
+			TestLog.log.info("Clicked OK button");
 		}
 		 catch(Exception ex){
-			 TestLog.log.info("Could not Click cancel button of msg box. "+ex); 
+			 TestLog.log.info("Could not Click OK button of msg box. "+ex); 
 		 }
 	}
+	
+	
 	
 	//link to another page
 	public void clickLoginLink(){
@@ -197,15 +245,7 @@ public class CreateAccountPage extends BasePage {
 }
 	
 	
-	//if passwords doesn't match
-	public void switchtoMsgBoxCreateAccount(){
- 		Alert simpleAlert = driver.switchTo().alert();
- 	    String alertText = simpleAlert.getText();
- 	    System.out.println("Alert text is " + alertText);
- 	    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
- 	    simpleAlert.accept();
- 	   
- 	}
+	
  
 	
 	

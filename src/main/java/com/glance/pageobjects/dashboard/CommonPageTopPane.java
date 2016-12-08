@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 import com.glance.pageobjects.common.BasePage;
 import com.glance.pageobjects.logs.TestLog;
@@ -27,7 +28,7 @@ public class CommonPageTopPane extends BasePage {
       WebElement txtUserName;
     
     //drop down icon in the top pane
-    @FindBy(xpath="//span[@class=' fa fa-angle-down']")
+    @FindBy(xpath="//div/nav/ul/li[1]/a[@class='user-profile dropdown-toggle']")
     WebElement drpDownIcon;
     
     
@@ -69,21 +70,23 @@ public class CommonPageTopPane extends BasePage {
     WebElement errorAccessDenied;
     
     //click drop down
-    public void clickDropDownIcon() {
-
-		try {
-			TestLog.log.info("Clicking Drop Down icon");
-			drpDownIcon.click();
-			TestLog.log.info("Clicked");
-
-		} catch (Exception ex) {
-          System.out.println("Clicking drop down icon failed");
-		}
-
-	}
+    
+    public void clickDropDownIcon(String pageLinks){
+		try{
+    		TestLog.log.info("Selecting");
+    		Select dropdown= new Select(drpDownIcon);
+			dropdown.selectByVisibleText(pageLinks);
+    		TestLog.log.info("Selected "+ pageLinks );
+    	}
+    	 catch(Exception ex){
+    		 TestLog.log.info("Could not select from drop down "+ex); 
+    	 }
+		
+    }
+	
 
     //click profile from the drop down menu
-    public void clickProfile() {
+   /* public void clickProfile() {
 
 		try {
 			TestLog.log.info("Clicking Profile");
@@ -94,10 +97,10 @@ public class CommonPageTopPane extends BasePage {
           System.out.println("Clicking Profile failed");
 		}
 
-	}
+	}*/
  
     //click settings from the drop down menu
-    public void clickSettings() {
+   /* public void clickSettings() {
 
 		try {
 			TestLog.log.info("Clicking Settings");
@@ -109,9 +112,9 @@ public class CommonPageTopPane extends BasePage {
 		}
 
 	}
-    
+    */
     //click logout from the drop down menu
-    public void clickLogout() {
+    /*public void clickLogout() {
 
 		try {
 			TestLog.log.info("Clicking Logout");
@@ -122,9 +125,14 @@ public class CommonPageTopPane extends BasePage {
           System.out.println("Clicking Logout failed");
 		}
 
+<<<<<<< HEAD
 	}
     
     //verfiy unexisting in search query
+=======
+	}*/
+ 
+>>>>>>> neelamaniPOM
     public void searchTopPane(String searchAPE) {
 
 		try {

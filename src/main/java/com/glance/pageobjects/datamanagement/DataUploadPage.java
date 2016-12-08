@@ -23,22 +23,25 @@ public class DataUploadPage extends BasePage {
 	@FindBy(xpath = "//select[@class='form-control step2']")
 	WebElement drpSelectDataTable;
 
+	@FindBy(xpath = "//div[@id='dZUpload']")
+	WebElement selectFileUpload;
+
 	@FindBy(xpath = "//button[@id='upload']")
 	WebElement btnUpload;
 
-	@FindBy(xpath = "//*[@id='jconfirm-box78429']")
+	@FindBy(xpath = "//span[@class='title']")
 	WebElement submitSuccessMessage;
 
 	@FindBy(xpath = "//button[@class='btn btn-success']")
 	WebElement btnDone;
 
-	@FindBy(xpath = "//span[@id='jconfirm-box68404']")
-	WebElement errorMessage;
-
 	@FindBy(xpath = "//button[@class='btn btn-danger']")
 	WebElement btnOkay;
 
-	@FindBy(xpath = "//a[@class='collapse-link']")
+	@FindBy(xpath = "//i[@class='fa fa-chevron-up']")
+	WebElement clickExpand;
+
+	@FindBy(xpath = "//i[@class='fa fa-chevron-down']")
 	WebElement clickCollapse;
 
 	@FindBy(xpath = "//i[@class='fa fa-close']")
@@ -46,6 +49,12 @@ public class DataUploadPage extends BasePage {
 
 	@FindBy(xpath = "//div[@class='content']")
 	WebElement alertMessage;
+
+	@FindBy(xpath = "//div[@class='content']")
+	WebElement lblRecordsAdded;
+
+	@FindBy(xpath = "//div[@class='content']")
+	WebElement lblNoRecordsAdded;
 
 	// add data upload page confirmation
 	public boolean verifyNavigationToDataUploadPage(String expectedMessage) {
@@ -82,6 +91,12 @@ public class DataUploadPage extends BasePage {
 		}
 	}
 
+	// select file upload area
+	public void selectFileUploadArea() {
+
+		selectFileUpload.click();
+	}
+
 	// clicking upload
 	public void clickUpload() {
 
@@ -97,7 +112,7 @@ public class DataUploadPage extends BasePage {
 		}
 	}
 
-	// submit success message
+	/*// submit success message
 	public boolean verifySubmitSuccess(String expectedMessage) {
 
 		boolean flag = false;
@@ -114,7 +129,7 @@ public class DataUploadPage extends BasePage {
 		}
 
 		return flag;
-	}
+	}*/
 
 	// click done
 	public void clickDone() {
@@ -122,8 +137,8 @@ public class DataUploadPage extends BasePage {
 		btnDone.click();
 	}
 
-	// add data upload page confirmation
-	public boolean verifyWrongFileErrorMessage(String expectedMessage) {
+	// empty file
+	public boolean verifyEmptyFileErrorMessage(String expectedMessage) {
 
 		boolean flag;
 
@@ -131,20 +146,55 @@ public class DataUploadPage extends BasePage {
 
 		if (actualMessage.contains(expectedMessage)) {
 			flag = true;
-			System.out.println("You are in the data upload page");
+			System.out.println("Select a file to upload");
 
 		} else {
-			System.out.println("You are not in the data upload page");
 			flag = false;
+			System.out.println("File is selected");
+			
 		}
 
 		return flag;
 	}
 
-	// error message
-	public void errorMessage() {
+	// table is not selected
+	public boolean verifyTableSelection(String expectedMessage) {
 
-		errorMessage.getText();
+		boolean flag;
+
+		String actualMessage = alertMessage.getText();
+
+		if (actualMessage.contains(expectedMessage)) {
+			flag = true;
+			System.out.println("Select a table to upload");
+
+		} else {
+			flag = false;
+			System.out.println("Table is selected");
+			
+		}
+
+		return flag;
+	}
+
+	// both fields empty
+	public boolean verifyEmptyFields(String expectedMessage) {
+
+		boolean flag;
+
+		String actualMessage = alertMessage.getText();
+
+		if (actualMessage.contains(expectedMessage)) {
+			flag = true;
+			System.out.println("Table and File both are empty");
+
+		} else {
+			flag = false;
+			System.out.println("Both fields are selected");
+
+		}
+
+		return flag;
 	}
 
 	// error message accepted
@@ -153,14 +203,55 @@ public class DataUploadPage extends BasePage {
 		btnOkay.click();
 	}
 
-	// clicking collapse
-	public void clickCollapse() {
+	// records uploaded to the table
+	public boolean verifyRecordsAdded(String expectedMessage) {
+
+		boolean flag;
+
+		String actualMessage = lblRecordsAdded.getText();
+
+		if (actualMessage.contains(expectedMessage)) {
+			flag = true;
+			System.out.println("Records uploaded to the table");
+
+		} else {
+			flag = false;
+			System.out.println("Records have not uploaded to the table");
+			
+		}
+
+		return flag;
+	}
+
+	// records not uploaded to the table
+	public boolean verifyNoRecordsAdded(String expectedMessage) {
+
+		boolean flag;
+
+		String actualMessage = lblNoRecordsAdded.getText();
+
+		if (actualMessage.contains(expectedMessage)) {
+			flag = true;
+			System.out.println("Records not uploaded to the table");
+
+		} else {
+			flag = false;
+			System.out.println("Records uploaded to the table");
+			
+		}
+
+		return flag;
+	}
+
+	// click collapse and expand
+	public void clickCollapseExpand() {
 
 		try {
 
-			TestLog.log.info("Clicking collapse icon");
+			TestLog.log.info("Clicking the collapse icon");
 			clickCollapse.click();
-			TestLog.log.info("Clicked collapse icon");
+			clickExpand.click();
+			TestLog.log.info("Clicked the collapse icon");
 		}
 
 		catch (Exception ex) {

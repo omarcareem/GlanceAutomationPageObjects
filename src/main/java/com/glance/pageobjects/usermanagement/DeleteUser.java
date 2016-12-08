@@ -1,4 +1,4 @@
-package com.glance.usermanagement.tests;
+package com.glance.pageobjects.usermanagement;
 
 
 

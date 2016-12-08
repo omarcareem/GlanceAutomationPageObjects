@@ -47,7 +47,7 @@ public class EditGroupPage extends BasePage{
 	WebElement btnOkayforUpdateGrp;
 	
 	
-	@FindBy(xpath="//div[5]/div/button")
+	@FindBy(xpath="//div/button[@class='btn btn-primary']")
 	WebElement btnCancelUpdate;
 	
 public void updateGroupName(String grpNameNew){

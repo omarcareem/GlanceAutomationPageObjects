@@ -118,11 +118,11 @@ public class SettingsPage extends BasePage {
 	String lblPageName;
 
 	// Check settings page title
-		
-
 		public boolean verifyNavigationToSettingPage(String expectedMessage){
 			boolean flag = false;
+			System.out.println("Getting header");
 			String actualMessage=lblSettingsDashboard.getText();
+			System.out.println(actualMessage);
 			if (actualMessage.contains(expectedMessage)) {
 				flag = true;
 				System.out.println("You are in the settings page");
@@ -131,7 +131,6 @@ public class SettingsPage extends BasePage {
 				System.out.println("You are not in the settings page");
 				flag = false;
 				}
-			
 			return flag;
 			
 			

@@ -24,6 +24,9 @@ public class CommonPageLeftPane extends BasePage {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	 @FindBy(xpath="//li/a[@class='user-profile dropdown-toggle']")
+	    WebElement txtUserName;
 	// image logo
 	@FindBy(xpath = "//img[@class='logo']")
 	WebElement imgLogo;
@@ -105,6 +108,9 @@ public class CommonPageLeftPane extends BasePage {
 
 	@FindBy(xpath = "//a[contains(text(),'Engagement')]/../ul/li[@class='btn-xs btn-primary']/a")
 	WebElement linkEngagementAddNew;
+	
+	@FindBy(xpath="//a[@class='site_title']/span")
+	WebElement linkLeftGlanceTitle;
 
 	// clicking add new account
 	public void clickOnAddNewAccountLink() {
@@ -137,13 +143,13 @@ public class CommonPageLeftPane extends BasePage {
 		System.out.println(noOfAccounts);
 
 		for (int i = 0; i < noOfAccounts; i++) {
-			String returnedAccountName = linkAccountNameList.get(i+1).getText();
+			String returnedAccountName = linkAccountNameList.get(i).getText();
 			System.out.println(returnedAccountName);
 			if (returnedAccountName.contains(accountName)) {
 
 				WebDriverWait wait = new WebDriverWait(driver, 10);
-				wait.until(ExpectedConditions.elementToBeClickable(linkAccountNameList.get(i+1)));
-				linkAccountNameList.get(i+1).click();
+				wait.until(ExpectedConditions.elementToBeClickable(linkAccountNameList.get(i)));
+				linkAccountNameList.get(i).click();
 				break;
 			}
 
@@ -218,13 +224,19 @@ public class CommonPageLeftPane extends BasePage {
 
 		ArrayList listOfEngagementNames = new ArrayList();
 		List<WebElement> linkEngagementNameList = driver.findElements(linkEngagementList);
-
+		
 		for (WebElement engagementNames : linkEngagementNameList) {
 
 			listOfEngagementNames.add(engagementNames.getText());
+		//	ArrayList EngamentList = listOfEngagementNames;
+		//	System.out.println(EngamentList);
+			
 		}
 		return listOfEngagementNames;
+		
 	}
+	
+	
 
 public void clickOnEngagementName(String engagementName) {
 
@@ -386,6 +398,28 @@ public void clickOnProjectName(String projectName) {
 		return txtWelcomeNote.getText();
 
 	}
+	
+	   public boolean verifyUserNameLeft() throws InterruptedException {
+		    boolean flag= false;
+		    
+		   
+		    
+		    String userNameTop = txtUserName.getText();
+		    System.out.println("UserNameTop: "+userNameTop);
+		    
+		    String userNameLeft = txtUserNameLeft.getText();
+		    System.out.println("UserNameLeft: "+userNameLeft);
+		    
+		    if(userNameLeft.contains(userNameTop)) {
+		
+		    	System.out.println("UserNameLeft Verified");
+		    	
+		    	flag = true;
+		    }
+		    
+		    return flag;
+		    
+		}
 
 	// get the user name
 	public String getLeftPanelUserName() {
@@ -538,15 +572,19 @@ public void clickOnProjectName(String projectName) {
 	
 	return flag;
 }*/
-	
+	//verify no dashboard define error
 	public boolean verifyNoDashboardDefineAcc() {
 		WebElement errorNodbDefineAcc;
 		errorNodbDefineAcc=driver.findElement(By.xpath("//p[contains(text(),'No dashboard elements defined for the selected account.')]"));
 		
+		//button[@class='btn btn-primary btn-lg new_element']
+		WebElement btnDefineNow;
+		btnDefineNow=driver.findElement(By.xpath("//button[@class='btn btn-primary btn-lg new_element']"));
 	    boolean flag = false;
 		
-		String text = errorNodbDefineAcc.getText();
-		if(text.contains("No dashboard elements defined")){
+		String text1 = errorNodbDefineAcc.getText();
+		String text2 =btnDefineNow.getText();
+		if(text1.contains("No dashboard elements defined") && text2.contains("Define Now")){
 			flag= true;
 		}
 		
@@ -556,9 +594,9 @@ public void clickOnProjectName(String projectName) {
 	//Verify the Pancake icon
 		 public boolean verifyToggling() {
 			    boolean flag= false;
-			    String glanceLink = txtLogo.getText();
+			    //String glanceLink = txtLogo.getText();
 			  
-			    if(glanceLink.contains("GLANCe")) {
+			    if(!linkLeftGlanceTitle.isDisplayed()) {
 			    	System.out.println("Toggling verified");
 			    	flag = true;
 			    }

@@ -1,4 +1,5 @@
 package com.glance.pageobjects.usermanagement;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +18,8 @@ public class ManageGroupPage extends BasePage {
 		PageFactory.initElements(driver, this);
 		// TODO Auto-generated constructor stub
 	}
+	@FindBy(xpath="//div[@id='main_body']/div/div/div[1]/div[1]/h2")
+	WebElement lblAddGroup;
 
 	@FindBy(xpath = "//i[@class='fa fa-group']")
 	WebElement manageGroupsIcon;
@@ -32,6 +35,12 @@ public class ManageGroupPage extends BasePage {
 
 	@FindBy(xpath = "//input[@class='btn btn-success']")
 	WebElement btnAdd;
+	
+	@FindBy(xpath=("//button[@class='btn btn-success']"))   
+	WebElement btnDone;
+	
+	@FindBy(xpath=("//button[@class='btn btn-danger']"))   
+	WebElement btnOkayforDeleteGrp;
 
 	@FindBy(xpath = "//button[text()='Cancel']")
 	WebElement btnCancel;
@@ -72,14 +81,48 @@ public class ManageGroupPage extends BasePage {
 	@FindBy(xpath = " //a[@class='paginate_button next']")
 	WebElement btnLast;
 
+	//Verify navigation to manage group page
+	public boolean verifyNavigationToManageGroupPage(String expectedMessage){
+		boolean flag = false;
+		String actualMessage=lblAddGroup.getText();
+		if (actualMessage.contains(expectedMessage)) {
+			flag = true;
+			System.out.println("You are in the Manage Group page");
+			}
+		else {
+			System.out.println("You are not in the Manage Group page");
+			flag = false;
+			}
+		
+		return flag;
+		
+		
+	}
+	//verify the fill out  field alert message
+	public boolean verifyAlert(String expectedAlertMessage){
+		boolean flag = false;
+		String actualMessage=lblAddGroup.getText();
+		if (actualMessage.contains(expectedAlertMessage)) {
+			flag = true;
+			System.out.println("Alert verified");
+			}
+		else {
+			System.out.println("Alert not verified");
+			flag = false;
+			}
+		
+		return flag;
+		
+		
+	}
 	
-
+    //imput the the group name
 	public void inputGroupName(String grpName) {
 
 		try {
 			TestLog.log.info("Typing on Group Name input field");
 			txtGroupName.sendKeys(grpName);
-			TestLog.log.info("Typed on funding start input field");
+			TestLog.log.info("Typed on Group Name input field");
 
 		} catch (Exception ex) {
 			System.out.println("Couldn't input Group name!");
@@ -87,6 +130,7 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	//click chooseFile Button
 	public void inputGroupImage() {
 
 		try {
@@ -100,11 +144,14 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	//clicking Add button and Done Button
 	public void clickAddGroup() {
 
 		try {
 			TestLog.log.info("Adding group");
 			btnAdd.click();
+			Thread.sleep(1000);
+			btnDone.click();
 			TestLog.log.info("Added group");
 
 		} catch (Exception ex) {
@@ -113,6 +160,7 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	//clicking cancel Adding group button 
 	public void clickCancelGroup() {
 
 		try {
@@ -126,6 +174,7 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	//search group by typing text
 	public void searchGroup(String searchText) {
 
 		try {
@@ -139,6 +188,8 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	
+	//select records from the drop down
 	public void selectRecords(int number) {
 
 		try {
@@ -155,6 +206,8 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	
+	//edit group details
 	public void clickEdit(String groupName) {
 
 		try {
@@ -170,13 +223,17 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
-	public void clickDelete(String groupName) {
+	
+	//click an existing group
+	public void clickDelete(String groupNameNew) {
 
 		try {
 			TestLog.log.info("clicking Delete");
 			
-			WebElement btnDelete = driver.findElement(By.xpath("//td[text()='" + groupName + "']/../td[5]/div/a[2]"));
+			WebElement btnDelete = driver.findElement(By.xpath("//td[text()='" + groupNameNew + "']/../td[5]/div/a[2]"));
 			btnDelete.click();
+			Thread.sleep(1000);
+			btnOkayforDeleteGrp.click();
 			TestLog.log.info("clicked Delete");
 
 		} catch (Exception ex) {
@@ -184,5 +241,71 @@ public class ManageGroupPage extends BasePage {
 		}
 
 	}
+	
+	//verfiy added group
+		public boolean verifyAdded(String grpName) {
+
+	        boolean flag = false;
+
+	        WebElement tblUser = driver.findElement(By.xpath("//tbody"));
+	        List<WebElement> tblRow = tblUser.findElements(By.tagName("tr"));
+
+	        outerloop: {
+	               for (WebElement row : tblRow) {
+
+	                     List<WebElement> tblData = row
+	                                   .findElements(By.xpath("//td[3]"));
+
+	                     for (WebElement data : tblData) {
+
+	                            String groupName = data.getText();
+	                            System.out.println(groupName);
+	                            if (groupName.contains(grpName)) {
+	                                   System.out.println("Successfully Added");
+	                                   flag = true;
+	                                   break outerloop;
+
+	                            }
+
+	                     }
+
+	               }
+	        }
+	        return flag;
+	 }
+	   
+		//verify group deleted
+		public boolean verifyDeleted(String grpNameNew) {
+
+	        boolean flag = true;
+
+	        WebElement tblUser = driver.findElement(By.xpath("//tbody"));
+	        List<WebElement> tblRow = tblUser.findElements(By.tagName("tr"));
+
+	        outerloop: {
+	               for (WebElement row : tblRow) {
+
+	                     List<WebElement> tblData = row
+	                                   .findElements(By.xpath("//td[3]"));
+
+	                     for (WebElement data : tblData) {
+
+	                            String groupName = data.getText();
+	                            System.out.println(groupName);
+	                            if (groupName.contains(grpNameNew)) {
+	                                   System.out.println("Successfully Deleted");
+	                                   flag = false;
+	                                   break outerloop;
+
+	                            }
+
+	                     }
+
+	               }
+	        }
+	        return flag;
+	 }
+	
+	
 
 }

@@ -1,5 +1,17 @@
 package com.glance.pageobjects.usermanagement;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import com.glance.pageobjects.common.BasePage;
+import com.glance.pageobjects.logs.TestLog;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +28,8 @@ public class EditGroupPage extends BasePage{
 		// TODO Auto-generated constructor stub
 	}
 	
+	@FindBy(xpath = "//div[1]/h2")
+	WebElement lblEditGroupPage;
 
 	@FindBy(xpath="//input[@id='group_name']")
 	WebElement txtEditGroupName;
@@ -29,34 +43,42 @@ public class EditGroupPage extends BasePage{
 	@FindBy(xpath="//input[@class='btn btn-success']")
 	WebElement btnUpdate;
 	
-	@FindBy(xpath="//div[5]/div/button")
+	@FindBy(xpath=("//button[@class='btn btn-success']"))   
+	WebElement btnOkayforUpdateGrp;
+	
+	
+	@FindBy(xpath="//div/button[@class='btn btn-primary']")
 	WebElement btnCancelUpdate;
 	
-	public void updateGroupName(String newGrpName){
+public void updateGroupName(String grpNameNew){
 		
 		try{
 			TestLog.log.info("Typing on Group Name input field");
-			txtEditGroupName.sendKeys(newGrpName);
-			TestLog.log.info("Typed on funding start input field");
+							
+			txtEditGroupName.clear();
+      
+			txtEditGroupName.sendKeys(grpNameNew);
+		
+			Thread.sleep(1000);
+			TestLog.log.info("Typed on  Group Name input field");
 			
 		}catch(Exception ex){
 			System.out.println("Couldn't update Group name");
 		}
 		
 	} 
+public void linkChangeImage(){
 	
-   public void linkChangeImage(){
+	try{
+		TestLog.log.info("clicking the link to change image");
+		linkChangeImg.click();
+		TestLog.log.info("clicked the link to change image");
 		
-		try{
-			TestLog.log.info("clicking the link to change image");
-			linkChangeImg.click();
-			TestLog.log.info("clicked the link to change image");
-			
-		}catch(Exception ex){
-			System.out.println("update link to image failed");
-		}
-		
-	}  
+	}catch(Exception ex){
+		System.out.println("update link to image failed");
+	}
+	
+}  
    
    public void clickChooseFile(){
 		
@@ -71,18 +93,20 @@ public class EditGroupPage extends BasePage{
 		
 	}  
    
-    public void clickUpdateGroup(){
-	
-	try{
-		TestLog.log.info("Updating group");
-		btnUpdate.click();
-		TestLog.log.info("Update group");
+   public void clickUpdateGroupBtn(){
 		
-	}catch(Exception ex){
-		System.out.println("Update Group details Failed");
-	}
-	
-}  
+		try{
+			TestLog.log.info("Updating group");
+			btnUpdate.click();
+			Thread.sleep(1000);
+			btnOkayforUpdateGrp.click();
+			TestLog.log.info("Update group");
+			
+		}catch(Exception ex){
+			System.out.println("Update Group details Failed");
+		}
+		
+	}  
 
    public void clickCancelUpdate(){
 	
@@ -96,5 +120,52 @@ public class EditGroupPage extends BasePage{
 	}
 	
 }
+   
+ //verify whether it is Edit Group Page 
+   public boolean verifyNavigationToEditGroupPage(String expectedMessageEdit){
+		boolean flag = false;
+		String actualMessage=lblEditGroupPage.getText();
+		if (actualMessage.contains(expectedMessageEdit)) {
+			flag = true;
+		}
+		
+		return flag;
+		
+		
+	}
+   //verify group details updated
+   public boolean verifyUpdated(String grpNameNew) {
+
+       boolean flag = false;
+
+       WebElement tblUser = driver.findElement(By.xpath("//tbody"));
+       List<WebElement> tblRow = tblUser.findElements(By.tagName("tr"));
+
+       outerloop: {
+              for (WebElement row : tblRow) {
+
+                    List<WebElement> tblData = row
+                                  .findElements(By.xpath("//td[3]"));
+
+                    for (WebElement data : tblData) {
+
+                           String groupName = data.getText();
+                           System.out.println(groupName);
+                           if (groupName.contains(grpNameNew)) {
+                                  System.out.println("Successfully Updated the Group Name");
+                                  flag = true;
+                                  break outerloop;
+
+                           }
+
+                    }
+
+              }
+       }
+       return flag;
+}
 	
 }
+
+	
+

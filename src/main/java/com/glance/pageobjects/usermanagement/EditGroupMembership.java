@@ -1,16 +1,13 @@
 package com.glance.pageobjects.usermanagement;
 
 
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
-//import org.testng.Assert;
 
 import com.glance.pageobjects.common.BasePage;
 import com.glance.pageobjects.logs.TestLog;
@@ -19,50 +16,58 @@ public class EditGroupMembership extends BasePage {
 
 	public EditGroupMembership(WebDriver driver) {
 		super(driver);
+		PageFactory.initElements(driver,this);
 		// TODO Auto-generated constructor stub
 	}
 	
 	
 
-	@FindBy(id="select_group")
+	@FindBy(xpath=("//select[@id='select_group']"))
 	WebElement drpEditSelectGroup;
 	
-	@FindBy(xpath=("//select[@name='example_length']"))   
-	WebElement drpShowEntries;
+	@FindBy(xpath=("//button[@class='btn btn-danger']"))   
+	WebElement btnOk;
 	
-	@FindBy(xpath=("//input[@type='search']"))   
+	@FindBy(xpath=("//button[contains(text(),'Close')]"))   
+	WebElement btnClose;
+	
+	@FindBy(xpath=("//div[@id='main_body']/div/div/div[1]/div[1]/h2"))
+	WebElement pagelbl;
+	
+	@FindBy(xpath=("//input[@type='search']"))  
 	WebElement txtSearch;
 	
-	@FindBy(xpath=("//i[@class='fa fa-chevron-up']"))   
-	WebElement btnHide;
-	
-	@FindBy(xpath=("//a[@id='1']"))   
-	WebElement btnDelete;
-	
-	@FindBy(id="example_first")
-	WebElement nvgtFirst;
-	
-	@FindBy(id="example_last")
-	WebElement nvgtLast;
-	
-	@FindBy(id="example_next")
-	WebElement nvgtNext;
-	
-	@FindBy(id="example_previous")
-	WebElement nvgtPrevious;
-	
-	@FindBy(xpath=("//a[@class='paginate_button current']"))   
-	WebElement nvgtNumber;
-	
-	
-	/*@FindBy(xpath=("//table[@id='example']"))
+	@FindBy(xpath = ("//tr[@class='headings']"))
 	WebElement table;
-	*/
-	public void SelectGroup(String Group){
+	
+	By linkDelete=By.xpath("//a[contains(text(),'Delete')]");
+	
+	
+	//Verify page
+	
+	public boolean getTitle(){
+		Boolean flag;
+		flag= false;
+		String actual = driver.getPageSource();
+		
+		if (actual.contains("Add group membership ")){
+			System.out.println("In group membership page");
+			flag=true;
+		}
+		return flag;
+		
+		
+	}
+	
+	//select group from drop down
+	
+	public void selectGroup(String group){
 		try{
 			TestLog.log.info("Selecting group");
+			//drpEditSelectGroup.click();
+			
 			Select dropdown= new Select(drpEditSelectGroup);
-			dropdown.selectByVisibleText(Group);
+			dropdown.selectByVisibleText(group);
 			
 			TestLog.log.info("Group selected");
 		
@@ -72,60 +77,99 @@ public class EditGroupMembership extends BasePage {
 		
 	}
 	
-	public void ShowEntries(String Entries) {
+	// To remove a user in the selected group	
+	public void removeUser(String user) {
 		try{
-			TestLog.log.info("Changing number of visible entries");
-			Select dropdown= new Select(drpShowEntries);
-			dropdown.selectByVisibleText(Entries);
-		
-			TestLog.log.info("Visible entries changed");
-	
-		} catch (Exception ex) {
-		
-		}
-	
-	}
-	public void Search(String KeyWord) {
-		try{
-			TestLog.log.info("Searching based on key word");
-			txtSearch.sendKeys(KeyWord,Keys.ENTER);
-	
-			TestLog.log.info("Entries with keyword are shown");
-	
-		} catch (Exception ex) {
-		
-		}
-	
-	}
-	
-	public void Hide() {
-		try{
-			TestLog.log.info("Hiding the details");
-			btnHide.click();
-			TestLog.log.info("Details were hide");
+			TestLog.log.info("Deleting the user");
+					
+			WebElement btnDelete=driver.findElement(By.xpath("//td[text()='"+user+"']/../td[7]/div[@class='fa-hover']"));
+			btnDelete.click();
 			
-		} catch (Exception ex) {
-		
+			Thread.sleep(5000);
+
+			//btnOk.click();
+	
+			TestLog.log.info("Details were deleted");
+
 		}
-			
-	}
+			catch (Exception ex) {
 		
-	public void Delete(String user) {
+		}}
+	
+	//Conform remove user
+	
+	public void ClickOkToRemoveUser() {
 		try{
 			TestLog.log.info("Deleting the user");
 			
+			btnOk.click();
+			TestLog.log.info("Details were deleted");
+
+		}
+			catch (Exception ex) {
+		
+		}}
+	
+		
+	//Close Remove user
+		public void closeRemove() throws InterruptedException{
+			btnClose.click();
+			Thread.sleep(5000);
+		
+		}
+	
+	//Check removed or not
+	public boolean verifyRemove(String user){
+		txtSearch.sendKeys(user);
+		
+		String source=driver.getPageSource();
+		
+		//WebElement table = driver.findElement(By.xpath("//td[@class='dataTables_empty']"));
+		//String text = table.getText();
+		boolean flag = false;
+	
+		if(source.contains("No data available in table")){
+			flag = true;
+		}
+		
+		return flag;
+		
+		
+		
+		/*boolean flag = true;
+		
+		WebElement tblUser = driver.findElement(By.xpath("//tbody"));
+		List<WebElement> tblRow = tblUser.findElements(By.tagName("tr"));
+
+		outerloop: {
+			for (WebElement row : tblRow) {
+
+				List<WebElement> tblData = row
+						.findElements(By.xpath("//td[3]"));
+
+				for (WebElement data : tblData) {
+
+					String userName = data.getText();
+					System.out.println(userName);
+					if (userName.contains(user)) {
+						System.out.println("Success");
+						flag = false;
+						break outerloop;
+					}
+				}
+			}
+		}
+		return flag;*/
+			
+	}
+	
+	public void closeDelete(String user) {
+		try{
+			TestLog.log.info("Deleting the user");
+
 			WebElement btnDelete = driver.findElement(By.xpath("//td[text()='"+user+"']/../td[7]/div[@class='fa-hover']"));
 			btnDelete.click();
-
-			Alert Alert1 = driver.switchTo().alert(); //Switch driver to alert
-			
-			/*String alertText1 = Alert1.getText(); //Getting the text displayed in alert
-			Assert.assertEquals(txtAlert, alertText1); //Verify the displayed text in the alert
-			*/
-	
-		    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-
-		    Alert1.accept(); //Accept alert
+			btnClose.click();
 
 			TestLog.log.info("Details were deleted");
 			
@@ -134,90 +178,19 @@ public class EditGroupMembership extends BasePage {
 		}
 			
 	}
-	
-	public void CancelDelete(String user) {
-		try{
-			TestLog.log.info("Deleting the user");
-
-			WebElement btnDelete = driver.findElement(By.xpath("//td[text()='"+user+"']/../td[7]/div[@class='fa-hover']"));
-			btnDelete.click();
-
-			Alert Alert1 = driver.switchTo().alert(); //Switch driver to alert
-			
-			
-			/*String alertText1 = Alert1.getText(); //Getting the text displayed in alert
-			Assert.assertEquals(txtAlert, alertText1); //Verify the displayed text in the alert
-			*/
-	
-		    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-
-		    Alert1.dismiss(); //Cancel alert
-
-			TestLog.log.info("Details were deleted");
-			
-		} catch (Exception ex) {
+	public boolean verifyTableIsDisplayed(){
+		boolean flag = false;
+		String tableData=table.getText();
 		
+		if(tableData.contains("User ID")){
+			flag=true;
 		}
-			
+		return flag;
+		
 	}
-	
-	public void NavigateFirst() {
-		try{
-			TestLog.log.info("Navigating to first page");
-			nvgtFirst.click();
-			TestLog.log.info("Showing first page");
-			
-		} catch (Exception ex) {
-		
-		}
-			
-	}
-	
-	public void NavigateLast() {
-		try{
-			TestLog.log.info("Navigating to last page");
-			nvgtLast.click();
-			TestLog.log.info("Showing last page");
-			
-		} catch (Exception ex) {
-		
-		}
-			
-	}
-	
-	public void NavigateNext() {
-		try{
-			TestLog.log.info("Navigating to next page");
-			nvgtNext.click();
-			TestLog.log.info("Showing next page");
-			
-		} catch (Exception ex) {
-		
-		}
-			
-	}
-	
-	public void NavigatePrevious() {
-		try{
-			TestLog.log.info("Navigating to previous page");
-			nvgtPrevious.click();
-			TestLog.log.info("Showing previous page");
-			
-		} catch (Exception ex) {
-		
-		}
-	
 }
 	
-	public void NavigateNumber() {
-		try{
-			TestLog.log.info("Navigating to specific page");
-			nvgtNumber.click();
-			TestLog.log.info("Showing specific page");
-			
-		} catch (Exception ex) {
-		
-		}
 	
-}
-	}
+	
+
+	

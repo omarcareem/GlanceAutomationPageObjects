@@ -58,6 +58,23 @@ public class UserManagementPage extends CommonPageObject {
 		return userDetail;
 	}
 	
+	//method to verify the UserDetais element 
+			public boolean FindUserDetailsElement(String expectedMessage){
+				boolean flag = false;
+				String actualMessage=lblUserDetails.getText();
+				if (actualMessage.contains(expectedMessage)) {
+					flag = true;
+					System.out.println("User Detail Page Navigation Success");
+					}
+				else {
+					System.out.println("User Detail Page Navigation not Success");
+					flag = false;
+					}
+				
+				return flag;
+				
+			}
+
 	//verify actual table content from search 
 	public int verifySearchResult(String searchKey ){
 		 

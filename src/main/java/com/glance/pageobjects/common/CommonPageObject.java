@@ -30,6 +30,7 @@ import com.glance.pageobjects.logs.TestLog;
 
 public class CommonPageObject extends BasePage {
 
+	int currentMonthNumber;
 	public CommonPageObject(WebDriver driver) {
 		super(driver);
 		// TODO Auto-generated constructor stub
@@ -623,5 +624,40 @@ public class CommonPageObject extends BasePage {
 			}
 		});
 	}
+	
+	
+		public int getCurrentCalendarMonthinInt(String currentMonth){
+	        
+	       
+	        //String currentMonth= Calendar.getInstance().get(Calendar.MONTH);
+	        
+	        if(currentMonth=="Jan"){
+	               currentMonthNumber=1;
+	        }else if(currentMonth=="Feb"){
+	               currentMonthNumber=2;
+	        }else if(currentMonth=="Mar"){
+	               currentMonthNumber=3;
+	        }else if(currentMonth=="Apr"){
+	               currentMonthNumber=4;
+	        }else if(currentMonth=="May"){
+	               currentMonthNumber=5;
+	        }else if(currentMonth=="Jun"){
+	               currentMonthNumber=6;
+	        }else if(currentMonth=="Jul"){
+	               currentMonthNumber=7;
+	        }else if(currentMonth=="Aug"){
+	               currentMonthNumber=8;
+	        }else if(currentMonth=="Sep"){
+	               currentMonthNumber=9;
+	        }else if(currentMonth=="Oct"){
+	               currentMonthNumber=10;
+	        }else if(currentMonth=="Nov"){
+	               currentMonthNumber=11;
+	        }else if(currentMonth=="Dec"){
+	               currentMonthNumber=12;
+	        }
+	        
+	        return currentMonthNumber;
+	 }
 
 }

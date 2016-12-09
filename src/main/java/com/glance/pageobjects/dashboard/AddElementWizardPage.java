@@ -95,7 +95,7 @@ public class AddElementWizardPage extends BasePage {
 
 	@FindBy(xpath = "//div[@class='x_title']/h2")
 	WebElement titleElementWizard;
-	
+
 	WebDriverWait wait = new WebDriverWait(driver, 10);
 
 	public String getElementWizardPageTitle() {
@@ -110,6 +110,21 @@ public class AddElementWizardPage extends BasePage {
 		}
 
 		return elementWizardPageTitle;
+	}
+
+	public boolean getElementWizardPageTitle(String elementWizardPageTitle) {
+
+		// String elementWizardPageTitle=null;
+		try {
+			TestLog.log.info("Reading the title");
+			elementWizardPageTitle = titleElementWizard.getText();
+			TestLog.log.info("The title is: " + elementWizardPageTitle);
+			System.out.println(elementWizardPageTitle);
+		} catch (Exception ex) {
+			TestLog.log.info("Could not read the title due to: " + ex);
+		}
+
+		return true;
 	}
 
 	public void selectMetric(String metric) {
@@ -170,7 +185,7 @@ public class AddElementWizardPage extends BasePage {
 			TestLog.log.info("Unable to enter click the next button. Due to: " + ex);
 		}
 	}
-	
+
 	public void clickPreviousButton() {
 		try {
 			TestLog.log.info("Clicking on Previous button");
@@ -269,9 +284,9 @@ public class AddElementWizardPage extends BasePage {
 			TestLog.log.info("Unable to Select a data field. Due to: " + ex);
 		}
 	}
-	
-	public void selectWhenScreen(String whenScreen){
-		
+
+	public void selectWhenScreen(String whenScreen) {
+
 		try {
 			wait.until(ExpectedConditions.visibilityOf(drpScreen));
 			Select dropWhenScreen = new Select(drpScreen);
@@ -282,14 +297,14 @@ public class AddElementWizardPage extends BasePage {
 			TestLog.log.info("Unable to Select a when screen. Due to: " + ex);
 		}
 	}
-	
-	public void saveNewElement(){
+
+	public void saveNewElement() {
 		try {
 			wait.until(ExpectedConditions.elementToBeClickable(btnSave));
 			TestLog.log.info("Saving the new element");
-			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			JavascriptExecutor executor = (JavascriptExecutor) driver;
 			executor.executeScript("arguments[0].click();", btnSave);
-			//btnSave.click();
+			// btnSave.click();
 			TestLog.log.info("Saved the new element");
 		} catch (Exception ex) {
 			TestLog.log.info("Unable to save the new element. Due to: " + ex);

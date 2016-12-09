@@ -1,12 +1,21 @@
 package com.glance.pageobjects.userlogin;
 
+<<<<<<< HEAD
 import org.openqa.selenium.JavascriptExecutor;
+=======
+import java.util.List;
+
+import org.openqa.selenium.By;
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+<<<<<<< HEAD
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+=======
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 import com.glance.pageobjects.common.BasePage;
 import com.glance.pageobjects.logs.TestLog;
@@ -19,6 +28,20 @@ public class SettingsPage extends BasePage {
 		// TODO Auto-generated constructor stub
 	}
 
+<<<<<<< HEAD
+=======
+	@FindBy(xpath = "//div[@id='main_body']/div/div[2]/div/div[1]/h2")
+	WebElement lblSettingsDashboard;
+	@FindBy(xpath = "//div[@id='main_body']/div/div[3]/div/div[1]/h2")
+	WebElement lblSettingsData;
+	@FindBy(xpath = "//div[@id='main_body']/div/div[4]/div/div[1]/h2")
+	WebElement lblSettingsUser;
+	@FindBy(xpath = "//div[@id='main_body']/div/div[5]/div/div[1]/h2")
+	WebElement lblSettingsPersonalizations;
+	@FindBy(xpath = "//div[@id='main_body']/div/div[6]/div/div[1]/h2")
+	WebElement lblSettingsMaintenance;
+
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 	@FindBy(xpath = "//div/a/i[@class='fa fa-institution']")
 	WebElement btnAddAccount;
 
@@ -81,10 +104,14 @@ public class SettingsPage extends BasePage {
 
 	@FindBy(xpath = "//button[@class='btn btn-info']")
 	WebElement btnSaveOK;
+<<<<<<< HEAD
 
 	@FindBy(xpath = "//button[@class='btn btn-default']")
 	WebElement btnSaveClose;
 
+=======
+	
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 	@FindBy(xpath = "//a[@class='btn btn-success']")
 	WebElement btnProfileUpdate;
 
@@ -92,6 +119,7 @@ public class SettingsPage extends BasePage {
 	WebElement btnSessionDump;
 
 	@FindBy(xpath = "//div[@id='session_dump']/pre/font[16]")
+<<<<<<< HEAD
 	WebElement SessionDumpUserId;
 
 	@FindBy(xpath = "//div[@id='session_dump']/pre/font[18]")
@@ -107,6 +135,43 @@ public class SettingsPage extends BasePage {
 
 	// Click on Add Account Button
 	public void ClickAddAccountBtn() {
+=======
+	WebElement sessionDumpUserId;
+
+	@FindBy(xpath = "//div[@id='session_dump']/pre/font[18]")
+	WebElement sessionDumpUserName;
+
+	@FindBy(xpath = "//div[@id='session_dump']/pre/font[20]")
+	WebElement sessionDumpFirstName;
+
+	@FindBy(xpath = "//div[@id='session_dump']/pre/font[22]")
+	WebElement sessionDumpLastName;
+	
+	@FindBy(xpath = "//div[@class='x_title']/h2")
+	String lblPageName;
+
+	// Check settings page title
+		public boolean verifyNavigationToSettingPage(String expectedMessage){
+			boolean flag = false;
+			System.out.println("Getting header");
+			String actualMessage=lblSettingsDashboard.getText();
+			System.out.println(actualMessage);
+			if (actualMessage.contains(expectedMessage)) {
+				flag = true;
+				System.out.println("You are in the settings page");
+				}
+			else {
+				System.out.println("You are not in the settings page");
+				flag = false;
+				}
+			return flag;
+			
+			
+		}
+
+	// Click on Add Account Button
+	public void clickAddAccountBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Add Account Button");
@@ -122,7 +187,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Get Count of Account
+<<<<<<< HEAD
 	public int GetCountAddAccount() {
+=======
+	public int getCountAddAccount() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 		String Count = null;
 		try {
 			TestLog.log.info("Getting the Count Of total Accounts");
@@ -139,7 +208,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Add Engagement Button
+<<<<<<< HEAD
 	public void ClickAddEngagementBtn() {
+=======
+	public void clickAddEngagementBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Add Engagement Button");
@@ -155,7 +228,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Get Count of Engagement
+<<<<<<< HEAD
 	public int GetCountAddEngagement() {
+=======
+	public int getCountAddEngagement() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 		String Count = null;
 		try {
 			TestLog.log.info("Getting the Count Of total Engagements");
@@ -170,6 +247,7 @@ public class SettingsPage extends BasePage {
 		return (Integer.parseInt(Count));
 
 	}
+<<<<<<< HEAD
 
 	// Click on Add Project Button
 	public void ClickAddProjectBtn() {
@@ -178,6 +256,55 @@ public class SettingsPage extends BasePage {
 			TestLog.log.info("Clicking on Add Project Button");
 			btnAddProject.click();
 			TestLog.log.info("Clicked on Add Project Button");
+=======
+	// method for verifying add engagement count ************************
+			public boolean verifyEngagementCount(int previousCountEngagement, int newCountEngagement) {
+
+				boolean flag = false;
+
+				if (previousCountEngagement < newCountEngagement) {
+					System.out.println("new engagement is added " + previousCountEngagement + "and" + newCountEngagement);
+					flag = true;
+				} else {
+					System.out.println("new engagement is not added");
+					flag = false;
+				}
+				return flag;
+
+			}
+
+			// method for verifying settings page ************************
+			public boolean verifyPageName(String[] expected) {
+
+				List<WebElement> pageNames = driver.findElements(By.xpath(lblPageName));
+
+				if (expected.length != pageNames.size()) {
+					System.out.println("fail, wrong number of elements found");
+				}
+
+				for (int i = 0; i < expected.length; i++) {
+					String optionValue = pageNames.get(i).getAttribute("h2");
+					if (optionValue.equals(expected[i])) {
+						System.out.println("passed on: " + optionValue);
+					} else {
+						System.out.println("failed on: " + optionValue);
+					}
+				}
+				return false;
+
+			}
+
+
+	// Click on Add Project Button
+	public void clickAddProjectBtn() {
+
+		try {
+			TestLog.log.info("Clicking on Add Project Button");
+			if (btnAddProject.isDisplayed()) {
+				btnAddProject.click();
+				TestLog.log.info("Clicked on Add Project Button");
+			}
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		} catch (Exception ex) {
 			TestLog.log
@@ -188,7 +315,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Get Count of Project
+<<<<<<< HEAD
 	public int GetCountAddProject() {
+=======
+	public int getCountAddProject() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 		String Count = null;
 		try {
 			TestLog.log.info("Getting the Count Of total Projects");
@@ -205,7 +336,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Delete Records Button
+<<<<<<< HEAD
 	public void ClickDeleteRecordsBtn() {
+=======
+	public void clickDeleteRecordsBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Delete Records Button");
@@ -221,7 +356,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Data Upload Button
+<<<<<<< HEAD
 	public void ClickDataUploadBtn() {
+=======
+	public void clickDataUploadBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Data Upload Button");
@@ -237,7 +376,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Data Delete/Modify Button
+<<<<<<< HEAD
 	public void ClickDataDeleteModifyBtn() {
+=======
+	public void clickDataDeleteModifyBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Data Delete/Modify Button");
@@ -254,7 +397,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Sockets Button
+<<<<<<< HEAD
 	public void ClickSocketsBtn() {
+=======
+	public void clickSocketsBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Sockets Button");
@@ -269,7 +416,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Get Count of Sockets
+<<<<<<< HEAD
 	public int GetCountSockets() {
+=======
+	public int getCountSockets() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 		String Count = null;
 		try {
 			TestLog.log.info("Getting the Count Of total Sockets");
@@ -285,6 +436,7 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Manage Users Button
+<<<<<<< HEAD
 	public void ClickManageUsersBtn() {
 
 		try {
@@ -294,6 +446,13 @@ public class SettingsPage extends BasePage {
 			JavascriptExecutor executor = (JavascriptExecutor)driver;
 			executor.executeScript("arguments[0].click();", btnManageUsers);
 			//btnManageUsers.click();
+=======
+	public void clickManageUsersBtn() {
+
+		try {
+			TestLog.log.info("Clicking on Manage Users Button");
+			btnManageUsers.click();
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 			TestLog.log.info("Clicked on Manage Users Button");
 
 		} catch (Exception ex) {
@@ -305,7 +464,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Get Count of Manage Users
+<<<<<<< HEAD
 	public int GetCountManageUsers() {
+=======
+	public int getCountManageUsers() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 		String Count = null;
 		try {
 			TestLog.log.info("Getting the Count Of total Manage Users");
@@ -322,7 +485,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Manage Groups Button
+<<<<<<< HEAD
 	public void ClickManageGroupsBtn() {
+=======
+	public void clickManageGroupsBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Manage Groups Button");
@@ -338,7 +505,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Get Count of Manage Groups
+<<<<<<< HEAD
 	public int GetCountManageGroups() {
+=======
+	public int getCountManageGroups() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 		String Count = null;
 		try {
 			TestLog.log.info("Getting the Count Of total Manage Groups");
@@ -355,7 +526,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Group Membership Button
+<<<<<<< HEAD
 	public void ClickGroupMembershipBtn() {
+=======
+	public void clickGroupMembershipBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Group Membership Button");
@@ -371,7 +546,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Manage Access Button
+<<<<<<< HEAD
 	public void ClickManageAccessBtn() {
+=======
+	public void clickManageAccessBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Manage Access Button");
@@ -387,7 +566,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Current Month Radio Button
+<<<<<<< HEAD
 	public void ClickCurrentMonthRadioBtn() {
+=======
+	public void clickCurrentMonthRadioBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Current Month Radio Button");
@@ -404,7 +587,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Last Selected Radio Button
+<<<<<<< HEAD
 	public void ClickLastSelectedRadioBtn() {
+=======
+	public void clickLastSelectedRadioBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Last Selected Radio Button");
@@ -421,7 +608,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Save Button
+<<<<<<< HEAD
 	public void ClickSaveBtn() {
+=======
+	public void clickSaveBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Save Button");
@@ -436,7 +627,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Save Ok Button
+<<<<<<< HEAD
 	public void ClickSaveOKBtn() {
+=======
+	public void clickSaveOKBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Save Ok Button");
@@ -450,6 +645,7 @@ public class SettingsPage extends BasePage {
 
 	}
 
+<<<<<<< HEAD
 	// Click on Save Close Button
 	public void ClickSaveCloseBtn() {
 
@@ -467,6 +663,11 @@ public class SettingsPage extends BasePage {
 
 	// Click on Profile Update Button
 	public void ClickProfileUpdateBtn() {
+=======
+	
+	// Click on Profile Update Button
+	public void clickProfileUpdateBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Profile Update Button");
@@ -482,7 +683,11 @@ public class SettingsPage extends BasePage {
 	}
 
 	// Click on Session Dump Button
+<<<<<<< HEAD
 	public void ClickSessionDumpBtn() {
+=======
+	public void clickSessionDumpBtn() {
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
 
 		try {
 			TestLog.log.info("Clicking on Session Dump Button");
@@ -496,6 +701,7 @@ public class SettingsPage extends BasePage {
 
 	}
 
+<<<<<<< HEAD
 	// Check on Session Dump User id
 	public String CheckSessionDumpUserId() {
 		String UserId = null;
@@ -558,6 +764,71 @@ public class SettingsPage extends BasePage {
 		}
 		return LastName;
 
+=======
+	
+	// Check on Session Dump User id
+	public boolean checkSessionDumpUserId(String expectedMessageUserId){
+		boolean flag = true;
+		String actualMessage=sessionDumpUserId.getText();
+		if (actualMessage.contains(expectedMessageUserId)) {
+			flag = false;
+			System.out.println("Checking on Session Dump User Id");
+			}
+		else {
+			System.out.println("Checked on Session Dump User Id");
+			flag = true;
+			}
+		
+		return flag;
+	}
+	
+
+	// Check on Session Dump User name
+	public boolean checkSessionDumpUserName(String expectedMessageUserName){
+		boolean flag = true;
+		String actualMessage=sessionDumpUserName.getText();
+		if (actualMessage.contains(expectedMessageUserName)) {
+			flag = false;
+			System.out.println("Checking on Session Dump User Name");
+			}
+		else {
+			System.out.println("Checked on Session Dump User Name");
+			flag = true;
+			}
+		
+		return flag;
 	}
 
+	// Check on Session Dump First name
+	public boolean checkSessionDumpFirstName(String expectedMessageFirstName){
+		boolean flag = true;
+		String actualMessage=sessionDumpFirstName.getText();
+		if (actualMessage.contains(expectedMessageFirstName)) {
+			flag = false;
+			System.out.println("Checking on Session Dump FirstName");
+			}
+		else {
+			System.out.println("Checked on Session Dump FirstName");
+			flag = true;
+			}
+		
+		return flag;
+>>>>>>> 72f48efed32ada12e35b21552adaeb6d6cc7ebc7
+	}
+
+	// Check on Session Dump Last name
+	public boolean checkSessionDumpLastName(String expectedMessageLastName){
+		boolean flag = true;
+		String actualMessage=sessionDumpLastName.getText();
+		if (actualMessage.contains(expectedMessageLastName)) {
+			flag = false;
+			System.out.println("Checking on Session Dump LastName");
+			}
+		else {
+			System.out.println("Checked on Session Dump LastName");
+			flag = true;
+			}
+		
+		return flag;
+	}
 }

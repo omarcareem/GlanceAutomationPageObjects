@@ -125,14 +125,14 @@ public class CommonPageTopPane extends BasePage {
           System.out.println("Clicking Logout failed");
 		}
 
-<<<<<<< HEAD
+
 	}
     
     //verfiy unexisting in search query
-=======
+
 	}*/
  
->>>>>>> neelamaniPOM
+
     public void searchTopPane(String searchAPE) {
 
 		try {

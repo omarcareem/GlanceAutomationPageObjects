@@ -434,11 +434,11 @@ public class CommonPageObject extends BasePage {
 		TestLog.log.info("verification sort according to the colom ");
 		boolean flag = false;
 		
-        List<String> expColom = new ArrayList<>();
+        List<String> expColom = new ArrayList();
                 
-        List<String> actColom = new ArrayList<>();
+        List<String> actColom = new ArrayList();
         
-        List<String> tempColom = new ArrayList<>();
+        List<String> tempColom = new ArrayList();
         
         try{
 			TestLog.log.info("get the elements to an arrey"); 
@@ -455,7 +455,6 @@ public class CommonPageObject extends BasePage {
         	TestLog.log.info("sort according to the colom as expected");
         	Collections.sort(expColom,new Comparator<String>() {
 
-				@Override
 				public int compare(String o1, String o2) {
 						int a = Integer.parseInt(o1);
 						int b = Integer.parseInt(o2);

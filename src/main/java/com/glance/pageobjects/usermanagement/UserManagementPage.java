@@ -5,13 +5,10 @@ package com.glance.pageobjects.usermanagement;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 
 import com.glance.pageobjects.common.CommonPageObject;
 import com.glance.pageobjects.logs.TestLog;
@@ -25,7 +22,7 @@ public class UserManagementPage extends CommonPageObject {
 	}
 	
 	//object identification using page factory model
-	@FindBy (xpath= "//div[@class='x_title']/h2")
+	@FindBy (xpath= "//div/h3")
 	WebElement lblUserDetails;
 	
 	@FindBy(xpath="//a[@class='collapse-link']/i")
@@ -41,10 +38,14 @@ public class UserManagementPage extends CommonPageObject {
 	
 	
 	//method to verify the UserDetais element 
-	public void FindUserDetailsElement(){
+	public String findUserDetailsElement(){
+		
+		String userDetail = null;
 		try{
 			TestLog.log.info("verify page navigation");
 			if (lblUserDetails.isDisplayed()){
+				
+				userDetail = lblUserDetails.getText();
 				
 				System.out.println("User Detail Page Navigation Success");
 			} else {
@@ -53,6 +54,8 @@ public class UserManagementPage extends CommonPageObject {
 		}catch (Exception ex) {
 			TestLog.log.info("User Detail Page Navigation not Success" + ex);
 		}	
+		
+		return userDetail;
 	}
 	
 	//method to verify the UserDetais element 
@@ -73,11 +76,11 @@ public class UserManagementPage extends CommonPageObject {
 			}
 
 	//verify actual table content from search 
-	public int actualSearchResult(String searchKey ){
+	public int verifySearchResult(String searchKey ){
 		 
 		int searchRowCount =0;
 		try{
-			TestLog.log.info("verify page navigation after search");
+			TestLog.log.info("verify actual page row count after search");
 			
 			searchRowCount = driver.findElements(By.xpath("//*[contains(text(),'"+searchKey+"'))]")).size();
 		
@@ -86,6 +89,8 @@ public class UserManagementPage extends CommonPageObject {
 		}	
 		return searchRowCount;
 	}
+	
+	
 	
 	
 	//click edit link in user management
@@ -214,7 +219,7 @@ public class UserManagementPage extends CommonPageObject {
 					
 				}
 				
-				//verify on table maximized 
+				//verify on table close
 				
 				public boolean verifyButtonDelete(){
 					 TestLog.log.info("Verify Delete button");
@@ -222,13 +227,12 @@ public class UserManagementPage extends CommonPageObject {
 					 boolean Output = false;
 					 
 					try{
-						if(btnDelete.isDisplayed()){
-							TestLog.log.info("Delete button is visible");
-							Output = false;
-						}else{
-							Output = true;
-						}
+						driver.findElement(By.id("example"));
+						
+					}catch(org.openqa.selenium.NoSuchElementException e){
+						Output = true;
 					}catch (Exception ex) {
+						ex.printStackTrace();
 						TestLog.log.info("Delete button is visible" + ex);
 					}	
 					return Output;

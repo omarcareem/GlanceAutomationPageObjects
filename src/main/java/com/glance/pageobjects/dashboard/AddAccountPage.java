@@ -47,10 +47,10 @@ public class AddAccountPage extends BasePage {
 	@FindBy(xpath = "//button[@id='cancel']")
 	WebElement btnCancel;
 
-	@FindBy(xpath = "//i[@class='fa fa-chevron-up']")
-	WebElement clickExpand;
-	
 	@FindBy(xpath = "//i[@class='fa fa-chevron-down']")
+	WebElement clickExpand;
+
+	@FindBy(xpath = "//i[@class='fa fa-chevron-up']")
 	WebElement clickCollapse;
 
 	@FindBy(xpath = "//i[@class='fa fa-close']")
@@ -172,21 +172,21 @@ public class AddAccountPage extends BasePage {
 		}
 	}
 
-	//click collapse and expand
-		public void clickCollapseExpand() {
+	// click collapse and expand
+	public void clickCollapseExpand() {
 
-			try {
+		try {
 
-				TestLog.log.info("Clicking the collapse icon");
-				clickCollapse.click();
-				clickExpand.click();
-				TestLog.log.info("Clicked the collapse icon");
-			}
-
-			catch (Exception ex) {
-				TestLog.log.info("Could not click collapse. " + ex);
-			}
+			TestLog.log.info("Clicking the collapse icon");
+			clickCollapse.click();
+			clickExpand.click();
+			TestLog.log.info("Clicked the collapse icon");
 		}
+
+		catch (Exception ex) {
+			TestLog.log.info("Could not click collapse. " + ex);
+		}
+	}
 
 	// clicking close
 	public void clickClose() {

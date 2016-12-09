@@ -208,6 +208,7 @@ public class AddEngagementPage extends BasePage {
 		try {
 			TestLog.log.info("select add new entry");
 			btnAddNewEntry.click();
+			System.out.println("Add new Entry is clicked");
 			TestLog.log.info("new entry will submit");
 
 		} catch (Exception ex) {

@@ -37,7 +37,7 @@ public class ManageGroupPage extends BasePage {
 	WebElement btnAdd;
 	
 	@FindBy(xpath=("//button[@class='btn btn-success']"))   
-	WebElement btnOkayforAddGrp;
+	WebElement btnDone;
 	
 	@FindBy(xpath=("//button[@class='btn btn-danger']"))   
 	WebElement btnOkayforDeleteGrp;
@@ -81,6 +81,7 @@ public class ManageGroupPage extends BasePage {
 	@FindBy(xpath = " //a[@class='paginate_button next']")
 	WebElement btnLast;
 
+	//Verify navigation to manage group page
 	public boolean verifyNavigationToManageGroupPage(String expectedMessage){
 		boolean flag = false;
 		String actualMessage=lblAddGroup.getText();
@@ -97,8 +98,25 @@ public class ManageGroupPage extends BasePage {
 		
 		
 	}
+	//verify the fill out  field alert message
+	public boolean verifyAlert(String expectedAlertMessage){
+		boolean flag = false;
+		String actualMessage=lblAddGroup.getText();
+		if (actualMessage.contains(expectedAlertMessage)) {
+			flag = true;
+			System.out.println("Alert verified");
+			}
+		else {
+			System.out.println("Alert not verified");
+			flag = false;
+			}
+		
+		return flag;
+		
+		
+	}
 	
-
+    //imput the the group name
 	public void inputGroupName(String grpName) {
 
 		try {
@@ -112,6 +130,7 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	//click chooseFile Button
 	public void inputGroupImage() {
 
 		try {
@@ -125,11 +144,14 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	//clicking Add button and Done Button
 	public void clickAddGroup() {
 
 		try {
 			TestLog.log.info("Adding group");
 			btnAdd.click();
+			Thread.sleep(1000);
+			btnDone.click();
 			TestLog.log.info("Added group");
 
 		} catch (Exception ex) {
@@ -138,6 +160,7 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	//clicking cancel Adding group button 
 	public void clickCancelGroup() {
 
 		try {
@@ -151,6 +174,7 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	//search group by typing text
 	public void searchGroup(String searchText) {
 
 		try {
@@ -164,6 +188,8 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	
+	//select records from the drop down
 	public void selectRecords(int number) {
 
 		try {
@@ -180,6 +206,8 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	
+	//edit group details
 	public void clickEdit(String groupName) {
 
 		try {
@@ -195,6 +223,8 @@ public class ManageGroupPage extends BasePage {
 
 	}
 
+	
+	//click an existing group
 	public void clickDelete(String groupNameNew) {
 
 		try {
@@ -211,6 +241,7 @@ public class ManageGroupPage extends BasePage {
 		}
 
 	}
+	
 	//verfiy added group
 		public boolean verifyAdded(String grpName) {
 

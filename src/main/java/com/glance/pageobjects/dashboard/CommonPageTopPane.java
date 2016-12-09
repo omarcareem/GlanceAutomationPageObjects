@@ -130,7 +130,7 @@ public class CommonPageTopPane extends BasePage {
 
 
     //click profile from the drop down menu
-   /* public void clickProfile() {
+    public void clickProfile() {
 
 		try {
 			TestLog.log.info("Clicking Profile");
@@ -141,10 +141,10 @@ public class CommonPageTopPane extends BasePage {
           System.out.println("Clicking Profile failed");
 		}
 
-	}*/
+	}
  
     //click settings from the drop down menu
-   /* public void clickSettings() {
+   public void clickSettings() {
 
 		try {
 			TestLog.log.info("Clicking Settings");
@@ -156,9 +156,9 @@ public class CommonPageTopPane extends BasePage {
 		}
 
 	}
-    */
+    
     //click logout from the drop down menu
-    /*public void clickLogout() {
+    public void clickLogout() {
 
 		try {
 			TestLog.log.info("Clicking Logout");
@@ -174,7 +174,7 @@ public class CommonPageTopPane extends BasePage {
     
     //verfiy unexisting in search query
 
-	}*/
+	
  
 
  

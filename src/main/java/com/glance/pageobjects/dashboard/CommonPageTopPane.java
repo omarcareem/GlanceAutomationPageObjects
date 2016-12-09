@@ -73,7 +73,7 @@ public class CommonPageTopPane extends BasePage {
     WebElement errorAccessDenied;
     
     //click drop down
-<<<<<<< HEAD
+
     
     public void clickDropDownIcon(String pageLinks){
 		try{
@@ -88,7 +88,7 @@ public class CommonPageTopPane extends BasePage {
 		
     }
 	
-=======
+
     public void clickDropDownIcon() {
 
 		try {
@@ -127,7 +127,7 @@ public class CommonPageTopPane extends BasePage {
     	
     	return flag;
     }
->>>>>>> shamamaPOM
+
 
     //click profile from the drop down menu
    /* public void clickProfile() {
@@ -169,19 +169,17 @@ public class CommonPageTopPane extends BasePage {
           System.out.println("Clicking Logout failed");
 		}
 
-<<<<<<< HEAD
+
 	}
     
     //verfiy unexisting in search query
-<<<<<<< HEAD
-=======
+
 	}*/
  
->>>>>>> neelamaniPOM
-    public void searchTopPane(String searchAPE) {
-=======
+
+ 
     public void searchTopPane(String searchUnexisting) {
->>>>>>> shamamaPOM
+
 
 		try {
 			TestLog.log.info("searching");

@@ -139,7 +139,7 @@ public class CommonPageObject extends BasePage {
 		String expRecordCount = null;
 		int currentRecordCount = 0;
 		int startingcount = 0;
-		
+		String currentPage=null;
 		
 		
 		boolean flag = false;
@@ -173,26 +173,31 @@ public class CommonPageObject extends BasePage {
 					flag = true;
 				} 
 			}else  if(pagination.equalsIgnoreCase("Next")){
-					for (int i=0;i<actualpageNumbers;i++){
+					
 						TestLog.log.info("get actual page number");
 											
 							recordCount = lblRecordCount.getText();
-							expRecordCount =("Showing "+(((actualpageNumbers+1)*10)-9) +" to " +((actualpageNumbers+1)*10)+" of "+actualRowCount + " entries");
+							currentPage = driver.findElement(By.xpath("//span/a[@class='paginate_button current']")).getText(); 
+							currentPageCount =Integer.parseInt(currentPage);
+							
+							expRecordCount =("Showing "+(((currentPageCount)*10)-9) +" to " +((currentPageCount)*10)+" of "+actualRowCount + " entries");
 							if(recordCount.equalsIgnoreCase(expRecordCount)){
 								flag = true;
-							}
+							
 					}
 						
-				}else if(pagination.equalsIgnoreCase("Previos")){
-					for (int i=0;i<actualpageNumbers;i++){
+				}else if(pagination.equalsIgnoreCase("Previous")){
+					
 						TestLog.log.info("get actual page number");
 											
 							recordCount = lblRecordCount.getText();
+							currentPage = driver.findElement(By.xpath("//span/a[@class='paginate_button current']")).getText(); 
+							currentPageCount =Integer.parseInt(currentPage);
 							
-							if(recordCount.equalsIgnoreCase("Showing "+(((actualpageNumbers-1)*10)-9) +" to " +((actualpageNumbers-1)*10)+" of "+actualRowCount + " entries")){
+							if(recordCount.equalsIgnoreCase("Showing "+((currentPageCount*10)-9) +" to " +(currentPageCount*10)+" of "+actualRowCount + " entries")){
 								flag = true;
 							}
-					}
+					
 				}else{
 					System.out.println("no page found");
 				}
@@ -399,13 +404,13 @@ public class CommonPageObject extends BasePage {
 	}
 	
 	//verify search result
-	public String actualSearchResult(String keyWord){
+	public int actualSearchResult(String keyWord){
 		int actualSearch = 0;
-		String searchResult = null;
+		
 		try {
 			if(!(keyWord==null)){
 				actualSearch = driver.findElements(By.tagName("tr")).size();
-				searchResult = Integer.toString(actualSearch);				
+								
 			}else{
 				System.out.println("keyWord is null");
 			}
@@ -415,7 +420,7 @@ public class CommonPageObject extends BasePage {
 			ex.printStackTrace();
 			TestLog.log.info("Could not find search result" + ex);
 		}
-		return searchResult;
+		return actualSearch;
 	}
 		
 	//sorting the table according to the coloum	

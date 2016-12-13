@@ -57,7 +57,7 @@ public class CommonPageObject extends BasePage {
 	
 	
 	By dropDown = By.xpath("//label/select[@name='example_length']");
-	By middlePaginationElement = By.xpath("//a[@ class='paginate_button']");
+	By middlePaginationElement = By.xpath("//span/a");
 	By middlePaginationCuttent = By.xpath("//a[@ class='paginate_button current']");
 	By txtSearch = By.xpath("//input[@type='search']");
 	By tblExample = By.xpath("//table[@id='example']");
@@ -120,7 +120,7 @@ public class CommonPageObject extends BasePage {
 				TestLog.log.info("checkif pagination link exists");
 
 					TestLog.log.info("click on pagination link ");
-					middlePpaginationEle.get(i).click();
+					middlePpaginationEle.get(i-1).click();
 					
 				} 	else{
 					System.out.println("Page navigation not success");
@@ -210,24 +210,38 @@ public class CommonPageObject extends BasePage {
 	}
 
 	// Page navigation verification String 
-		public boolean verifyPageNavigationMiddle(int middlePagination, int actualRowCount, int actualpageNumbers){
+		public boolean verifyPageNavigationMiddle(int middlePagination, int actualRowCount){
 			String recordCount = null;
+			int currentPageCount = 0;
+			String expRecordCount = null;
+			String currentPage=null;
 			boolean flag = false;
 			
 			
 			try{
-				if (middlePagination==actualpageNumbers)  {
-						TestLog.log.info("get actual page number");
-											
-							recordCount = lblRecordCount.getText();
-							
-							if(recordCount.equalsIgnoreCase("Showing "+((actualpageNumbers*10)-9) +" to " +(actualpageNumbers*10)+" of "+actualRowCount + " entries")){
-								flag = true;
-							
+				
+				if ((middlePagination*10)<actualRowCount){
+					recordCount = lblRecordCount.getText();
+					currentPage = driver.findElement(By.xpath("//span/a[@class='paginate_button current']")).getText(); 
+					currentPageCount =Integer.parseInt(currentPage);
+					
+					expRecordCount =("Showing "+((currentPageCount*10)-9) +" to " +(currentPageCount*10)+" of "+actualRowCount + " entries");
+					if(recordCount.equalsIgnoreCase(expRecordCount)){
+						flag = true;
+						
 					}
 				}else{
-					System.out.println("no page found");
+					recordCount = lblRecordCount.getText();
+					currentPage = driver.findElement(By.xpath("//span/a[@class='paginate_button current']")).getText(); 
+					currentPageCount =Integer.parseInt(currentPage);
+					
+					expRecordCount =("Showing "+((currentPageCount*10)-9) +" to " +actualRowCount+" of "+actualRowCount + " entries");
+					if(recordCount.equalsIgnoreCase(expRecordCount)){
+						flag = true;
+						
+					}
 				}
+				
 			}catch (Exception ex) {
 				ex.printStackTrace();
 				TestLog.log.info("Could not find page" + ex);

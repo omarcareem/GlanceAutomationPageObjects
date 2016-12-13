@@ -38,10 +38,10 @@ public class DataUploadPage extends BasePage {
 	@FindBy(xpath = "//button[@class='btn btn-danger']")
 	WebElement btnOkay;
 
-	@FindBy(xpath = "//i[@class='fa fa-chevron-up']")
+	@FindBy(xpath = "//i[@class='fa fa-chevron-down']")
 	WebElement clickExpand;
 
-	@FindBy(xpath = "//i[@class='fa fa-chevron-down']")
+	@FindBy(xpath = "//i[@class='fa fa-chevron-up']")
 	WebElement clickCollapse;
 
 	@FindBy(xpath = "//i[@class='fa fa-close']")
@@ -112,25 +112,6 @@ public class DataUploadPage extends BasePage {
 		}
 	}
 
-	/*// submit success message
-	public boolean verifySubmitSuccess(String expectedMessage) {
-
-		boolean flag = false;
-
-		String actualMessage = submitSuccessMessage.getText();
-
-		if (actualMessage.contains(expectedMessage)) {
-			flag = true;
-			System.out.println("You have uploaded the file successfully");
-
-		} else {
-			System.out.println("You have not uploaded the file");
-			flag = false;
-		}
-
-		return flag;
-	}*/
-
 	// click done
 	public void clickDone() {
 
@@ -151,7 +132,7 @@ public class DataUploadPage extends BasePage {
 		} else {
 			flag = false;
 			System.out.println("File is selected");
-			
+
 		}
 
 		return flag;
@@ -171,7 +152,7 @@ public class DataUploadPage extends BasePage {
 		} else {
 			flag = false;
 			System.out.println("Table is selected");
-			
+
 		}
 
 		return flag;
@@ -217,7 +198,7 @@ public class DataUploadPage extends BasePage {
 		} else {
 			flag = false;
 			System.out.println("Records have not uploaded to the table");
-			
+
 		}
 
 		return flag;
@@ -237,7 +218,7 @@ public class DataUploadPage extends BasePage {
 		} else {
 			flag = false;
 			System.out.println("Records uploaded to the table");
-			
+
 		}
 
 		return flag;

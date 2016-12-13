@@ -95,6 +95,38 @@ public class CommonPageTopPane extends BasePage {
 		}
 
 	}
+<<<<<<< HEAD
+=======
+    
+  //Verify options
+    public  boolean  verifyDropDownOptions(){
+    	boolean flag= false;
+    	
+     	 String option1 =drpProfileOption.getText();
+     	 String option2 =drpSettingsOption.getText();
+     	 String option3 =drpLogoutOption.getText();
+
+    	List<WebElement> DropDownOptions = driver.findElements(By.xpath("//div[1]/div/div[2]/div/nav/ul/li[1]/ul"));
+
+    	for(WebElement suggestions : DropDownOptions){
+    	   System.out.println("The options under Drop down icon are:" +option1 +option2 +option3);
+    	    if(suggestions.getText().contains(option1) && suggestions.getText().contains(option2)
+    	    		&& suggestions.getText().contains(option3)) {
+    	        System.out.println("Drop down options are verfied");
+    	    
+    	       
+    	        flag = true;
+    	    }
+    	   
+        }
+    	
+    	return flag;
+    }
+
+
+    //click profile from the drop down menu
+    public void clickProfile() {
+>>>>>>> 1d3d8d135fe1bf977403529eac21f86089c82a19
 
 	// Verify options
 	public boolean verifyDropDownOptions() {
@@ -120,6 +152,7 @@ public class CommonPageTopPane extends BasePage {
 
 		}
 
+<<<<<<< HEAD
 		return flag;
 	}
 
@@ -137,6 +170,12 @@ public class CommonPageTopPane extends BasePage {
 
 	// click settings from the drop down menu
 	public void clickSettings() {
+=======
+	}
+ 
+    //click settings from the drop down menu
+   public void clickSettings() {
+>>>>>>> 1d3d8d135fe1bf977403529eac21f86089c82a19
 
 		try {
 			TestLog.log.info("Clicking Settings");
@@ -148,9 +187,15 @@ public class CommonPageTopPane extends BasePage {
 		}
 
 	}
+<<<<<<< HEAD
 
 	// click logout from the drop down menu
 	public void clickLogout() {
+=======
+    
+    //click logout from the drop down menu
+    public void clickLogout() {
+>>>>>>> 1d3d8d135fe1bf977403529eac21f86089c82a19
 
 		try {
 			TestLog.log.info("Clicking Logout");
@@ -163,7 +208,12 @@ public class CommonPageTopPane extends BasePage {
 
 	}
 
+<<<<<<< HEAD
 	// verfiy unexisting in search query
+=======
+	
+ 
+>>>>>>> 1d3d8d135fe1bf977403529eac21f86089c82a19
 
 	// }*/
 

@@ -62,12 +62,12 @@ public class DataDeleteUpdatePage extends BasePage {
 	@FindBy(xpath = "//button[@class='btn btn-default']")
 	WebElement btnOkay;
 
-	@FindBy(xpath = "//i[@class='fa fa-chevron-up']")
-	WebElement clickExpand;
-	
 	@FindBy(xpath = "//i[@class='fa fa-chevron-down']")
+	WebElement clickExpand;
+
+	@FindBy(xpath = "//i[@class='fa fa-chevron-up']")
 	WebElement clickCollapse;
-	
+
 	@FindBy(xpath = "//i[@class='fa fa-close']")
 	WebElement clickClose;
 
@@ -157,25 +157,6 @@ public class DataDeleteUpdatePage extends BasePage {
 			TestLog.log.info("Could not click update. " + ex);
 		}
 	}
-
-	/*// update confirmation message
-	public boolean verifyUpdateConfirmation(String expectedMessage) {
-
-		boolean flag;
-
-		String actualMessage = updateConfirmationMessage.getText();
-
-		if (actualMessage.contains(expectedMessage)) {
-			flag = true;
-			System.out.println("You are in the delete update page");
-
-		} else {
-			System.out.println("You are not in the delete update page");
-			flag = false;
-		}
-
-		return flag;
-	}*/
 
 	// clicking delete
 	public void clickDelete(String userin) {
@@ -289,7 +270,7 @@ public class DataDeleteUpdatePage extends BasePage {
 						break outerloop;
 
 					}
-					
+
 				}
 			}
 		}
@@ -298,35 +279,36 @@ public class DataDeleteUpdatePage extends BasePage {
 	}
 
 	// verify record exist or not
-		public boolean verifyReordExist(String userin) {
-			boolean flag = true;
+	public boolean verifyReordExist(String userin) {
+		boolean flag = true;
 
-			WebElement tblUser = driver.findElement(By.xpath("//tbody"));
-			List<WebElement> tblRow = tblUser.findElements(By.tagName("tr"));
+		WebElement tblUser = driver.findElement(By.xpath("//tbody"));
+		List<WebElement> tblRow = tblUser.findElements(By.tagName("tr"));
 
-			outerloop: {
-				for (WebElement row : tblRow) {
+		outerloop: {
+			for (WebElement row : tblRow) {
 
-					List<WebElement> tblData = row.findElements(By.xpath("//td[1]"));
+				List<WebElement> tblData = row.findElements(By.xpath("//td[1]"));
 
-					for (WebElement data : tblData) {
+				for (WebElement data : tblData) {
 
-						String name = data.getText();
-						// System.out.println(userName);
-						if (name.contains(userin)) {
-							System.out.println("Record exist");
-							flag = false;
-							break outerloop;
+					String name = data.getText();
+					// System.out.println(userName);
+					if (name.contains(userin)) {
+						System.out.println("Record exist");
+						flag = false;
+						break outerloop;
 
-						}
-						
 					}
-				}
-				System.out.println("Record does not exist");
-			}
 
-			return flag;
+				}
+			}
+			System.out.println("Record does not exist");
 		}
+
+		return flag;
+	}
+
 	// Page Navigation - First page
 	public void firstPageNavigation() {
 
@@ -416,7 +398,7 @@ public class DataDeleteUpdatePage extends BasePage {
 
 			TestLog.log.info("get actual page count text");
 			recordCount = lblRecordCount.getText();
-			System.out.println("Record count:" +recordCount);
+			System.out.println("Record count:" + recordCount);
 
 		} catch (Exception ex) {
 			TestLog.log.info("Could not find dropdown" + ex);
@@ -679,7 +661,7 @@ public class DataDeleteUpdatePage extends BasePage {
 		int pageNumbers = 0;
 		try {
 			pageNumbers = driver.findElements(By.xpath("//span/a")).size();
-			System.out.println("Page Count:" +pageNumbers);
+			System.out.println("Page Count:" + pageNumbers);
 
 		} catch (Exception ex) {
 			TestLog.log.info("Could not find page count" + ex);

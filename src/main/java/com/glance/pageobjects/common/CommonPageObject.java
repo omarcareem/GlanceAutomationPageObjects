@@ -271,66 +271,66 @@ public class CommonPageObject extends BasePage {
 				try{							
 				TestLog.log.info("get actual row count");
 				if (actualRawCount <= 10){
-					if(selectedValue.contains("10")){
+					if(selectedValue.equalsIgnoreCase("10")){
 						expectedRowCount = actualRawCount;
-							} else if(selectedValue.contains("25")){
+							} else if(selectedValue.equalsIgnoreCase("25")){
 								expectedRowCount = 	actualRawCount;					
-							}else if(selectedValue.contains("50")){
+							}else if(selectedValue.equalsIgnoreCase("50")){
 								expectedRowCount = 	actualRawCount;						
-							}else if(selectedValue.contains("100")){
+							}else if(selectedValue.equalsIgnoreCase("100")){
 								expectedRowCount = 	actualRawCount;						
 							}else{
 								TestLog.log.info("no record added");
 								System.out.println("No records appeared");
 							}
 				}
-				if (actualRawCount > 10 || actualRawCount <= 25){
-					if(selectedValue.contains("10")){
+				if (actualRawCount > 10 && actualRawCount < 25){
+					if(selectedValue.equalsIgnoreCase("10")){
 						expectedRowCount = 	10;
-							} else if(selectedValue.contains("25")){
+							} else if(selectedValue.equalsIgnoreCase("25")){
 								expectedRowCount = 	actualRawCount;					
-							}else if(selectedValue.contains("50")){
+							}else if(selectedValue.equalsIgnoreCase("50")){
 								expectedRowCount = 	actualRawCount;						
-							}else if(selectedValue.contains("100")){
-								expectedRowCount = 	actualRawCount;						
-							}else{
-								System.out.println("No records appeared");
-							}
-				}
-				if (actualRawCount > 25 || actualRawCount <= 50){
-					if(selectedValue.contains("10")){
-						expectedRowCount = 	10;
-							} else if(selectedValue.contains("25")){
-								expectedRowCount = 	25;					
-							}else if(selectedValue.contains("50")){
-								expectedRowCount = 	actualRawCount;						
-							}else if(selectedValue.contains("100")){
+							}else if(selectedValue.equalsIgnoreCase("100")){
 								expectedRowCount = 	actualRawCount;						
 							}else{
 								System.out.println("No records appeared");
 							}
 				}
-				if (actualRawCount > 50 || actualRawCount <= 100){
-					if(selectedValue.contains("10")){
+				if (actualRawCount >= 25 && actualRawCount < 50){
+					if(selectedValue.equalsIgnoreCase("10")){
 						expectedRowCount = 	10;
-							} else if(selectedValue.contains("25")){
+							} else if(selectedValue.equalsIgnoreCase("25")){
 								expectedRowCount = 	25;					
-							}else if(selectedValue.contains("50")){
+							}else if(selectedValue.equalsIgnoreCase("50")){
+								expectedRowCount = 	actualRawCount;						
+							}else if(selectedValue.equalsIgnoreCase("100")){
+								expectedRowCount = 	actualRawCount;						
+							}else{
+								System.out.println("No records appeared");
+							}
+				}
+				if (actualRawCount >= 50 && actualRawCount < 100){
+					if(selectedValue.equalsIgnoreCase("10")){
+						expectedRowCount = 	10;
+							} else if(selectedValue.equalsIgnoreCase("25")){
+								expectedRowCount = 	25;					
+							}else if(selectedValue.equalsIgnoreCase("50")){
 								expectedRowCount = 	50;						
-							}else if(selectedValue.contains("100")){
+							}else if(selectedValue.equalsIgnoreCase("100")){
 								expectedRowCount = 	actualRawCount;						
 							}else{
 								System.out.println("No records appeared");
 							}
 				}
-				if (actualRawCount > 100){
-					if(selectedValue.contains("10")){
+				if (actualRawCount >= 100){
+					if(selectedValue.equalsIgnoreCase("10")){
 						expectedRowCount = 	10;
-							} else if(selectedValue.contains("25")){
+							} else if(selectedValue.equalsIgnoreCase("25")){
 								expectedRowCount = 	25;					
-							}else if(selectedValue.contains("50")){
+							}else if(selectedValue.equalsIgnoreCase("50")){
 								expectedRowCount = 	50;						
-							}else if(selectedValue.contains("100")){
+							}else if(selectedValue.equalsIgnoreCase("100")){
 								expectedRowCount = 	100;						
 							}else{
 								System.out.println("No records appeared");
@@ -369,6 +369,8 @@ public class CommonPageObject extends BasePage {
 					actualRawCount = (actualRawCount + driver.findElements(By.tagName("tr")).size())-1;
 				}
 				
+				btnFirst.click();
+				
 			}
 
 		} catch (Exception ex) {
@@ -404,12 +406,12 @@ public class CommonPageObject extends BasePage {
 	}
 	
 	//verify search result
-	public int actualSearchResult(String keyWord){
+	public int actualSearchResult(String keyWord)throws Exception{
 		int actualSearch = 0;
 		
 		try {
 			if(!(keyWord==null)){
-				actualSearch = driver.findElements(By.tagName("tr")).size();
+				actualSearch = ((driver.findElements(By.tagName("tr")).size())-1);
 								
 			}else{
 				System.out.println("keyWord is null");
@@ -417,8 +419,8 @@ public class CommonPageObject extends BasePage {
 			
 			
 		}catch(Exception ex){
-			ex.printStackTrace();
 			TestLog.log.info("Could not find search result" + ex);
+			throw ex;
 		}
 		return actualSearch;
 	}

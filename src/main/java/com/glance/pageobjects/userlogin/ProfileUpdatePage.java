@@ -2,7 +2,7 @@ package com.glance.pageobjects.userlogin;
 
 
 
-import java.awt.List;
+//import java.awt.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,6 +42,10 @@ public class ProfileUpdatePage extends BasePage {
 	
 	@FindBy(id="linkId")
 	 WebElement linkChangeImg;
+	
+
+	@FindBy(id="changeIdiv")
+	 WebElement imagPreview;
 	
 	@FindBy(id="myFile")
 	 WebElement btnchooseImg;
@@ -483,6 +487,22 @@ public boolean getJobRoleValue(String valJobRole) {
 	String valueOfJobRole = drpjobrole.getAttribute("value");
 	if (valueOfJobRole.contains(valJobRole)) {
 		System.out.println("Profile update as:  " + valueOfJobRole);
+		flag = true;
+	} else {
+		System.out.println(" Profile update try is not verified");
+		flag = false;
+	}
+	return flag;
+
+}
+
+public boolean getImagePreview(String valJobRole) {
+
+	boolean flag = false;
+
+	String valueOfimage = imagPreview.getAttribute("value");
+	if (valueOfimage.contains(valJobRole)) {
+		System.out.println("Profile update as:  " + valueOfimage);
 		flag = true;
 	} else {
 		System.out.println(" Profile update try is not verified");

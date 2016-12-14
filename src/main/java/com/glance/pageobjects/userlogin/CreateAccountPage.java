@@ -51,7 +51,11 @@ public class CreateAccountPage extends BasePage {
 	@FindBy(xpath="//div[2]/div[2]/div/div/div/div/div[3]/div")
 	 WebElement lblPopupMsg3;
 	
+	@FindBy(xpath="//div[3]/div")
+	 WebElement lblPopupMsg4;
 	
+	
+	//div[3]/div
 	
 	@FindBy(xpath="//div[4]/button")
 	 WebElement popupDonebtn;
@@ -201,7 +205,21 @@ public class CreateAccountPage extends BasePage {
 
 	}
 	
-	
+	public boolean getPopupMsg4(String lblInvalidCreateAccPopupmsg3) {
+
+		boolean flag = false;
+
+		String popupMessageName = lblPopupMsg3.getText();
+		if (popupMessageName.contains(lblInvalidCreateAccPopupmsg3)) {
+			System.out.println("invalid  try is verified:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println("Invalid try is not verified");
+			flag = false;
+		}
+		return flag;
+
+	}
 
 	public void clickpopupDone(){
 		

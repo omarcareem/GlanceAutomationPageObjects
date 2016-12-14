@@ -71,6 +71,18 @@ public class CommonPageTopPane extends BasePage {
     @FindBy(xpath="//div/div[2]/div/div/h1") 
     WebElement errorAccessDenied;
     
+  
+    @FindBy(xpath="//div[@id='changeIdiv']/div/img[@class='img-circle profile_img']") 
+    WebElement proflUpdateImage;
+    
+ 
+    @FindBy(xpath="//button[@class='btn btn-warning']") 
+    WebElement btnErrorEmptySearch;
+    
+
+    @FindBy(xpath="//span[@class='title']") 
+    WebElement popUpError;
+    
     //click drop down
     public void clickDropDownIcon() {
 
@@ -263,10 +275,11 @@ public class CommonPageTopPane extends BasePage {
 		try {
 			TestLog.log.info("clicking Go");
 			btnSubmit.click();
+			 
 			TestLog.log.info("clicked Go");
 
 		} catch (Exception ex) {
-          System.out.println("Cancel Add Group Failed");
+          System.out.println("Clicking Search Go button failed");
 		}
 
 	}
@@ -302,7 +315,7 @@ public class CommonPageTopPane extends BasePage {
 	}
      
     //verify no results found error as search results
-    public boolean verifyNoSearchReults() {
+    public boolean verifyNoSearchResults() {
 	    boolean flag= false;
 	    String error = errorSearch.getText();
 	    if(error.contains("Sorry, no matching results")){
@@ -314,12 +327,29 @@ public class CommonPageTopPane extends BasePage {
 	    
 	}
     
-    //verify the navigation to first default account details
-    public boolean verifyFirstDefaultDet() {
+    //click go in the search text
+    public void clickErrorPopUpOk() {
+
+		try {
+			TestLog.log.info("clicking ok");
+			 btnErrorEmptySearch.click();
+			 
+			TestLog.log.info("clicked ok");
+
+		} catch (Exception ex) {
+          System.out.println("clicking ok failed");
+		}
+
+	}
+    
+    //verify the error message for search with empty input
+    public boolean verifySearchEmpty() {
 	    boolean flag= false;
-	    String error = searchTextBox.getText();
-	    if(error.contains("Scotia")){
-	    	System.out.println("Directed to first default details");
+	    
+	    String error = popUpError.getText();
+	    
+	    if(error.contains("Error")){
+	    	System.out.println("Empty search is verified");
 	    	flag = true;
 	    }
 	    
@@ -330,7 +360,7 @@ public class CommonPageTopPane extends BasePage {
     
     
     //verify access denied message
-    public boolean verifyInvalidAccess() {
+    public boolean verifyInvalidAccess(String AccessDeniedMsg) {
 	    boolean flag= false;
 	    String error1 = errorAccessDenied.getText();
 	 
@@ -363,6 +393,31 @@ public class CommonPageTopPane extends BasePage {
 	    if(userNameTop.contains(UserNameProfile)) {
 	
 	    	System.out.println("UserName Verified");
+	    	
+	    	flag = true;
+	    }
+	    
+	    return flag;
+	    
+	}
+    
+    //Verify UserImage in the TopPane
+    public boolean verifyUserImage() throws InterruptedException {
+	    boolean flag= false;
+	    
+	    String userImage = imgUserTop.getAttribute("src");
+	    System.out.println("UserImageTop: "+userImage);
+	    
+	    drpDownIcon.click();
+	    Thread.sleep(2000);
+		drpProfileOption.click();
+		Thread.sleep(2000);
+	    
+	    String UserImageProfile =proflUpdateImage.getAttribute("src");
+	    System.out.println("UserImageProfile: " +UserImageProfile);
+	    if(userImage.contains(UserImageProfile)) {
+	
+	    	System.out.println("UserImage in the Top Pane Verified");
 	    	
 	    	flag = true;
 	    }

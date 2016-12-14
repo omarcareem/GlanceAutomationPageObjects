@@ -57,7 +57,7 @@ public class CommonPageObject extends BasePage {
 	
 	
 	By dropDown = By.xpath("//label/select[@name='example_length']");
-	By middlePaginationElement = By.xpath("//a[@ class='paginate_button']");
+	By middlePaginationElement = By.xpath("//span/a");
 	By middlePaginationCuttent = By.xpath("//a[@ class='paginate_button current']");
 	By txtSearch = By.xpath("//input[@type='search']");
 	By tblExample = By.xpath("//table[@id='example']");
@@ -120,7 +120,7 @@ public class CommonPageObject extends BasePage {
 				TestLog.log.info("checkif pagination link exists");
 
 					TestLog.log.info("click on pagination link ");
-					middlePpaginationEle.get(i).click();
+					middlePpaginationEle.get(i-1).click();
 					
 				} 	else{
 					System.out.println("Page navigation not success");
@@ -139,7 +139,7 @@ public class CommonPageObject extends BasePage {
 		String expRecordCount = null;
 		int currentRecordCount = 0;
 		int startingcount = 0;
-		
+		String currentPage=null;
 		
 		
 		boolean flag = false;
@@ -173,26 +173,31 @@ public class CommonPageObject extends BasePage {
 					flag = true;
 				} 
 			}else  if(pagination.equalsIgnoreCase("Next")){
-					for (int i=0;i<actualpageNumbers;i++){
+					
 						TestLog.log.info("get actual page number");
 											
 							recordCount = lblRecordCount.getText();
-							expRecordCount =("Showing "+(((actualpageNumbers+1)*10)-9) +" to " +((actualpageNumbers+1)*10)+" of "+actualRowCount + " entries");
+							currentPage = driver.findElement(By.xpath("//span/a[@class='paginate_button current']")).getText(); 
+							currentPageCount =Integer.parseInt(currentPage);
+							
+							expRecordCount =("Showing "+(((currentPageCount)*10)-9) +" to " +((currentPageCount)*10)+" of "+actualRowCount + " entries");
 							if(recordCount.equalsIgnoreCase(expRecordCount)){
 								flag = true;
-							}
+							
 					}
 						
-				}else if(pagination.equalsIgnoreCase("Previos")){
-					for (int i=0;i<actualpageNumbers;i++){
+				}else if(pagination.equalsIgnoreCase("Previous")){
+					
 						TestLog.log.info("get actual page number");
 											
 							recordCount = lblRecordCount.getText();
+							currentPage = driver.findElement(By.xpath("//span/a[@class='paginate_button current']")).getText(); 
+							currentPageCount =Integer.parseInt(currentPage);
 							
-							if(recordCount.equalsIgnoreCase("Showing "+(((actualpageNumbers-1)*10)-9) +" to " +((actualpageNumbers-1)*10)+" of "+actualRowCount + " entries")){
+							if(recordCount.equalsIgnoreCase("Showing "+((currentPageCount*10)-9) +" to " +(currentPageCount*10)+" of "+actualRowCount + " entries")){
 								flag = true;
 							}
-					}
+					
 				}else{
 					System.out.println("no page found");
 				}
@@ -205,24 +210,38 @@ public class CommonPageObject extends BasePage {
 	}
 
 	// Page navigation verification String 
-		public boolean verifyPageNavigationMiddle(int middlePagination, int actualRowCount, int actualpageNumbers){
+		public boolean verifyPageNavigationMiddle(int middlePagination, int actualRowCount){
 			String recordCount = null;
+			int currentPageCount = 0;
+			String expRecordCount = null;
+			String currentPage=null;
 			boolean flag = false;
 			
 			
 			try{
-				if (middlePagination==actualpageNumbers)  {
-						TestLog.log.info("get actual page number");
-											
-							recordCount = lblRecordCount.getText();
-							
-							if(recordCount.equalsIgnoreCase("Showing "+((actualpageNumbers*10)-9) +" to " +(actualpageNumbers*10)+" of "+actualRowCount + " entries")){
-								flag = true;
-							
+				
+				if ((middlePagination*10)<actualRowCount){
+					recordCount = lblRecordCount.getText();
+					currentPage = driver.findElement(By.xpath("//span/a[@class='paginate_button current']")).getText(); 
+					currentPageCount =Integer.parseInt(currentPage);
+					
+					expRecordCount =("Showing "+((currentPageCount*10)-9) +" to " +(currentPageCount*10)+" of "+actualRowCount + " entries");
+					if(recordCount.equalsIgnoreCase(expRecordCount)){
+						flag = true;
+						
 					}
 				}else{
-					System.out.println("no page found");
+					recordCount = lblRecordCount.getText();
+					currentPage = driver.findElement(By.xpath("//span/a[@class='paginate_button current']")).getText(); 
+					currentPageCount =Integer.parseInt(currentPage);
+					
+					expRecordCount =("Showing "+((currentPageCount*10)-9) +" to " +actualRowCount+" of "+actualRowCount + " entries");
+					if(recordCount.equalsIgnoreCase(expRecordCount)){
+						flag = true;
+						
+					}
 				}
+				
 			}catch (Exception ex) {
 				ex.printStackTrace();
 				TestLog.log.info("Could not find page" + ex);
@@ -266,66 +285,66 @@ public class CommonPageObject extends BasePage {
 				try{							
 				TestLog.log.info("get actual row count");
 				if (actualRawCount <= 10){
-					if(selectedValue.contains("10")){
+					if(selectedValue.equalsIgnoreCase("10")){
 						expectedRowCount = actualRawCount;
-							} else if(selectedValue.contains("25")){
+							} else if(selectedValue.equalsIgnoreCase("25")){
 								expectedRowCount = 	actualRawCount;					
-							}else if(selectedValue.contains("50")){
+							}else if(selectedValue.equalsIgnoreCase("50")){
 								expectedRowCount = 	actualRawCount;						
-							}else if(selectedValue.contains("100")){
+							}else if(selectedValue.equalsIgnoreCase("100")){
 								expectedRowCount = 	actualRawCount;						
 							}else{
 								TestLog.log.info("no record added");
 								System.out.println("No records appeared");
 							}
 				}
-				if (actualRawCount > 10 || actualRawCount <= 25){
-					if(selectedValue.contains("10")){
+				if (actualRawCount > 10 && actualRawCount < 25){
+					if(selectedValue.equalsIgnoreCase("10")){
 						expectedRowCount = 	10;
-							} else if(selectedValue.contains("25")){
+							} else if(selectedValue.equalsIgnoreCase("25")){
 								expectedRowCount = 	actualRawCount;					
-							}else if(selectedValue.contains("50")){
+							}else if(selectedValue.equalsIgnoreCase("50")){
 								expectedRowCount = 	actualRawCount;						
-							}else if(selectedValue.contains("100")){
-								expectedRowCount = 	actualRawCount;						
-							}else{
-								System.out.println("No records appeared");
-							}
-				}
-				if (actualRawCount > 25 || actualRawCount <= 50){
-					if(selectedValue.contains("10")){
-						expectedRowCount = 	10;
-							} else if(selectedValue.contains("25")){
-								expectedRowCount = 	25;					
-							}else if(selectedValue.contains("50")){
-								expectedRowCount = 	actualRawCount;						
-							}else if(selectedValue.contains("100")){
+							}else if(selectedValue.equalsIgnoreCase("100")){
 								expectedRowCount = 	actualRawCount;						
 							}else{
 								System.out.println("No records appeared");
 							}
 				}
-				if (actualRawCount > 50 || actualRawCount <= 100){
-					if(selectedValue.contains("10")){
+				if (actualRawCount >= 25 && actualRawCount < 50){
+					if(selectedValue.equalsIgnoreCase("10")){
 						expectedRowCount = 	10;
-							} else if(selectedValue.contains("25")){
+							} else if(selectedValue.equalsIgnoreCase("25")){
 								expectedRowCount = 	25;					
-							}else if(selectedValue.contains("50")){
+							}else if(selectedValue.equalsIgnoreCase("50")){
+								expectedRowCount = 	actualRawCount;						
+							}else if(selectedValue.equalsIgnoreCase("100")){
+								expectedRowCount = 	actualRawCount;						
+							}else{
+								System.out.println("No records appeared");
+							}
+				}
+				if (actualRawCount >= 50 && actualRawCount < 100){
+					if(selectedValue.equalsIgnoreCase("10")){
+						expectedRowCount = 	10;
+							} else if(selectedValue.equalsIgnoreCase("25")){
+								expectedRowCount = 	25;					
+							}else if(selectedValue.equalsIgnoreCase("50")){
 								expectedRowCount = 	50;						
-							}else if(selectedValue.contains("100")){
+							}else if(selectedValue.equalsIgnoreCase("100")){
 								expectedRowCount = 	actualRawCount;						
 							}else{
 								System.out.println("No records appeared");
 							}
 				}
-				if (actualRawCount > 100){
-					if(selectedValue.contains("10")){
+				if (actualRawCount >= 100){
+					if(selectedValue.equalsIgnoreCase("10")){
 						expectedRowCount = 	10;
-							} else if(selectedValue.contains("25")){
+							} else if(selectedValue.equalsIgnoreCase("25")){
 								expectedRowCount = 	25;					
-							}else if(selectedValue.contains("50")){
+							}else if(selectedValue.equalsIgnoreCase("50")){
 								expectedRowCount = 	50;						
-							}else if(selectedValue.contains("100")){
+							}else if(selectedValue.equalsIgnoreCase("100")){
 								expectedRowCount = 	100;						
 							}else{
 								System.out.println("No records appeared");
@@ -364,6 +383,8 @@ public class CommonPageObject extends BasePage {
 					actualRawCount = (actualRawCount + driver.findElements(By.tagName("tr")).size())-1;
 				}
 				
+				btnFirst.click();
+				
 			}
 
 		} catch (Exception ex) {
@@ -399,23 +420,23 @@ public class CommonPageObject extends BasePage {
 	}
 	
 	//verify search result
-	public String actualSearchResult(String keyWord){
+	public int actualSearchResult(String keyWord)throws Exception{
 		int actualSearch = 0;
-		String searchResult = null;
+		
 		try {
 			if(!(keyWord==null)){
-				actualSearch = driver.findElements(By.tagName("tr")).size();
-				searchResult = Integer.toString(actualSearch);				
+				actualSearch = ((driver.findElements(By.tagName("tr")).size())-1);
+								
 			}else{
 				System.out.println("keyWord is null");
 			}
 			
 			
 		}catch(Exception ex){
-			ex.printStackTrace();
 			TestLog.log.info("Could not find search result" + ex);
+			throw ex;
 		}
-		return searchResult;
+		return actualSearch;
 	}
 		
 	//sorting the table according to the coloum	
@@ -434,11 +455,11 @@ public class CommonPageObject extends BasePage {
 		TestLog.log.info("verification sort according to the colom ");
 		boolean flag = false;
 		
-        List<String> expColom = new ArrayList<>();
+        List<String> expColom = new ArrayList();
                 
-        List<String> actColom = new ArrayList<>();
+        List<String> actColom = new ArrayList();
         
-        List<String> tempColom = new ArrayList<>();
+        List<String> tempColom = new ArrayList();
         
         try{
 			TestLog.log.info("get the elements to an arrey"); 
@@ -455,7 +476,6 @@ public class CommonPageObject extends BasePage {
         	TestLog.log.info("sort according to the colom as expected");
         	Collections.sort(expColom,new Comparator<String>() {
 
-				@Override
 				public int compare(String o1, String o2) {
 						int a = Integer.parseInt(o1);
 						int b = Integer.parseInt(o2);

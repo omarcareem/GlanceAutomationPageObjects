@@ -111,6 +111,9 @@ public class CommonPageLeftPane extends BasePage {
 	
 	@FindBy(xpath="//a[@class='site_title']/span")
 	WebElement linkLeftGlanceTitle;
+	
+	  @FindBy(xpath="//div[1]/div/div[2]/div/nav/ul/li[1]/a/img")
+	    WebElement imgUserTop;
 
 	// clicking add new account
 	public void clickOnAddNewAccountLink() {
@@ -413,6 +416,26 @@ public void clickOnProjectName(String projectName) {
 		    if(userNameLeft.contains(userNameTop)) {
 		
 		    	System.out.println("UserNameLeft Verified");
+		    	
+		    	flag = true;
+		    }
+		    
+		    return flag;
+		    
+		}
+	   
+	   //Verify UserImage in the LeftPanel
+	    public boolean verifyUserImageLeft() throws InterruptedException {
+		    boolean flag= false;
+		    		  	  
+		    String userImageTop = imgUserTop.getAttribute("alt");
+		    System.out.println("UserImageTopName: "+userImageTop);
+		    
+		    String userImageLeft =imgUserLeft.getAttribute("alt");
+		    System.out.println("UserIamgeLeft:"+userImageLeft);
+		    if(userImageTop.contains(userImageLeft)) {
+		
+		    	System.out.println("UserImage in the Left Panel Verified");
 		    	
 		    	flag = true;
 		    }

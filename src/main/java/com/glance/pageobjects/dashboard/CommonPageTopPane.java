@@ -20,6 +20,7 @@ public class CommonPageTopPane extends BasePage {
 		// TODO Auto-generated constructor stub
 	}
 
+<<<<<<< HEAD
 	// user profile pic in the top pane
 	@FindBy(xpath = "//div[1]/div/div[2]/div/nav/ul/li[1]/a/img")
 	WebElement imgUserTop;
@@ -83,6 +84,73 @@ public class CommonPageTopPane extends BasePage {
 	}
 
 	public void clickDropDownIcon() {
+=======
+    
+    // user profile pic in the top pane
+    @FindBy(xpath="//div[1]/div/div[2]/div/nav/ul/li[1]/a/img")
+    WebElement imgUserTop;
+ 
+    //user name in the top pane
+    @FindBy(xpath="//li/a[@class='user-profile dropdown-toggle']")
+      WebElement txtUserName;
+    
+    //drop down icon in the top pane
+    @FindBy(xpath="//span[@class=' fa fa-angle-down']")
+    WebElement drpDownIcon;
+    
+    
+    @FindBy(xpath="//div/nav/ul/li[1]/ul/li[1]/a")
+    WebElement drpProfileOption;
+    
+     @FindBy(xpath="//ul/li[1]/ul/li[2]/a/span") 
+     WebElement drpSettingsOption;
+     
+    @FindBy(xpath="//div/nav/ul/li[1]/ul/li[3]/a") 
+     WebElement drpLogoutOption;
+     
+    @FindBy(xpath="//i[@class='fa fa-bars']") 
+     WebElement btnPancake;
+     
+    @FindBy(id="search") 
+     WebElement searchTextBox;
+    
+    @FindBy(id="first-name") 
+    WebElement proflUpdateFirstName;
+    
+ 
+    @FindBy(xpath="//div[3]/div[1]/strong") 
+    WebElement searchCatAcc;
+    
+    @FindBy(xpath="//div[3]/div[2]/strong") 
+    WebElement searchCatEng;
+     
+    @FindBy(xpath="//div[3]/div[3]/strong") 
+    WebElement searchCatPro;
+     
+    @FindBy(id="frm_submit") 
+    WebElement btnSubmit;
+    
+    @FindBy(xpath="//div[@class='autocomplete-no-suggestion']") 
+    WebElement errorSearch;
+    
+    @FindBy(xpath="//div/div[2]/div/div/h1") 
+    WebElement errorAccessDenied;
+    
+  
+    @FindBy(xpath="//div[@id='changeIdiv']/div/img[@class='img-circle profile_img']") 
+    WebElement proflUpdateImage;
+    
+ 
+    @FindBy(xpath="//button[@class='btn btn-warning']") 
+    WebElement btnErrorEmptySearch;
+    
+
+    @FindBy(xpath="//span[@class='title']") 
+    WebElement popUpError;
+    
+    //click drop down
+    public void clickDropDownIcon() {
+>>>>>>> shamamaPOM
 
 		try {
 			TestLog.log.info("Clicking Drop Down icon");
@@ -343,10 +411,15 @@ public class CommonPageTopPane extends BasePage {
 		try {
 			TestLog.log.info("clicking Go");
 			btnSubmit.click();
+			 
 			TestLog.log.info("clicked Go");
 
 		} catch (Exception ex) {
+<<<<<<< HEAD
 			System.out.println("Cancel Add Group Failed");
+=======
+          System.out.println("Clicking Search Go button failed");
+>>>>>>> shamamaPOM
 		}
 
 	}
@@ -382,6 +455,7 @@ public class CommonPageTopPane extends BasePage {
 		return flag;
 
 	}
+<<<<<<< HEAD
 
 	// verify no results found error as search results
 	public boolean verifyNoSearchReults() {
@@ -421,6 +495,66 @@ public class CommonPageTopPane extends BasePage {
 
 		return flag;
 
+=======
+     
+    //verify no results found error as search results
+    public boolean verifyNoSearchResults() {
+	    boolean flag= false;
+	    String error = errorSearch.getText();
+	    if(error.contains("Sorry, no matching results")){
+	    	System.out.println("Correct error");
+	    	flag = true;
+	    }
+	    
+	    return flag;
+	    
+	}
+    
+    //click go in the search text
+    public void clickErrorPopUpOk() {
+
+		try {
+			TestLog.log.info("clicking ok");
+			 btnErrorEmptySearch.click();
+			 
+			TestLog.log.info("clicked ok");
+
+		} catch (Exception ex) {
+          System.out.println("clicking ok failed");
+		}
+
+	}
+    
+    //verify the error message for search with empty input
+    public boolean verifySearchEmpty() {
+	    boolean flag= false;
+	    
+	    String error = popUpError.getText();
+	    
+	    if(error.contains("Error")){
+	    	System.out.println("Empty search is verified");
+	    	flag = true;
+	    }
+	    
+	    return flag;
+	    
+	}
+    
+    
+    
+    //verify access denied message
+    public boolean verifyInvalidAccess(String AccessDeniedMsg) {
+	    boolean flag= false;
+	    String error1 = errorAccessDenied.getText();
+	 
+	    if(error1.contains("Access Denied!")) {
+	    	System.out.println("Navigated to Access Denied Page");
+	    	flag = true;
+	    }
+	    
+	    return flag;
+	    
+>>>>>>> shamamaPOM
 	}
 
 	// Verify UserName in the TopPane
@@ -446,5 +580,30 @@ public class CommonPageTopPane extends BasePage {
 
 		return flag;
 
+	}
+    
+    //Verify UserImage in the TopPane
+    public boolean verifyUserImage() throws InterruptedException {
+	    boolean flag= false;
+	    
+	    String userImage = imgUserTop.getAttribute("src");
+	    System.out.println("UserImageTop: "+userImage);
+	    
+	    drpDownIcon.click();
+	    Thread.sleep(2000);
+		drpProfileOption.click();
+		Thread.sleep(2000);
+	    
+	    String UserImageProfile =proflUpdateImage.getAttribute("src");
+	    System.out.println("UserImageProfile: " +UserImageProfile);
+	    if(userImage.contains(UserImageProfile)) {
+	
+	    	System.out.println("UserImage in the Top Pane Verified");
+	    	
+	    	flag = true;
+	    }
+	    
+	    return flag;
+	    
 	}
 }

@@ -20,7 +20,68 @@ public class CommonPageTopPane extends BasePage {
 		// TODO Auto-generated constructor stub
 	}
 
-<<<<<<< HEAD
+	/*
+	 * // user profile pic in the top pane
+	 * 
+	 * @FindBy(xpath = "//div[1]/div/div[2]/div/nav/ul/li[1]/a/img") WebElement
+	 * imgUserTop;
+	 * 
+	 * // user name in the top pane
+	 * 
+	 * @FindBy(xpath = "//li/a[@class='user-profile dropdown-toggle']")
+	 * WebElement txtUserName;
+	 * 
+	 * // drop down icon in the top pane
+	 * 
+	 * @FindBy(xpath =
+	 * "//div/nav/ul/li[1]/a[@class='user-profile dropdown-toggle']") WebElement
+	 * drpDownIcon;
+	 * 
+	 * @FindBy(xpath = "//div/nav/ul/li[1]/ul/li[1]/a") WebElement
+	 * drpProfileOption;
+	 * 
+	 * @FindBy(xpath = "//ul/li[1]/ul/li[2]/a/span") WebElement
+	 * drpSettingsOption;
+	 * 
+	 * @FindBy(xpath = "//div/nav/ul/li[1]/ul/li[3]/a") WebElement
+	 * drpLogoutOption;
+	 * 
+	 * @FindBy(xpath = "//i[@class='fa fa-bars']") WebElement btnPancake;
+	 * 
+	 * @FindBy(id = "search") WebElement searchTextBox;
+	 * 
+	 * @FindBy(id = "first-name") WebElement proflUpdateFirstName;
+	 * 
+	 * @FindBy(xpath = "//div[3]/div[1]/strong") WebElement searchCatAcc;
+	 * 
+	 * @FindBy(xpath = "//div[3]/div[2]/strong") WebElement searchCatEng;
+	 * 
+	 * @FindBy(xpath = "//div[3]/div[3]/strong") WebElement searchCatPro;
+	 * 
+	 * @FindBy(id = "frm_submit") WebElement btnSubmit;
+	 * 
+	 * @FindBy(xpath = "//div[@class='autocomplete-no-suggestion']") WebElement
+	 * errorSearch;
+	 * 
+	 * @FindBy(xpath = "//div/div[2]/div/div/h1") WebElement errorAccessDenied;
+	 */
+
+	// click drop down
+
+	public void clickDropDownIcon(String pageLinks) {
+		try {
+			TestLog.log.info("Selecting");
+			Select dropdown = new Select(drpDownIcon);
+			dropdown.selectByVisibleText(pageLinks);
+			TestLog.log.info("Selected " + pageLinks);
+		} catch (Exception ex) {
+			TestLog.log.info("Could not select from drop down " + ex);
+		}
+
+	}
+
+	// public void clickDropDownIcon() {
+
 	// user profile pic in the top pane
 	@FindBy(xpath = "//div[1]/div/div[2]/div/nav/ul/li[1]/a/img")
 	WebElement imgUserTop;
@@ -30,7 +91,7 @@ public class CommonPageTopPane extends BasePage {
 	WebElement txtUserName;
 
 	// drop down icon in the top pane
-	@FindBy(xpath = "//div/nav/ul/li[1]/a[@class='user-profile dropdown-toggle']")
+	@FindBy(xpath = "//span[@class=' fa fa-angle-down']")
 	WebElement drpDownIcon;
 
 	@FindBy(xpath = "//div/nav/ul/li[1]/ul/li[1]/a")
@@ -69,88 +130,17 @@ public class CommonPageTopPane extends BasePage {
 	@FindBy(xpath = "//div/div[2]/div/div/h1")
 	WebElement errorAccessDenied;
 
+	@FindBy(xpath = "//div[@id='changeIdiv']/div/img[@class='img-circle profile_img']")
+	WebElement proflUpdateImage;
+
+	@FindBy(xpath = "//button[@class='btn btn-warning']")
+	WebElement btnErrorEmptySearch;
+
+	@FindBy(xpath = "//span[@class='title']")
+	WebElement popUpError;
+
 	// click drop down
-
-	public void clickDropDownIcon(String pageLinks) {
-		try {
-			TestLog.log.info("Selecting");
-			Select dropdown = new Select(drpDownIcon);
-			dropdown.selectByVisibleText(pageLinks);
-			TestLog.log.info("Selected " + pageLinks);
-		} catch (Exception ex) {
-			TestLog.log.info("Could not select from drop down " + ex);
-		}
-
-	}
-
 	public void clickDropDownIcon() {
-=======
-    
-    // user profile pic in the top pane
-    @FindBy(xpath="//div[1]/div/div[2]/div/nav/ul/li[1]/a/img")
-    WebElement imgUserTop;
- 
-    //user name in the top pane
-    @FindBy(xpath="//li/a[@class='user-profile dropdown-toggle']")
-      WebElement txtUserName;
-    
-    //drop down icon in the top pane
-    @FindBy(xpath="//span[@class=' fa fa-angle-down']")
-    WebElement drpDownIcon;
-    
-    
-    @FindBy(xpath="//div/nav/ul/li[1]/ul/li[1]/a")
-    WebElement drpProfileOption;
-    
-     @FindBy(xpath="//ul/li[1]/ul/li[2]/a/span") 
-     WebElement drpSettingsOption;
-     
-    @FindBy(xpath="//div/nav/ul/li[1]/ul/li[3]/a") 
-     WebElement drpLogoutOption;
-     
-    @FindBy(xpath="//i[@class='fa fa-bars']") 
-     WebElement btnPancake;
-     
-    @FindBy(id="search") 
-     WebElement searchTextBox;
-    
-    @FindBy(id="first-name") 
-    WebElement proflUpdateFirstName;
-    
- 
-    @FindBy(xpath="//div[3]/div[1]/strong") 
-    WebElement searchCatAcc;
-    
-    @FindBy(xpath="//div[3]/div[2]/strong") 
-    WebElement searchCatEng;
-     
-    @FindBy(xpath="//div[3]/div[3]/strong") 
-    WebElement searchCatPro;
-     
-    @FindBy(id="frm_submit") 
-    WebElement btnSubmit;
-    
-    @FindBy(xpath="//div[@class='autocomplete-no-suggestion']") 
-    WebElement errorSearch;
-    
-    @FindBy(xpath="//div/div[2]/div/div/h1") 
-    WebElement errorAccessDenied;
-    
-  
-    @FindBy(xpath="//div[@id='changeIdiv']/div/img[@class='img-circle profile_img']") 
-    WebElement proflUpdateImage;
-    
- 
-    @FindBy(xpath="//button[@class='btn btn-warning']") 
-    WebElement btnErrorEmptySearch;
-    
-
-    @FindBy(xpath="//span[@class='title']") 
-    WebElement popUpError;
-    
-    //click drop down
-    public void clickDropDownIcon() {
->>>>>>> shamamaPOM
 
 		try {
 			TestLog.log.info("Clicking Drop Down icon");
@@ -163,38 +153,32 @@ public class CommonPageTopPane extends BasePage {
 		}
 
 	}
-<<<<<<< HEAD
-=======
-    
-  //Verify options
-    public  boolean  verifyDropDownOptions(){
-    	boolean flag= false;
-    	
-     	 String option1 =drpProfileOption.getText();
-     	 String option2 =drpSettingsOption.getText();
-     	 String option3 =drpLogoutOption.getText();
 
-    	List<WebElement> DropDownOptions = driver.findElements(By.xpath("//div[1]/div/div[2]/div/nav/ul/li[1]/ul"));
+	// Verify options
+	/*public boolean verifyDropDownOptions() {
+		boolean flag = false;
 
-    	for(WebElement suggestions : DropDownOptions){
-    	   System.out.println("The options under Drop down icon are:" +option1 +option2 +option3);
-    	    if(suggestions.getText().contains(option1) && suggestions.getText().contains(option2)
-    	    		&& suggestions.getText().contains(option3)) {
-    	        System.out.println("Drop down options are verfied");
-    	    
-    	       
-    	        flag = true;
-    	    }
-    	   
-        }
-    	
-    	return flag;
-    }
+		String option1 = drpProfileOption.getText();
+		String option2 = drpSettingsOption.getText();
+		String option3 = drpLogoutOption.getText();
 
+		List<WebElement> DropDownOptions = driver.findElements(By.xpath("//div[1]/div/div[2]/div/nav/ul/li[1]/ul"));
 
-    //click profile from the drop down menu
-    public void clickProfile() {
->>>>>>> 1d3d8d135fe1bf977403529eac21f86089c82a19
+		for (WebElement suggestions : DropDownOptions) {
+			System.out.println("The options under Drop down icon are:" + option1 + option2 + option3);
+			if (suggestions.getText().contains(option1) && suggestions.getText().contains(option2)
+					&& suggestions.getText().contains(option3)) {
+				System.out.println("Drop down options are verfied");
+
+				flag = true;
+			}
+
+		}
+
+		return flag;
+	}*/
+
+	// click profile from the drop down menu
 
 	// Verify options
 	public boolean verifyDropDownOptions() {
@@ -204,14 +188,11 @@ public class CommonPageTopPane extends BasePage {
 		String option2 = drpSettingsOption.getText();
 		String option3 = drpLogoutOption.getText();
 
-		List<WebElement> DropDownOptions = driver.findElements(By
-				.xpath("//div[1]/div/div[2]/div/nav/ul/li[1]/ul"));
+		List<WebElement> DropDownOptions = driver.findElements(By.xpath("//div[1]/div/div[2]/div/nav/ul/li[1]/ul"));
 
 		for (WebElement suggestions : DropDownOptions) {
-			System.out.println("The options under Drop down icon are:"
-					+ option1 + option2 + option3);
-			if (suggestions.getText().contains(option1)
-					&& suggestions.getText().contains(option2)
+			System.out.println("The options under Drop down icon are:" + option1 + option2 + option3);
+			if (suggestions.getText().contains(option1) && suggestions.getText().contains(option2)
 					&& suggestions.getText().contains(option3)) {
 				System.out.println("Drop down options are verfied");
 
@@ -220,30 +201,26 @@ public class CommonPageTopPane extends BasePage {
 
 		}
 
-<<<<<<< HEAD
 		return flag;
 	}
 
 	// click profile from the drop down menu
-	
-	  public void clickProfile() {
-	 
-	 try { TestLog.log.info("Clicking Profile"); drpProfileOption.click();
-	  TestLog.log.info("Clicked");
-	  
-	  } catch (Exception ex) { System.out.println("Clicking Profile failed"); }
-	  
-	  }
-	 
+
+	public void clickProfile() {
+
+		try {
+			TestLog.log.info("Clicking Profile");
+			drpProfileOption.click();
+			TestLog.log.info("Clicked");
+
+		} catch (Exception ex) {
+			System.out.println("Clicking Profile failed");
+		}
+
+	}
 
 	// click settings from the drop down menu
 	public void clickSettings() {
-=======
-	}
- 
-    //click settings from the drop down menu
-   public void clickSettings() {
->>>>>>> 1d3d8d135fe1bf977403529eac21f86089c82a19
 
 		try {
 			TestLog.log.info("Clicking Settings");
@@ -255,15 +232,9 @@ public class CommonPageTopPane extends BasePage {
 		}
 
 	}
-<<<<<<< HEAD
 
 	// click logout from the drop down menu
 	public void clickLogout() {
-=======
-    
-    //click logout from the drop down menu
-    public void clickLogout() {
->>>>>>> 1d3d8d135fe1bf977403529eac21f86089c82a19
 
 		try {
 			TestLog.log.info("Clicking Logout");
@@ -274,37 +245,15 @@ public class CommonPageTopPane extends BasePage {
 			System.out.println("Clicking Logout failed");
 		}
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 459dd2a6ba14b7c16b8605ef74de72d10fab62d5
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
+	// public void searchTopPane(String searchAPE) {
 
->>>>>>> neelamaniPOM
-	}*/
- 
-
-    public void searchTopPane(String searchAPE) {
-=======
-    public void searchTopPane(String searchUnexisting) {
->>>>>>> shamamaPOM
-=======
 	// verfiy unexisting in search query
-=======
-	
- 
->>>>>>> 1d3d8d135fe1bf977403529eac21f86089c82a19
 
 	// }*/
 
 	public void searchTopPane(String searchUnexisting) {
->>>>>>> 459dd2a6ba14b7c16b8605ef74de72d10fab62d5
 
 		try {
 			TestLog.log.info("searching");
@@ -342,8 +291,7 @@ public class CommonPageTopPane extends BasePage {
 		searchTextBox.clear();
 		searchTextBox.sendKeys(searchTwo);
 
-		List<WebElement> optionsToSelect = driver.findElements(By
-				.xpath("//div[@class='autocomplete-suggestion']"));
+		List<WebElement> optionsToSelect = driver.findElements(By.xpath("//div[@class='autocomplete-suggestion']"));
 
 		for (WebElement suggestions : optionsToSelect) {
 			System.out.println(suggestions);
@@ -362,8 +310,7 @@ public class CommonPageTopPane extends BasePage {
 
 		String valueOfSearch = searchTextBox.getAttribute("value");
 		if (valueOfSearch.contains(searchText)) {
-			System.out
-					.println("The selected search text is:  " + valueOfSearch);
+			System.out.println("The selected search text is:  " + valueOfSearch);
 			flag = true;
 		} else {
 			System.out.println(" search text is not verified");
@@ -411,15 +358,15 @@ public class CommonPageTopPane extends BasePage {
 		try {
 			TestLog.log.info("clicking Go");
 			btnSubmit.click();
-			 
+
 			TestLog.log.info("clicked Go");
 
 		} catch (Exception ex) {
-<<<<<<< HEAD
+
 			System.out.println("Cancel Add Group Failed");
-=======
-          System.out.println("Clicking Search Go button failed");
->>>>>>> shamamaPOM
+
+			System.out.println("Clicking Search Go button failed");
+
 		}
 
 	}
@@ -444,18 +391,15 @@ public class CommonPageTopPane extends BasePage {
 		String searchSugCategory1 = searchCatAcc.getText();
 		String searchSugCategory2 = searchCatEng.getText();
 		String searchSugCategory3 = searchCatPro.getText();
-		if (searchSugCategory1.contains("Accounts")
-				&& searchSugCategory3.contains("Projects")
+		if (searchSugCategory1.contains("Accounts") && searchSugCategory3.contains("Projects")
 				|| searchSugCategory2.contains("Engagements")) {
-			System.out
-					.println("Search Suggestions are  Successfully is displayed category wise ");
+			System.out.println("Search Suggestions are  Successfully is displayed category wise ");
 			flag = true;
 		}
 
 		return flag;
 
 	}
-<<<<<<< HEAD
 
 	// verify no results found error as search results
 	public boolean verifyNoSearchReults() {
@@ -494,67 +438,63 @@ public class CommonPageTopPane extends BasePage {
 		}
 
 		return flag;
-
-=======
-     
-    //verify no results found error as search results
-    public boolean verifyNoSearchResults() {
-	    boolean flag= false;
-	    String error = errorSearch.getText();
-	    if(error.contains("Sorry, no matching results")){
-	    	System.out.println("Correct error");
-	    	flag = true;
-	    }
-	    
-	    return flag;
-	    
 	}
-    
-    //click go in the search text
-    public void clickErrorPopUpOk() {
+
+	// verify no results found error as search results
+	public boolean verifyNoSearchResults() {
+		boolean flag = false;
+		String error = errorSearch.getText();
+		if (error.contains("Sorry, no matching results")) {
+			System.out.println("Correct error");
+			flag = true;
+		}
+
+		return flag;
+
+	}
+
+	// click go in the search text
+	public void clickErrorPopUpOk() {
 
 		try {
 			TestLog.log.info("clicking ok");
-			 btnErrorEmptySearch.click();
-			 
+			btnErrorEmptySearch.click();
+
 			TestLog.log.info("clicked ok");
 
 		} catch (Exception ex) {
-          System.out.println("clicking ok failed");
+			System.out.println("clicking ok failed");
 		}
 
 	}
-    
-    //verify the error message for search with empty input
-    public boolean verifySearchEmpty() {
-	    boolean flag= false;
-	    
-	    String error = popUpError.getText();
-	    
-	    if(error.contains("Error")){
-	    	System.out.println("Empty search is verified");
-	    	flag = true;
-	    }
-	    
-	    return flag;
-	    
+
+	// verify the error message for search with empty input
+	public boolean verifySearchEmpty() {
+		boolean flag = false;
+
+		String error = popUpError.getText();
+
+		if (error.contains("Error")) {
+			System.out.println("Empty search is verified");
+			flag = true;
+		}
+
+		return flag;
+
 	}
-    
-    
-    
-    //verify access denied message
-    public boolean verifyInvalidAccess(String AccessDeniedMsg) {
-	    boolean flag= false;
-	    String error1 = errorAccessDenied.getText();
-	 
-	    if(error1.contains("Access Denied!")) {
-	    	System.out.println("Navigated to Access Denied Page");
-	    	flag = true;
-	    }
-	    
-	    return flag;
-	    
->>>>>>> shamamaPOM
+
+	// verify access denied message
+	public boolean verifyInvalidAccess(String AccessDeniedMsg) {
+		boolean flag = false;
+		String error1 = errorAccessDenied.getText();
+
+		if (error1.contains("Access Denied!")) {
+			System.out.println("Navigated to Access Denied Page");
+			flag = true;
+		}
+
+		return flag;
+
 	}
 
 	// Verify UserName in the TopPane
@@ -581,29 +521,29 @@ public class CommonPageTopPane extends BasePage {
 		return flag;
 
 	}
-    
-    //Verify UserImage in the TopPane
-    public boolean verifyUserImage() throws InterruptedException {
-	    boolean flag= false;
-	    
-	    String userImage = imgUserTop.getAttribute("src");
-	    System.out.println("UserImageTop: "+userImage);
-	    
-	    drpDownIcon.click();
-	    Thread.sleep(2000);
+
+	// Verify UserImage in the TopPane
+	public boolean verifyUserImage() throws InterruptedException {
+		boolean flag = false;
+
+		String userImage = imgUserTop.getAttribute("src");
+		System.out.println("UserImageTop: " + userImage);
+
+		drpDownIcon.click();
+		Thread.sleep(2000);
 		drpProfileOption.click();
 		Thread.sleep(2000);
-	    
-	    String UserImageProfile =proflUpdateImage.getAttribute("src");
-	    System.out.println("UserImageProfile: " +UserImageProfile);
-	    if(userImage.contains(UserImageProfile)) {
-	
-	    	System.out.println("UserImage in the Top Pane Verified");
-	    	
-	    	flag = true;
-	    }
-	    
-	    return flag;
-	    
+
+		String UserImageProfile = proflUpdateImage.getAttribute("src");
+		System.out.println("UserImageProfile: " + UserImageProfile);
+		if (userImage.contains(UserImageProfile)) {
+
+			System.out.println("UserImage in the Top Pane Verified");
+
+			flag = true;
+		}
+
+		return flag;
+
 	}
 }

@@ -59,7 +59,7 @@ public class DataUploadPage extends BasePage {
 	// add data upload page confirmation
 	public boolean verifyNavigationToDataUploadPage(String expectedMessage) {
 
-		boolean flag;
+		boolean flag=false;
 
 		String actualMessage = lblPageName.getText();
 
@@ -121,7 +121,7 @@ public class DataUploadPage extends BasePage {
 	// empty file
 	public boolean verifyEmptyFileErrorMessage(String expectedMessage) {
 
-		boolean flag;
+		boolean flag=false;
 
 		String actualMessage = alertMessage.getText();
 
@@ -141,7 +141,7 @@ public class DataUploadPage extends BasePage {
 	// table is not selected
 	public boolean verifyTableSelection(String expectedMessage) {
 
-		boolean flag;
+		boolean flag=false;
 
 		String actualMessage = alertMessage.getText();
 
@@ -161,7 +161,7 @@ public class DataUploadPage extends BasePage {
 	// both fields empty
 	public boolean verifyEmptyFields(String expectedMessage) {
 
-		boolean flag;
+		boolean flag=false;
 
 		String actualMessage = alertMessage.getText();
 
@@ -187,7 +187,7 @@ public class DataUploadPage extends BasePage {
 	// records uploaded to the table
 	public boolean verifyRecordsAdded(String expectedMessage) {
 
-		boolean flag;
+		boolean flag=false;
 
 		String actualMessage = lblRecordsAdded.getText();
 
@@ -207,7 +207,7 @@ public class DataUploadPage extends BasePage {
 	// records not uploaded to the table
 	public boolean verifyNoRecordsAdded(String expectedMessage) {
 
-		boolean flag;
+		boolean flag=false;
 
 		String actualMessage = lblNoRecordsAdded.getText();
 

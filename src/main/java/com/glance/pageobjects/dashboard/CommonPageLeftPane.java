@@ -153,6 +153,7 @@ public class CommonPageLeftPane extends BasePage {
 				WebDriverWait wait = new WebDriverWait(driver, 10);
 				wait.until(ExpectedConditions.elementToBeClickable(linkAccountNameList.get(i)));
 				linkAccountNameList.get(i).click();
+				System.out.println("click on account name");
 				break;
 			}
 

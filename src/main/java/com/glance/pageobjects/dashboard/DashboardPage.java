@@ -423,8 +423,6 @@ public class DashboardPage extends BasePage {
 	public void selectOkayInPopup() {
 		try {
 			TestLog.log.info("select go to dashboard");
-			//((WebElement) okayBtn).click();
-			//driver.findElement(okayBtn).click();
 			btnDeleteConfirmOk.click();
 			TestLog.log.info("navigate to dashboard page");
 
@@ -463,7 +461,6 @@ public class DashboardPage extends BasePage {
 
 		boolean flag = false;
 		try {
-			// wait.until(ExpectedConditions.visibilityOf(lblElementMessage));
 			String actualElementMessage = lblElementMessage.getText();
 			String expectedElementMessage = "No dashboard elements defined!";
 			if (actualElementMessage.contains(expectedElementMessage)) {

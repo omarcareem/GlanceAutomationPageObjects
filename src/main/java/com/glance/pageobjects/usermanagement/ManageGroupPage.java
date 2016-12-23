@@ -42,6 +42,11 @@ public class ManageGroupPage extends BasePage {
 	@FindBy(xpath=("//button[@class='btn btn-danger']"))   
 	WebElement btnOkayforDeleteGrp;
 
+	//button[@class='btn btn-default']
+	@FindBy(xpath=("//button[@class='btn btn-default']"))   
+	WebElement btnCancelforDeleteGrp;
+
+	
 	@FindBy(xpath = "//button[text()='Cancel']")
 	WebElement btnCancel;
 
@@ -98,23 +103,7 @@ public class ManageGroupPage extends BasePage {
 		
 		
 	}
-	//verify the fill out  field alert message
-	public boolean verifyAlert(String expectedAlertMessage){
-		boolean flag = false;
-		String actualMessage=lblAddGroup.getText();
-		if (actualMessage.contains(expectedAlertMessage)) {
-			flag = true;
-			System.out.println("Alert verified");
-			}
-		else {
-			System.out.println("Alert not verified");
-			flag = false;
-			}
-		
-		return flag;
-		
-		
-	}
+	
 	
     //imput the the group name
 	public void inputGroupName(String grpName) {
@@ -242,6 +231,22 @@ public class ManageGroupPage extends BasePage {
 
 	}
 	
+	public void clickCancelDelete(String groupNameNew) {
+
+		try {
+			TestLog.log.info("clicking Cancel Delete");
+			WebElement btnDelete = driver.findElement(By.xpath("//td[text()='" + groupNameNew + "']/../td[5]/div/a[2]"));
+			btnDelete.click();
+			Thread.sleep(1000);
+			btnCancelforDeleteGrp.click();
+			TestLog.log.info("clicked cancel Delete");
+
+		} catch (Exception ex) {
+
+		}
+
+	}
+	
 	//verfiy added group
 		public boolean verifyAdded(String grpName) {
 
@@ -277,7 +282,7 @@ public class ManageGroupPage extends BasePage {
 		//verify group deleted
 		public boolean verifyDeleted(String grpNameNew) {
 
-	        boolean flag = true;
+	        boolean flag = false;
 
 	        WebElement tblUser = driver.findElement(By.xpath("//tbody"));
 	        List<WebElement> tblRow = tblUser.findElements(By.tagName("tr"));
@@ -292,9 +297,9 @@ public class ManageGroupPage extends BasePage {
 
 	                            String groupName = data.getText();
 	                            System.out.println(groupName);
-	                            if (groupName.contains(grpNameNew)) {
+	                            if (!groupName.contains(grpNameNew)) {
 	                                   System.out.println("Successfully Deleted");
-	                                   flag = false;
+	                                   flag = true;
 	                                   break outerloop;
 
 	                            }
@@ -305,7 +310,10 @@ public class ManageGroupPage extends BasePage {
 	        }
 	        return flag;
 	 }
-	
+		
+		
+		
+		
 	
 
 }

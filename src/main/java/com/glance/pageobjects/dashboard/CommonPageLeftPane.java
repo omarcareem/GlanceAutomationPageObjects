@@ -177,6 +177,15 @@ public class CommonPageLeftPane extends BasePage {
 
 	}
 
+	@FindBy(xpath = "//a[contains(text(),'Individual')]/../ul/li[@class='btn-xs btn-primary']/a")
+	WebElement linkIndividualAddNew;
+
+	public void clickOnAddNewIndividualLink() {
+
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+		executor.executeScript("arguments[0].click();", linkIndividualAddNew);
+
+	}
 	// click on account *******************************************
 	public void clickAccount() {
 

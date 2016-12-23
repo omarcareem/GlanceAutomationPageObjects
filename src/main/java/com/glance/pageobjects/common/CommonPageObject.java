@@ -611,7 +611,7 @@ public class CommonPageObject extends BasePage {
 	}
 	
 	// This method will capture screen shots
-	public void takeScreenShotofFailure(String screenShot) throws Exception {
+	public String takeScreenShotofFailure(String screenShot, WebDriver driver) throws Exception {
 
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
 				.format(Calendar.getInstance().getTime());
@@ -631,6 +631,8 @@ public class CommonPageObject extends BasePage {
 		FileUtils.copyFile(imageFile, new File(destFile));
 		System.out.println("Saving file");
 		TestLog.log.info("Saving file");
+		return destFile;
+		
 	}
 
 	// this method will wait for the page load

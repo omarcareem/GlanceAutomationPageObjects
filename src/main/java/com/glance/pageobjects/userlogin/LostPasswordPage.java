@@ -1,8 +1,5 @@
 package com.glance.pageobjects.userlogin;
 
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -38,13 +35,16 @@ public class LostPasswordPage extends BasePage {
 	
 	//Popup msg Box
 	@FindBy(xpath="	//div/div[3]/div")
-	 WebElement lblLostPasswordmsg;
+	 WebElement lblLostPasswordmsg1;
+	
+	@FindBy(xpath="	//div/div[3]/div")
+	 WebElement lblLostPasswordmsg2;
 	
 	@FindBy(xpath="	//div[4]/button[1]")
 	 WebElement btnLostPasswordOkay;
 	
-	@FindBy(xpath="	//div[4]/button[2]")
-	 WebElement btnLostPasswordCancel;
+	@FindBy(xpath="	//div[4]/button[1]")
+	 WebElement btnLostPasswordDone;
 	
 	
 	
@@ -125,7 +125,23 @@ public class LostPasswordPage extends BasePage {
 
 		boolean flag = false;
 
-		String popupMessageName = lblLostPasswordmsg.getText();
+		String popupMessageName = lblLostPasswordmsg1.getText();
+		if (popupMessageName.contains(lblLostpasswordtmsg)) {
+			System.out.println("Invalid lost password request error try is verified:  " + popupMessageName);
+			flag = true;
+		} else {
+			System.out.println("Ivalid lost password request error is not verified");
+			flag = false;
+		}
+		return flag;
+
+	}
+	
+	public boolean getLostPasswordMsgContent1(String lblLostpasswordtmsg) {
+
+		boolean flag = false;
+
+		String popupMessageName = lblLostPasswordmsg2.getText();
 		if (popupMessageName.contains(lblLostpasswordtmsg)) {
 			System.out.println("Invalid lost password request error try is verified:  " + popupMessageName);
 			flag = true;
@@ -150,27 +166,18 @@ public class LostPasswordPage extends BasePage {
 		
 	}
 	
-	public void clickPopupCancel(){
+public void clickPopupDone(){
 		
 		try{
-			TestLog.log.info("Clicking cacel button");
-			btnLostPasswordCancel.click();
-			TestLog.log.info("clicked cancel button");
+			TestLog.log.info("Clicking Done button");
+			btnLostPasswordDone.click();
+			TestLog.log.info("clicked Done button");
 		}
 		 catch(Exception ex){
-			 TestLog.log.info("Could not Click cancel button of msg box. "+ex); 
+			 TestLog.log.info("Could not Click Done button of msg box. "+ex); 
 		 }
 		
 	}
 	
-	//For Success submission
-	public void switchtoMsgBoxLostPasswordPage(){
- 		Alert simpleAlert = driver.switchTo().alert();
- 	    String alertText = simpleAlert.getText();
- 	    System.out.println("Alert text is " + alertText);
- 	    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
- 	    simpleAlert.accept();
- 	   
- 	}
- 
+	
 }
